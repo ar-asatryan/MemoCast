@@ -1,0 +1,22 @@
+{
+	"request" : {
+		"Amount": 9.95,
+		"BillTo": {
+			"FirstName": "Konstantin",
+			"LastName": "Bahinsky",
+			"Address": "p/o box 22284",
+			"City": "Krasnoyarsk",
+			"State": "Krasnoyarsk Region",
+			"PostalCode": "660130",
+			"Country": "Russian Federation",
+			"Email": "bahinsky@gmail.com"
+		},
+		"PaymentTitle": "Subs Test",
+		"CreditCard": {
+			"CardNumber": "4111111111111112",
+			"ExpirationMonth": "12",
+			"ExpirationYear": "2019",
+			"CardType": "001"
+		}
+	}
+}

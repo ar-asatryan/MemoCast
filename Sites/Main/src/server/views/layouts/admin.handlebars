@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<title>Memocast Admin</title>
+<link href="/dist/css/lib.admin.min.css" rel="stylesheet" />
+<link href="/bower/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="/bower/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/admin/css/alertify.core.css" />
+<link rel="stylesheet" href="/admin/css/alertify.default.css" />
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.0/metisMenu.min.css"> -->
+<link rel="stylesheet" href="/admin/css/admin.css" />
+{{{_sections.head}}}
+<style type="text/css">
+.form-group label {
+    font-weight: 700;
+}
+</style>
+</head>
+<body>
+{{> admin-nav }}
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+{{{ body }}}
+</div>
+</div>
+</div>
+
+<script type="text/javascript" src="/dist/js/lib.admin.min.js"></script>
+<!--    Plugin for Date Time Picker and Full Calendar Plugin   -->
+<script src="/bower/moment/min/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="/admin/js/admin.js"></script>
+<script type="text/javascript">
+var getStorageValue = function (name, defaultValue) {
+    if (typeof(Storage) !== "undefined") {
+        var tmp = localStorage[name];
+        if (tmp) {
+            return tmp;
+        }
+    }
+    return defaultValue;
+}
+
+var setStorageValue = function (name, value) {
+    if (typeof(Storage) !== "undefined") {
+        localStorage[name] = value;
+    }
+}
+
+var disableFormButton = function (selector, title) {
+    var $bt = $(selector);
+    $bt.prop('disabled', true);
+    $bt.html('<i class="fa fa-refresh fa-spin fa-fw"></i> <span>' + title + '</span>');
+}
+
+var enableFormButton = function (selector, title) {
+    var $bt = $(selector);
+    $bt.prop('disabled', false);
+    $bt.text(title);
+}
+
+$(function() {
+    var $searchType = $('#search-type');
+    $searchType.on('change', function(evt) {
+        setStorageValue('admin-search-type', this.value);
+    });
+    var currentSearchType = getStorageValue('admin-search-type', 'users');
+    $searchType.find('option').each(function() {
+        this.selected = this.value === currentSearchType;
+    });
+});
+
+</script>
+
+<script type="text/javascript" src="/admin/js/alertify.min.js"></script>
+
+{{{_sections.scripts}}}
+
+</body>
+</html>

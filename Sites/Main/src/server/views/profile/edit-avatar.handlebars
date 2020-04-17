@@ -1,0 +1,85 @@
+{{#section "head"}}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+{{/section}}
+
+<div class="h3 title">
+    {{ istring locale ru='Изменить фотографию' en='Update photo' }}
+</div>
+<hr />
+
+<form id="avatar-form" method="post" class="form-horizontal" enctype="multipart/form-data">
+
+<div class="fileinput fileinput-new text-center" data-provides="fileinput">
+    <div class="fileinput-new thumbnail img-raised">
+        <img src="{{ user.photo }}" class="mmc-my-avatar" />
+    </div>
+    <div class="fileinput-preview fileinput-exists thumbnail img-raised">
+    </div>
+    <div>
+        <span class="btn btn-raised btn-round btn-default btn-file">
+        <span class="fileinput-new">Select image</span>
+        <span class="fileinput-exists">Change</span>
+        <input type="file" name="image" id="file-img-avatar" accept="image/png,image/jpeg" />
+        </span>
+        <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
+        <i class="fa fa-times"></i> Remove</a>
+    </div>
+</div>
+
+</form>
+
+{{#section "scripts"}}
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+    let file = $('#file-img-avatar');
+    let form = $('#avatar-form');
+    file.on('change.bs.fileinput', function (evt) {
+        let path = file.val();
+        if (path !== '' && evt.target) {
+            var files = evt.target.files;
+            console.log('got new image! fuck ye!');
+            var url = '/api/user-image';
+            var data = new FormData();
+            data.append('image', files[0]);
+            $.ajax(url, {
+                method: 'POST',
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(response);
+                    var d = new Date();
+                    let url = '/images/my?width=120&height=120&rnd=' + d.getTime();
+                    console.log(url);
+                    $('.mmc-my-avatar').attr('src', url);
+                },
+                error: function(err) {
+                    console.log(err);
+                },
+                complete: function() {
+                }
+            });
+
+        } else {
+            console.log('should remove file from server, bitch!');
+            let url = '/api/user-image';
+            $.ajax(url, {
+                method: 'DELETE',
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+});
+</script>
+
+{{/section}}

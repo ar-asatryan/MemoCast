@@ -1,0 +1,269 @@
+<ul class="nav nav-pills" id="user-pills" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="pill" href="#user-info" role="tab" aria-controls="home">Main info</a>
+  </li>
+{{#if selectedUser.local-credentials.login }}
+<li class="nav-item">
+  <a class="nav-link" data-toggle="pill" href="#user-local" role="tab" aria-controls="profile">Local credentials</a>
+</li>
+{{/if}}
+{{#if selectedUser.facebook-credentials.id }}
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="pill" href="#user-fb" role="tab" aria-controls="profile">Facebook</a>
+  </li>
+{{/if}}
+{{#if selectedUser.vkontakte-credentials.id }}
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="pill" href="#user-vk" role="tab" aria-controls="messages">VKontakte</a>
+    </li>
+{{/if}}
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="pill" href="#user-subs" role="tab" aria-controls="settings">Subscriptions</a>
+  </li>
+</ul>
+
+<div class="tab-content" style="padding: 15px 0px;">
+  <div class="tab-pane active" id="user-info" role="tabpanel">
+    <form id="user-form" action="#" method="post">
+        <input type="hidden" id="tb-user-id" name="_id" value="{{ selectedUser._id }}" />
+        <div class="form-group">
+            <label for="tb-user-displayName">
+                Display name
+            </label>
+            <input type="text" class="form-control" name="displayName" id="tb-user-displayName" value="{{ selectedUser.displayName }}" />
+        </div>
+        <div class="form-group">
+            <label for="tb-user-email">
+                E-mail
+            </label>
+            <input type="text" class="form-control" name="email" id="tb-user-email" value="{{ selectedUser.email }}" />
+        </div>
+        <div class="form-group">
+            <label for="tb-user-user-id">
+                User ID
+            </label>
+            <input type="text" class="form-control" name="userID" id="tb-user-user-id" value="{{ selectedUser.userID }}" />
+        </div>
+        <div class="form-group">
+            <label for="tb-user-adminNotes">Admin notes</label>
+            <textarea rows="10" class="form-control" name="adminNotes" id="tb-user-adminNotes">{{ selectedUser.adminNotes }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="tb-user-phone">
+                Phone
+            </label>
+            <input type="text" class="form-control" name="phone" id="tb-user-phone" value="{{ selectedUser.phone }}" />
+        </div>
+        <div class="form-group">
+            <label for="tb-user-city">
+                City
+            </label>
+            <input type="text" class="form-control" name="city" id="tb-user-city" value="{{ selectedUser.city }}" />
+        </div>
+        <div class="form-group">
+            <label for="tb-user-sex">
+                Sex
+            </label>
+            <select class="form-control" name="sex" id="tb-user-sex">
+                <option value="unspecified"></option>
+                <option value="male"{{#equal selectedUser.sex "male"}} selected="selected"{{/equal}}>male</option>
+                <option value="female"{{#equal selectedUser.sex "female"}} selected="selected"{{/equal}}>female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tb-user-roles">
+                Roles
+            </label>
+            <select class="form-control" name="roles" id="tb-user-roles" multiple="multiple">
+                {{#each selectedUser.roles}}
+                <option value="{{ . }}" selected="selected">{{ . }}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+    </form>
+  </div>
+{{#if selectedUser.local-credentials.login }}
+    <div class="tab-pane" id="user-local" role="tabpanel">
+        <form id="user-local-form" action="#" method="post">
+            <input type="hidden" name="_id" value="{{ selectedUser._id }}" />
+            <div class="form-group">
+                <label for="tb-user-local-login">
+                    Login
+                </label>
+                <input type="text" class="form-control" name="login" id="tb-user-local-login" value="{{ selectedUser.local-credentials.login }}" />
+            </div>
+            <div class="form-group">
+                <label for="tb-user-local-password">
+                    New password
+                </label>
+                <input type="text" class="form-control" name="password" id="tb-user-local-password" value="" />
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+{{/if}}
+{{#if selectedUser.facebook-credentials.id }}
+  <div class="tab-pane" id="user-fb" role="tabpanel">
+      <form id="user-fb-form" action="#" method="post">
+          <input type="hidden" name="_id" value="{{ selectedUser._id }}" />
+          <div class="form-group">
+              <label for="tb-user-fb-id">
+                  ID
+              </label>
+              <input type="text" class="form-control" name="id" id="tb-user-fb-id" value="{{ selectedUser.facebook-credentials.id }}" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-fb-displayName">
+                  User name
+              </label>
+              <input type="text" class="form-control" name="displayName" id="tb-user-fb-displayName" value="{{ selectedUser.facebook-credentials.displayName }}" />
+          </div>
+          <div class="text-center">
+              <button class="btn btn-primary" type="submit">Update</button>
+          </div>
+      </form>
+  </div>
+{{/if}}
+{{#if selectedUser.vkontakte-credentials.id }}
+  <div class="tab-pane" id="user-vk" role="tabpanel">
+      <form id="user-vk-form" action="#" method="post">
+          <input type="hidden" name="_id" value="{{ selectedUser._id }}" />
+          <div class="form-group">
+              <label for="tb-user-vk-id">
+                  ID
+              </label>
+              <input type="text" class="form-control" name="id" id="tb-user-vk-id" value="{{ selectedUser.vkontakte-credentials.id }}" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-vk-username">
+                  User name
+              </label>
+              <input type="text" class="form-control" name="username" id="tb-user-vk-username" value="{{ selectedUser.vkontakte-credentials.username }}" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-vk-displayName">
+                  Display Name
+              </label>
+              <input type="text" class="form-control" name="displayName" id="tb-user-vk-displayName" value="{{ selectedUser.vkontakte-credentials.displayName }}" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-vk-gender">
+                  Gender
+              </label>
+              <input type="text" class="form-control" name="gender" id="tb-user-vk-gender" value="{{ selectedUser.vkontakte-credentials.gender }}" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-vk-url">
+                  URL
+              </label>
+              <input type="text" class="form-control" name="url" id="tb-user-vk-url" value="{{ selectedUser.vkontakte-credentials.url }}" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-vk-photo">
+                  Photo
+              </label>
+              <input type="text" class="form-control" name="photo" id="tb-user-vk-photo" value="{{ selectedUser.vkontakte-credentials.photo }}" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-vk-birthday">
+                  Birth Date
+              </label>
+              <input type="text" class="form-control" name="birthday" id="tb-user-vk-birthday" value="{{ selectedUser.vkontakte-credentials.birthday }}" />
+          </div>
+          <div class="text-center">
+              <button class="btn btn-primary" type="submit">Update</button>
+          </div>
+      </form>
+  </div>
+{{/if}}
+  <div class="tab-pane" id="user-subs" role="tabpanel">
+      <div id="subs-container">
+      </div>
+      <!-- TODO : add subscription -->
+      <hr />
+      <h1>New subscription</h1>
+      <hr />
+      <form id="user-newsub-form" method="post" action="#">
+          <input type="hidden" name="_id" value="{{ selectedUser._id }}" />
+          <div class="form-group">
+              <label for="tb-user-newsub-kind">
+                  Subscription type
+              </label>
+              <select id="tb-user-newsub-kind" class="form-control" name="kind">
+                  <option value="onetime">onetime</option>
+                  <option value="recurring">recurring</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="tb-user-newsub-paypal">
+                  PayPal Payment / Sub ID
+              </label>
+              <input type="text" class="form-control" name="paypal" id="tb-user-newsub-paypal" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-newsub-cybersource">
+                  CyberSource Payment / Sub ID
+              </label>
+              <input type="text" class="form-control" name="cybersource" id="tb-user-newsub-cybersource" />
+          </div>
+          <div class="form-group">
+              <label for="tb-user-newsub-notes">Notes</label>
+              <textarea rows="10" class="form-control" name="notes" id="tb-user-newsub-notes"></textarea>
+          </div>
+          <div class="form-group">
+              <label for="tb-user-newsub-expire">
+                  Expire
+              </label>
+              <input type="text" class="form-control" name="expire" id="tb-user-newsub-expire" />
+          </div>
+          <div class="text-center">
+              <button class="btn btn-primary" type="submit">Add subscription</button>
+          </div>
+      </form>
+  </div>
+</div>
+
+{{#section "scripts"}}
+
+<script type="text/x-handlebars-template" id="template-subs">
+<!-- /.panel-heading -->
+<table id="subs-items" cellspacing="0" width="100%" class="display table table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th>Date</th>
+<th>Type</th>
+<th></th>
+<th></th>
+<th>Expire</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+\{{#each .}}
+<tr data-sub-id="\{{ _id }}">
+<td>\{{ createDate }}</td>
+<td>\{{ kind }}\{{#if paypal }} PayPal\{{/if}}\{{#if cybersource }} Credit Card\{{/if}}</td>
+<td>
+    \{{#if active}}
+    <i class="fa fa-check text-success"></i>
+    \{{else}}
+    <i class="fa fa-times text-danger"></i>
+    \{{/if}}
+</td>
+<td>\{{#if paypal }}\{{ paypal.id }}\{{/if}}\{{#if cybersource }}\{{ cybersource.subscription-id }}\{{/if}}</td>
+<td>\{{ expire }}</td>
+<td>\{{ notes }}</td>
+<td><button class="btn btn-danger mmc-delete-sub-button" data-sub-id="\{{ _id }}">Remove</button></td>
+</tr>
+\{{/each}}
+</tbody>
+</table>
+</script>
+
+<script type="text/javascript" src="/admin/js/user.js"></script>
+{{/section}}

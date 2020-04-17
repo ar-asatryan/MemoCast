@@ -1,0 +1,16 @@
+<div class="h3 title">
+    {{ istring locale ru='Following' en='Following' }}
+</div>
+<hr />
+
+{{#each following}}
+{{> user-info .}}
+{{else}}
+<p>You don't follow anyone yet</p>
+{{/each}}
+
+{{#section "scripts"}}
+<script type="text/javascript">
+$('#sm-profile-following').addClass('active');
+</script>
+{{/section}}

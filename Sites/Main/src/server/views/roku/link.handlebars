@@ -1,0 +1,91 @@
+{{#section "header"}}
+
+{{#unless user}}
+
+    <h1>Linking Roku device to your account</h1>
+    <div class="h3">Please login to link your Roku device</div>
+    <hr class="intro-divider" />
+    <ul class="list-inline intro-social-buttons">
+        <li>
+            <a href="/login" class="btn btn-default btn-lg"><span class="network-name">Sign In</span></a>
+        </li>
+        <li>
+            <a href="/signup" class="btn btn-default btn-lg"><span class="network-name">Create new account</span></a>
+        </li>
+    </ul>
+
+{{/unless}}
+
+{{#if user}}
+
+    {{#if gold}}
+
+    {{#unless linked}}
+
+        <h1>Linking Roku device to your account</h1>
+        <div class="h3">Use the code bellow to link your Roku device</div>
+        <hr class="intro-divider" />
+        <h1>{{ rokuActivationCode.code }}</h1>
+
+    {{/unless}}
+
+    {{#if linked}}
+
+        <h1>Your devices already linked!</h1>
+        <div class="h3">You need to un-link previous device(s) before linking</div>
+        <hr class="intro-divider" />
+        <form action="/roku/link" method="post">
+            <input type="hidden" name="cmd" value="unlink" />
+            <ul class="list-inline intro-social-buttons">
+                <li>
+                    <button type="submit" class="btn btn-default btn-lg">Unlink Device</button>
+                </li>
+            </ul>
+        </form>
+
+    {{/if}}
+
+    {{/if}}
+
+    {{#unless gold}}
+
+    <h1>Linking Roku device to your account</h1>
+    <div class="h3">Please purchase subscription</div>
+    <hr class="intro-divider" />
+    <ul class="list-inline intro-social-buttons">
+        <li>
+            <a href="/profile/subscription" class="btn btn-default btn-lg"><span class="network-name">Become Gold Member</span></a>
+        </li>
+    </ul>
+
+    {{/unless}}
+
+{{/if}}
+
+{{/section}}
+
+{{#if links}}
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>Your linked devices</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<table class="table">
+				<tr>
+					<th>Date</th>
+					<th>&nbsp;</th>
+				</tr>
+				{{#each links}}
+				<tr>
+					<td class="text-left">{{ createDate }}</td>
+					<td><a href="/roku/unlink/{{ _id }}" class="btn btn-danger">Unlink</a></td>
+				</tr>
+				{{/each}}
+			</table>
+		</div>
+	</div>
+</div>	
+{{/if}}

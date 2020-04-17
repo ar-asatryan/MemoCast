@@ -1,0 +1,153 @@
+<div class="card">
+    <div class="card-content">
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>{{ string locale 'pages.signup.title' ru='Регистрация' en='Sign up' }}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-primary">
+                <ul>
+                <li>
+                    {{ istring locale
+                        ru='Зарегистрируйтесь и получите неограниченный доступ к более чем 200 тысяч фильмов, сериалов и передач'
+                        en='Register to get unlimited access to over 200 thousand shows and movies' }}
+                </li>
+                <li>
+                    {{ istring locale ru='Комментируйте и лайкайте' en='Make comments and likes' }}
+                </li>
+                <li>
+                    {{ istring locale ru='Запрашивайте фильмы' en='Request movies' }}
+                </li>
+                <li>
+                    {{ istring locale ru='Находите друзей и открывайте для себя новые фильмы с их помощью' en='Follow friends and their comments' }}
+
+                </li>
+                <li>
+                    {{ istring locale ru='Получайте извещения о выходе новых эпизодах сериалов и передач' en='Get updated on new episode arrivals' }}
+                </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+
+        <!-- login form -->
+        <form method="post" id="signup-form" action="/signup" autocomplete="on">
+            <div class="row">
+            <div class="col-md-12">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-at"></i></div>
+                    <input type="email" class="form-control" autocomplete="on" name="email" id="signup-email" placeholder="{{ istring locale ru='Эл. почта' en='E-mail' }}" value="{{ email }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                    <input type="text" class="form-control" autocomplete="on" name="displayName" id="signup-display-name" placeholder="{{ istring locale ru='Ваше имя' en='Your name' }}" value="{{ displayName }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                    <input type="password" class="form-control" autocomplete="on" name="password" id="signup-password" placeholder="{{ istring locale ru='Пароль' en='Password' }}" value="{{ password }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                    <input type="password" class="form-control" autocomplete="on" name="confirm-password" id="signup-confirm-password" placeholder="{{ istring locale ru='Подтвердите пароль' en='Confirm password' }}" value="{{ confirmPassword }}" />
+                </div>
+            </div>
+
+            {{#if error}}
+            <div class="alert alert-danger" id="signup-error" role="alert">
+              <strong>{{ error.message }}</strong>
+            </div>
+            {{/if}}
+
+            <button class="btn btn-lg btn-primary btn-block" id="signup-submit" type="submit">{{ string locale 'pages.signup.submit' ru='Отправить' en='Submit' }}</button>
+
+            </div>
+            </div>
+
+        </form>
+        <!-- /// login form -->
+
+        <!-- social buttons -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <hr />
+                <div class="h5">
+                    {{ istring locale ru='Или воспользуйтесь социальной сетью для создания аккаунта и входа на сайт' en='Or use social network for create account and enter site' }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row social-buttons">
+            <div class="col-md-6 text-left">
+                <a href="/auth/facebook" class="btn btn-lg btn-block btn-facebook">
+                    <i class="fa fa-facebook visible-xs"></i>
+                    <span class="hidden-xs">Facebook</span>
+                </a>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/auth/vk" class="btn btn-lg btn-block btn-vkontakte">
+                    <i class="fa fa-vk visible-xs"></i>
+                    <span class="hidden-xs">VKontakte</span>
+                </a>
+            </div>
+        </div>
+        <!-- /// social buttons -->
+
+        </div></div>
+    </div>
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+$(function () {
+
+    $form = $('#signup-form');
+    $bt = $('#signup-submit');
+
+    // set focus on login field at page load
+    $('#signup-email').focus();
+
+    let validateOptions = Memocast.formValidation.defaultValidateOptions();
+    validateOptions.rules = {
+        'email': {
+            'required' : true
+        },
+        'displayName': {
+            'required' : true
+        },
+        'password': {
+            'required' : true
+        },
+        'confirm-password': {
+            'required': true,
+            'equalTo': '#signup-password'
+        }
+    };
+
+    let validator = $form.validate(validateOptions);
+
+    $form.submit(function (evt) {
+
+        if (!validator.form()) {
+            return evt.preventDefault();
+
+        }
+
+    });
+});
+</script>
+{{/section}}

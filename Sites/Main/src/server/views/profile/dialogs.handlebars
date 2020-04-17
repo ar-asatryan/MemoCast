@@ -1,0 +1,40 @@
+<div class="h3 title">
+    {{ istring locale ru='Сообщения' en='Messages' }}
+</div>
+
+<hr />
+
+<div id="dialogs">
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+    $(function() {
+        $('#sm-profile-im').addClass('active');
+    });
+</script>
+<script type="text/x-handlebars-template" id="template-dialogs">
+\{{#each .}}
+<div class="row mmc-time-stamp-container">
+    <div class="col-xs-1">
+        <a href="/profile/im/\{{ user.id }}">
+            <img src="\{{ user.photo }}" class="img-circle img-responsive" style="min-width: 40px; min-height: 40px;" />
+        </a>
+    </div>
+    <div class="col-xs-11 align-middle">
+        <a href="/profile/im/\{{ user.id }}">
+            <a href="/profile/im/\{{ user.id }}">\{{ user.displayName }}</a>
+        </a>
+        <br />
+        <small class="text-muted">
+            {{ istring locale ru='Последнее сообщение' en='Last message'}}: <span class="mmc-time-stamp" data-date="\{{ date }}"></span>
+        </small>
+    </div>
+</div>
+\{{#unless @last}}
+<hr />
+\{{/unless}}
+\{{/each}}
+</script>
+<script type="text/javascript" src="/js/profile/dialogs.js"></script>
+{{/section}}

@@ -1,0 +1,23 @@
+<div class="card-content mmc-time-stamp-container">
+{{#if history}}
+<strong>{{ istring ru='Просмотрено' en='Watched'}}</strong> <span class="mmc-time-stamp" data-date="{{ history.createDate }}"></span>
+<br/>
+<strong>{{ istring ru='Эпизод' en='Episode' }}</strong>
+{{#if history.videoItem.title }}
+{{ history.videoItem.title }}
+{{/if}}
+
+{{#if history.videoItem.seasonNumber }}
+S{{ history.videoItem.seasonNumber }}
+{{/if}}
+
+{{#if history.videoItem.episodeNumber }}
+E{{ history.videoItem.episodeNumber }}
+{{/if}}
+
+<hr />
+{{/if}}
+<p>
+{{ videoTitle.sinopsis }}
+</p>
+</div>

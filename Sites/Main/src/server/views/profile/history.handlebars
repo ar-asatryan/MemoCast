@@ -1,0 +1,18 @@
+<div class="h3 title">
+    {{ istring locale ru='История просмотров' en='Watch history' }}
+</div>
+<hr />
+
+{{#if videos}}
+{{> videos videos }}
+{{else}}
+<p>История просмотров пуста</p>
+{{/if}}
+
+{{#section "scripts"}}
+<script type="text/javascript">
+    $(function() {
+        $('#sm-profile-history').addClass('active');
+    });
+</script>
+{{/section}}

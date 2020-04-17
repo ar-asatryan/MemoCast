@@ -1,0 +1,75 @@
+<div id="subs-container">
+</div>
+
+{{#section "scripts"}}
+
+<script type="text/x-handlebars-template" id="template-subs">
+<!-- /.panel-heading -->
+<table id="subs-items" cellspacing="0" width="100%" class="display table table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th>Date</th>
+<th>User</th>
+<th>Type</th>
+<th></th>
+<th>Expire</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+\{{#each .}}
+<tr data-request-id="\{{ _id }}">
+<td>\{{ sub.createDate }}</td>
+<td>
+    <a href="/admin/user/\{{ user._id }}">
+    \{{#if user.displayName }}
+    \{{ user.displayName }}
+    \{{else}}
+    \{{user._id}}
+    \{{/if}}
+    </a>
+</td>
+<td>\{{ sub.kind }}\{{#if sub.paypal }} PayPal\{{/if}}\{{#if sub.cybersource }} Credit Card\{{/if}}</td>
+<td>\{{#if sub.paypal }}\{{ sub.paypal.id }}\{{/if}}\{{#if sub.cybersource }}\{{ sub.cybersource.subscription-id }}\{{/if}}</td>
+<td>\{{ sub.expire }}</td>
+<td>\{{ sub.notes }}</td>
+</tr>
+\{{/each}}
+</tbody>
+</table>
+</script>
+
+<script type="text/javascript">
+$(function () {
+
+    let $container = $('#subs-container');
+    let template = Handlebars.compile($("#template-subs").html());
+
+    let loadItems = function () {
+        let url = '/api/admin/subscriptions';
+        $.ajax(url, {
+            method: 'GET',
+            success: function (response) {
+                console.log(response);
+                $container.html(template(response));
+
+                let table = $('#subs-items').DataTable({
+                    order: [[0, 'desc']],
+                    search: {
+                        smart: true
+                    },
+                    responsive: true
+                });
+            },
+            error: function (err) {
+                console.log(err);
+            },
+            complete: function () {
+            }
+        })
+    };
+
+    loadItems();
+});
+</script>
+{{/section}}

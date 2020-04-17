@@ -1,0 +1,397 @@
+{{#section "head"}}
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="yandexbot" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
+<link href="/bower/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+{{/section}}
+
+<div class="panel panel-default" id="pan-video-title-items" style="display: none;">
+
+</div>
+
+<div class="panel panel-default" id="pan-video-item-edit" style="display: none;">
+    <div class="panel-body">
+        <form method="post" action="#" id="form-video-item">
+          <div class="row">
+            <div class="form-group col-lg-12">
+                <label>Заголовок <a id="movie-link" href="" target="_blank">Ссылка на видео</a></label>
+                <input type="text" name="title" id="tb-video-item-title" placeholder="Заголовок" class="form-control" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-6">
+                <label>Категория</label>
+                <select name="category" id="sb-item-categories" class="form-control" multiple="multiple"></select>
+            </div>
+            <div class="form-group col-lg-6" style="text-transform: capitalize;">
+                <label>Языки</label>
+                <select name="language" id="sb-item-languages" class="form-control" multiple="multiple"></select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-group col-lg-2">
+                <span class="input-group-addon" id="basic-addon3">S#</span>
+                <input type="number" name="season-index" id="tb-video-item-season-index" class="form-control" aria-describedby="basic-addon3" />
+            </div>
+            <div class="input-group col-lg-2">
+                <span class="input-group-addon" id="basic-addon3">S№</span>
+                <input type="number" name="season-number" id="tb-video-item-season-number" class="form-control" aria-describedby="basic-addon3" />
+            </div>
+            <div class="input-group col-lg-2">
+                <span class="input-group-addon" id="basic-addon3">Название сезона</span>
+                <input type="text" name="season-title" id="tb-video-item-season-title" class="form-control" aria-describedby="basic-addon3" />
+            </div>
+            <div class="input-group col-lg-2">
+                <span class="input-group-addon" id="basic-addon3">E#</span>
+                <input type="number" name="episode-index" id="tb-video-item-episode-index" class="form-control" aria-describedby="basic-addon3" />
+            </div>
+            <div class="input-group col-lg-2">
+                <span class="input-group-addon" id="basic-addon3">E№</span>
+                <input type="number" name="episode-number" id="tb-video-item-episode-number" class="form-control" aria-describedby="basic-addon3" />
+            </div>
+            <div class="input-group date col-lg-2">
+              <span class="input-group-addon"><i class="fa fa-calendar fa-fixed"></i></span>
+              <input type="text" name="air-date" id="tb-video-item-air-date" class="form-control" placeholder="Дата выхода на ТВ" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-6">
+                <label>Описание фильма</label>
+                <textarea name="sinopsis" id="tb-video-item-sinopsis" rows="6" class="form-control"></textarea>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>В ролях</label>
+                <textarea name="cast" id="tb-video-item-cast" rows="6" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-3">
+                <label>Режиссер</label>
+                <input type="text" name="director" id="tb-video-item-director" placeholder="Режиссёр" class="form-control" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label>Ведущий</label>
+                <input type="text" name="host" id="tb-video-item-host" placeholder="Ведущий" class="form-control" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label>Гости</label>
+                <input type="text" name="guests" id="tb-video-item-guests" placeholder="Гости программы / эпизода" class="form-control" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label>Год</label>
+                <input type="text" name="year" id="tb-video-item-year" placeholder="Год" class="form-control" />
+            </div>
+          </div>
+            <div class="row">
+              <div class="form-group col-lg-6">
+                  <textarea name="admin-notes" id="tb-video-item-admin-notes" rows="1" placeholder="Заметки для админа" class="form-control"></textarea>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" id="tb-video-item-ispublic" aria-label="Опубликовано" title="Опубликовано">
+                  </span>
+                  <input type="text" name="createDate" id="tb-video-item-create-date" readonly="readonly" class="form-control" title="Дата создания" aria-label="Дата создания" />\
+                </div>
+              </div>
+            </div>
+            <div style="width: 100%; margin-top: 15px;" class="text-center">
+                <button type="submit" class="btn btn-primary" id="bt-video-item-submit">Сохранить</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="panel-body" id="video-item-files">
+    </div>
+    <div class="panel-body" id="video-item-captions">
+    </div>
+</div>
+
+<div id="pan-video-title-info" style="margin-bottom: 25px;">
+
+    <ul class="nav nav-pills" style="margin-bottom: 10px;">
+        <li class="nav-item">
+            <a href="#pan-video-title-main-info" data-toggle="pill" class="nav-link active" role="tab">Main title info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#pan-video-title-images" data-toggle="pill" class="nav-link" role="tab">Images</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="pan-video-title-main-info">
+            <form method="post" action="#" id="form-video">
+              <div class="row">
+                <div class="form-group col-lg-3">
+                    <label>Заголовок</label>
+                    <input type="text" name="title" id="tb-video-title" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Оригинальный заголовок</label>
+                    <input type="text" name="originalTitle" id="tb-video-originaltitle" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Title ID</label>
+                    <input type="text" name="title-id" id="tb-video-title-id" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Второй заголовок</label>
+                    <input type="text" name="akaTitle" id="tb-video-akatitle" class="form-control" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-4">
+                    <label>Страны</label>
+                    <select name="country" id="sb-countries" class="form-control" multiple="multiple"></select>
+                </div>
+                <div class="form-group col-lg-4" style="text-transform: capitalize;">
+                    <label>Языки</label>
+                    <select name="language" data-selected-on-init="true" id="sb-languages" class="form-control" multiple="multiple"></select>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label>Категории</label>
+                    <select name="category" id="sb-categories" class="form-control"  multiple="multiple">
+                    </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-6">
+                    <label>Описание фильма</label>
+                    <textarea name="sinopsis" id="tb-video-sinopsis" rows="6" class="form-control"></textarea>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label>В ролях</label>
+                    <textarea name="cast" id="tb-video-cast" rows="6"class="form-control"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-3">
+                    <label>Режиссер</label>
+                    <input type="text" name="director" id="tb-video-director" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Автор сценария</label>
+                    <input type="text" name="writer" id="tb-video-writer" class="form-control" />
+                </div>
+                <div class="form-group col-lg-1">
+                    <label>Год</label>
+                    <input type="text" name="year" id="tb-video-year" class="form-control" />
+                </div>
+                <div class="form-group col-lg-5">
+                    <label>Студия</label>
+                    <input type="text" name="produced" id="tb-video-produced" placeholder="Студия" class="form-control" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-3">
+                    <label>Ведущий</label>
+                    <input type="text" name="host" id="tb-video-host" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Гости</label>
+                    <input type="text" name="guests" id="tb-video-guests" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Композитор</label>
+                    <input type="text" name="musicby" id="tb-video-musicby" class="form-control" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label>Продюсер</label>
+                    <input type="text" name="producer" id="tb-video-producer" class="form-control" />
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 15px;">
+                  <div class="input-group col-lg-6">
+                      <span class="input-group-addon">Награды</span>
+                      <input type="text" id="tb-video-awards" name="awards" class="form-control" value="" />
+                  </div>
+                  <div class="input-group col-lg-6">
+                      <span class="input-group-addon">Тэги</span>
+                      <select name="category" id="sb-tags" class="form-control"  multiple="multiple">
+                      </select>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-6">
+                    <textarea name="admin-notes" id="tb-video-admin-notes" rows="1" placeholder="Заметки администратора" class="form-control"></textarea>
+                </div>
+                <div class="col-lg-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="checkbox" aria-label="Опубликовано" id="tb-video-ispublic">
+                    </span>
+                      <input type="text" name="createDate" id="tb-create-date" readonly="readonly" class="form-control" aria-label="Дата создания"/>
+                  </div>
+                </div>
+              </div>
+                <p id="video-title-process-status" style="display: none; padding: 15px;">
+                </p>
+                <div style="width: 100%;" class="text-center">
+                    <button type="submit" class="btn btn-primary" id="bt-video-title-submit">Сохранить</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="tab-pane" id="pan-video-title-images">
+            <input id="video-title-file" name="image" type="file" multiple />
+        </div>
+    </div>
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript" src="/bower/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script type="text/javascript" src="/bower/bootstrap-fileinput/themes/fa/theme.min.js"></script>
+<script type="text/javascript">
+
+{{#if item}}
+var InitialVideoItemID = '{{ item }}';
+{{else}}
+var InitialVideoItemID = null;
+{{/if}}
+
+{{#if new}}
+var VideoTitleID = null;
+{{else}}
+var VideoTitleID = '{{id}}';
+{{/if}}
+var VideoTitle = null;
+var Categories = null;
+var Languages = null;
+var Countries = null;
+var VideoItems = null;
+var CurrentVideoItem = null;
+var videoTitleLeftMenuTemplate = null;
+var videoItemsListTemplate = null;
+var videoTitleUpdateRequest = null;
+var videoItemFilesTemplate = null;
+var videoItemCaptionsTemplate = null;
+</script>
+
+<script type="text/javascript" src="/admin/js/helpers.js"></script>
+<script type="text/javascript" src="/admin/js/video-title.js"></script>
+
+<script type="text/x-handlebars-template" id="template-video-item-files-list">
+<table id="table-files" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>File</th>
+            <th>Size</th>
+            <th>Type</th>
+            <th>&nbsp</th>
+        </tr>
+    </thead>
+    <tbody>
+    \{{#each .}}
+    <tr data-file-id="\{{ _id }}">
+        <td>\{{ path }}</td>
+        <td>\{{ fancynumber size }}</td>
+        <td>\{{ type }} \{{#if encodingPreset }} (\{{ encodingPreset}})\{{/if}}</td>
+        <td><button data-file-id="\{{ _id }}" class="btn btn-danger mmc-delete-file-button">Delete</button></td>
+    </tr>
+    \{{/each}}
+    </tbody>
+</table>
+</script>
+
+<script type="text/x-handlebars-template" id="template-video-item-captions-list">
+<hr />
+
+<form id="new-captions-form" enctype="multipart/form-data" method="post" action="/api/admin/captions/item/">
+<div class="row">
+    <div class="form-group col-md-6">
+    <input type="file" id="new-captions-file" name="data" class="form-control" />
+    </div>
+    <div class="form-group col-md-6">
+    <select id="new-captions-language" name="language" class="form-control">
+    </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-primary">Upload new subtitles</button>
+    </div>
+</div>
+</form>
+
+<hr />
+<h6>Субтитры</h6>
+<table id="table-files" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Language</th>
+            <th>Create Date</th>
+            <th>&nbsp</th>
+        </tr>
+    </thead>
+    <tbody>
+    \{{#each .}}
+    <tr data-caption-id="\{{ _id }}">
+        <td><a href="/api/captions/\{{ _id }}.vtt" target="_blank">\{{ language }}</a></td>
+        <td>\{{ createDate }}</td>
+        <td><button data-caption-id="\{{ _id }}" class="btn btn-danger mmc-delete-caption-button">Delete</button></td>
+    </tr>
+    \{{/each}}
+    </tbody>
+</table>
+</script>
+
+<script type="text/x-handlebars-template" id="template-video-title-left-menu">
+
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarVideoTitleLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    \{{ title }}
+  </a>
+  <div class="dropdown-menu memocast-switch-menu" aria-labelledby="navbarVideoTitleLink">
+      <a href="#" class="dropdown-item memocast-switch-item" id="bt-left-menu-video-title-info" memocast-bind-element="pan-video-title-info">
+          Main info
+      </a>
+      <a href="#" id="lm-video-items" class="dropdown-item memocast-switch-item" memocast-bind-element="pan-video-title-items">
+          Episodes
+      </a>
+  </div>
+</li>
+</script>
+
+<script type="text/x-handlebars-template" id="template-video-title-items-list">
+<!-- /.panel-heading -->
+<div class="panel-body">
+<table cellspacing="0" width="100%" class="display memocast-video-list table table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th></th>
+<th>Создано</th>
+<th>Сезон</th>
+<th>Эпизод</th>
+<th>Дата</th>
+<th>Заголовок</th>
+</tr>
+</thead>
+<tbody>
+\{{#each .}}
+<tr memocast-item-id="\{{ _id }}">
+<td>\{{ mmc-row-index }}</td>
+<td mmc-time-stamp="\{{ createDate }}"></td>
+<td>\{{ seasonNumber }} \{{ seasonTitle }}</td>
+<td>\{{ episodeNumber }}</td>
+<td>\{{ airDate }}</td>
+<td>
+    \{{#if isPublic }}
+    <span class="fa fa-check text-success" />
+    \{{else}}
+    <span class="fa fa-times text-danger" />
+    \{{/if}}
+
+    <a href="#" class="mmc-item-link" memocast-item-id="\{{ _id }}">\{{#if title}}\{{ title }}\{{else}}<em>Нет заголовка</em>\{{/if}}</a></td>
+</tr>
+\{{/each}}
+</tbody>
+</table>
+</div>
+</script>
+
+{{/section}}
+
+{{#section "leftmenu"}}
+<li id="left-menu-video-title" class="nav-item dropdown">
+</li>
+{{/section}}

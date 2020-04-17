@@ -1,0 +1,181 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <button id="bt-spread" class="btn btn-danger">Разъеденить</button>
+    </div>
+</div>
+
+<div class="panel panel-default d-none">
+    <div class="panel-body">
+        <form id="videos-form" method="post" action="#" class="form-inline">
+            <div class="form-group">
+            <input type="text" style="width: 300px;" name="title" id="tb-video-title" class="form-control" value="{{ search.search }}" placeholder="Поиск ..." />
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="bt-videos-search-submit">Поиск</button>
+            <button type="button" class="btn btn-danger" id="bt-videos-search-cancel" style="display: none;"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Отмена</button>
+        </form>
+    </div>
+</div>
+
+<div id="search-results"></div>
+
+{{#section "scripts"}}
+<script type="text/x-handlebars-template" id="template-titles-list">
+<div class="panel panel-default">
+<div class="panel-heading">
+Результат поиска &quot;\{{ searchString }}&quot;
+</div>
+<!-- /.panel-heading -->
+<div class="panel-body">
+<table cellspacing="0" width="100%" class="display memocast-video-list table table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th>Название</th>
+<th>Год</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+\{{#each videos}}
+<tr>
+<td class="mmc-checkbox-container">
+    <input class="mmc-item-checkbox" data-item-id="\{{ _id }}" type="checkbox" />
+</td>
+<td><a href="/admin/videos/titles/\{{_id}}">\{{title}}</a></td><td>\{{year}}</td>
+<td>\{{ score }}</td>
+</tr>
+\{{/each}}
+</tbody>
+</table>
+</div>
+</div>
+</script>
+<script type="text/javascript">
+
+    let initialSearch = '{{ search.search }}';
+
+    let titlesListTemplate = null;
+
+    let resetSearchButtons = function() {
+        $('#bt-videos-search-submit').show();
+        $('#bt-videos-search-cancel').hide();
+    };
+
+    let doSearch = function () {
+        var title = $('#tb-video-title').val();
+        if (title) {
+            $('#bt-videos-search-submit').hide();
+            $('#bt-videos-search-cancel').show();
+            var data = {
+                search: title,
+                skip: 0,
+                count: 20,
+                publicOnly: false
+            };
+            var url = '/api/video';
+            currentSearchRequest = $.ajax(url, {
+                method: 'GET',
+                data: data,
+                success: function(response) {
+
+                    resetSearchButtons();
+
+                    var bindData = {
+                        searchString: title,
+                        videos: response
+                    };
+
+                    $('#search-results').html(titlesListTemplate(bindData));
+
+                    $('.memocast-video-list').DataTable({
+                        search: {
+                            smart: true
+                        },
+                        responsive: true,
+                        order: [[ 2 , 'desc' ]]
+                    });
+                },
+                error: function (err) {
+                }
+            });
+        }
+    }
+
+    $(function() {
+
+        // compile event preview template
+	   titlesListTemplate = Handlebars.compile($("#template-titles-list").html());
+
+        var currentSearchRequest = null;
+
+        $('#bt-videos-search-cancel').on('click', function() {
+            if (currentSearchRequest) {
+                currentSearchRequest.abort();
+            }
+            resetSearchButtons();
+            $('#tb-video-title').focus();
+        });
+
+        $('#videos-form').submit(function(evt) {
+            evt.preventDefault();
+            doSearch();
+        });
+
+    //    $('#bt-videos-search-submit').trigger('click');
+        doSearch();
+
+        // spread stuff
+        var btSpread = $('#bt-spread');
+        var titleButtons = [
+            btSpread
+        ];
+        btSpread.click(function (event) {
+            event.preventDefault();
+            if (window.confirm('Вы уверены?')) {
+                var url = '/api/admin/titles/spread';
+                var data = {
+                    ids: Object.keys(selectedItems),
+                }
+                $.ajax(url, {
+                    method: 'POST',
+                    data: data,
+                    success: function (response) {
+                    },
+                    error: function (error) {
+                    },
+                    complete: function (response) {
+                        doSearch();
+                    }
+                })
+            }
+        });
+
+        let selectedItems = { };
+
+        titleButtons.forEach(function (item) {
+            item.prop('disabled', true);
+        });
+
+        let setSelectedItems = function (data) {
+            selectedItems = data;
+            titleButtons.forEach(function (item) {
+                item.prop('disabled', Object.keys(selectedItems).length == 0);
+            });
+        };
+
+        $(document).on('change', '.mmc-item-checkbox', function (evt) {
+            evt.stopPropagation();
+            let $cb = $(this);
+            let id = $cb.data('item-id');
+            let checked = $cb.prop('checked');
+            if (checked) {
+                selectedItems[id] = true;
+            } else {
+                delete selectedItems[id];
+            }
+            setSelectedItems(selectedItems);
+        });
+    });
+</script>
+{{/section}}

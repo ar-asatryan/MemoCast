@@ -1,0 +1,30 @@
+{{#section "scripts"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+<script>
+  var socket = io('http://localhost:7885');
+  socket.on('connect', function () {
+      var url = '/api/io/connect';
+      $.ajax(url, {
+          method: 'POST',
+          data: { id: this.id },
+          success: function (response) {
+          },
+          error: function (err) {
+          }
+      });
+  });
+  socket.on('message', function (data) {
+    socket.emit('my other event', { my: 'data' });
+  });
+  $(function () {
+      var $bt = $('#bt-io');
+      var $tb = $('#tb-io');
+      $bt.on('click', function (evt) {
+          socket.emit('message', { message: $tb.val() });
+      });
+  });
+</script>
+{{/section}}
+
+<input type="text" id="tb-io" class="form-control" />
+<button id="bt-io" class="btn btn-primary">click</button>

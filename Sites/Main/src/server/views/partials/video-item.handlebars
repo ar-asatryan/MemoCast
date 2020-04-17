@@ -1,0 +1,39 @@
+	<div class="col-md-4 mmc-video-item"
+		itemscope itemtype="http://schema.org/Movie"
+		style="height: 100%;" 
+		data-mmc-link="{{ url }}" 
+		data-video-title-id="{{ id }}">
+
+		<meta itemprop="image" content="https://www.memocast.com/images/video-title/{{ id }}?width=480&height=270" />
+		{{#if year }}<meta itemprop="dateCreated" content="{{ year }}" />{{/if}}
+		{{#if director }}<meta itemprop="director" content="{{ director }}" />{{/if}}
+
+		<div class="card card-plain card-blog">
+			<a href="{{ url }}">
+				<img class="img mmc-video-popover"  data-video-title-id="{{ id }}" src="/images/video-title/{{ id }}?width=480&height=270" />
+			</a>
+			{{#if stats}}
+			<span class="stats">
+				{{#if stats.likes }}
+				<i class="fa fa-heart" aria-hidden="true"></i> {{ stats.likes }}
+				{{/if}}
+				&nbsp;
+				{{#if stats.comments }}
+				<i class="fa fa-comment ml-2" aria-hidden="true"></i> {{ stats.comments }}
+				{{/if}}
+			</span>
+			{{/if}}
+
+			<div class="card-content">
+				<div class="h4 card-title">
+					<a href="{{ url }}"><span itemprop="name">{{ title }}</span>{{#if yearAndCountries}} <small>({{#each yearAndCountries}}{{ . }}{{#unless @last}}, {{/unless}}{{/each}})</small>{{/if}}</a>
+				</div>
+				{{#if categories}}
+				<div class="category text-info" itemprop="genre">
+					{{#each categories}}{{#if title}}{{ category @root.locale title }}{{#unless @last}}, {{/unless}}{{/if}}{{/each}}
+				</div>
+				{{/if}}
+			</div>
+
+		</div>
+	</div>

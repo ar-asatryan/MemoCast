@@ -1,0 +1,31 @@
+@import "../material/sass/material-kit/_variables";
+
+.mmc-autocomplete {
+    z-index: 2000;
+    position: static;
+    width: 480px;
+    h1 {
+        font-size: 14px;
+        font-weight: normal;
+    }
+    .row {
+        vertical-align: middle;
+        cursor: hand;
+        cursor: pointer;
+        div {
+            padding: 5px;
+        }
+        .video-title {
+            font-size: 16px;
+            font-weight: 400;
+            small {
+                font-size: 12px;
+                color: $gray-color;
+                font-weight: 400;
+            }
+        }
+    }
+    .row:hover {
+        background-color: lighten($gray-color, 35%);
+    }
+}

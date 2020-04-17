@@ -1,0 +1,15 @@
+{
+    intent: 'sale',
+    payer:
+    {
+      payment_method: 'paypal'
+    },
+    transactions: [{
+        amount: {
+            total: '2.99',
+            currency: 'USD'
+        },
+        description: 'Memocast 2-days pass ticket'
+    }],
+    redirect_urls: settings.paypal['2daypass-redirect_urls']
+}

@@ -1,0 +1,27 @@
+@darkblue: #202e66;
+@lightblue: #24408f;
+@cyan: #1192cb;
+@orange: #ff8200;
+@black: #000;
+
+.link {
+    text-decoration: underline;
+}
+a {
+    color: @darkblue;
+    font-size: 16px;
+    &:extend(.link);
+    &:hover {
+        color: @lightblue;
+    }
+}
+
+ul {
+    background-color: @orange;
+    padding: 50px;
+    transform-origin: center bottom;
+    box-shadow: 3px 3px 3px @black;
+    text-overflow: ellipsis;
+    opacity: 0.5;
+    margin: 0.5;
+}

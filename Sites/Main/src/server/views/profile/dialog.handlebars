@@ -1,0 +1,53 @@
+<div class="h6"><img src="{{ dialogUser.photo }}" class="rounded-circle" /> Переписка с <a href="{{ dialogUser.url }}">{{ dialogUser.displayName }}</a></div>
+
+<hr />
+
+<div id="dialog">
+</div>
+
+<hr />
+
+<form id="new-message-form" method="post" action="#">
+    <input type="hidden" id="tb-new-message-to" name="to" value="{{ dialogUser.id }}" />
+    <div class="form-group">
+        <label for="tb-new-message-body">Ваше сообщение</label>
+        <textarea id="tb-new-message-body" class="form-control" name="body" rows="5"></textarea>
+    </div>
+
+    <button id="bt-messages-refresh" class="btn"><i class="fa fa-refresh"></i></button>
+
+    <button id="bt-new-message-submit" class="btn btn-primary pull-right" disabled="disabled">Отправить</button>
+</form>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+    $(function() {
+        $('#sm-profile-im').addClass('active');
+    });
+</script>
+<script type="text/javascript">
+var DialogUserID = '{{ dialogUser.id }}';
+var CurrentUserID = '{{ profileUser.id }}';
+var SocketIOAddress = '{{ socketio }}';
+</script>
+<script src="/js/profile/dialog.js" type="text/javascript"></script>
+<script type="text/x-handlebars-template" id="template-personal-message">
+<div class="row mmc-msg common-message" style="padding-top: 10px;" data-msg-from="\{{ from.id }}">
+    <div class="col-md-12">
+        <a href="\{{ from.url }}">\{{ from.displayName }}</a>
+        <br />
+        <small class="text-muted">\{{ createDate }}</small>
+        <p>
+            \{{ body }}
+        </p>
+    </div>
+</div>
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+
+{{/section}}
+
+{{#section "head"}}
+<link rel="stylesheet" href="/css/messages.css" media="screen" />
+{{/section}}

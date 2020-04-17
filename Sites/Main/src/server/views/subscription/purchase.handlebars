@@ -1,0 +1,477 @@
+<div class="card">
+    <div class="card-content">
+
+<div id="step-payment-type">
+
+    <div class="row">
+    	<div class="col-md-6 col-md-offset-3 text-center">
+    		<div class="h2 title">
+                {{ istring locale ru='Приобрести подписку' en='Purchase Subscription' }}
+            </div>
+    		<div class="h5 description">
+                {{ istring locale ru='Выберите интересующий Вас вариант подписки' en='Pick your payments plan' }}
+            </div>
+    		<div class="section-space"></div>
+    	</div>
+    </div>
+
+    <div class="row">
+
+		<div class="col-md-5 col-md-offset-1">
+			<div class="card card-pricing">
+				<div class="card-content">
+					<div class="h6 category">{{ istring locale ru='Стандартрая подписка' en='Gold Membership' }}</div>
+					<div class="h1 card-title">
+                        <small>$</small>9.95<small>{{ istring locale ru='/месяц' en='/month' }}</small>
+                    </div>
+					<ul>
+                        <li>
+                            <i class="material-icons text-success">check</i>
+                            <span class="text-rose">{{ istring locale ru='Пробный бесплатный период - 2 недели' en='Trial period without payment - 2 weeks' }}</span>
+
+                        </li>
+						<li>
+                            <i class="material-icons text-success">check</i>
+                            {{ istring locale ru='Более 200 тысяч фильмов и сериалов' en='Over 200 thousand Movies' }}
+                        </li>
+                        <li>
+                            <i class="material-icons text-success">check</i>
+                            {{ istring locale ru='Без перерывов на рекламу' en='No comercial interruptions' }}
+                        </li>
+                        <li>
+                            <i class="material-icons text-success">check</i>
+                            {{ istring locale ru='Новые поступления каждый день' en='New Arrivals every day' }}
+                        </li>
+                        <li>
+                            <i class="material-icons text-success">check</i>
+                            {{ istring locale ru='Отмена в любое время' en='Cancel anytime' }}
+                        </li>
+                        <li>
+                            {{ istring locale ru='$9.95 в месяц после окончания пробного периода' en='Easy flat monthly rate $9.95/month after trial period ends' }}
+                        </li>
+					</ul>
+                    <button class="btn btn-primary btn-raise btn-round"  id="bt-gold-membership">
+                        {{ istring locale ru='Подписаться с кредитной картой' en='Subscribe with credit card' }}
+                    </button>
+                    <button class="btn btn-primary btn-raise btn-round" id="bt-paypal-gold-membership">
+                        <i class="fa fa-circle-o-notch fa-spin fa-fw d-none mmc-spinner"></i>
+                        {{ istring locale ru='Подписаться через PayPal' en='Subscribe with PayPal' }}
+                    </button>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="card card-pricing">
+				<div class="card-content">
+					<div class="h6 category">{{ istring locale ru='Доступ на 48 часов' en='2-days access' }}</div>
+					<h1 class="card-title"><small>$</small>2.99</h1>
+                    <ul>
+                        <li>
+                            <i class="material-icons text-danger">close</i>
+                            {{ istring locale ru='Без пробного периода' en='No trial period' }}
+                        </li>
+                        <li>
+                            <i class="material-icons text-success">check</i>
+                            {{ istring locale ru='Более 200 тысяч фильмов и сериалов' en='Over 200 thousand Movies' }}
+                        </li>
+                        <li>
+                            <i class="material-icons text-success">check</i>
+                            {{ istring locale ru='Без перерывов на рекламу' en='No comercial interruptions' }}
+                        </li>
+                        <li>
+                            <i class="material-icons text-success">check</i>
+                            {{ istring locale ru='Новые поступления каждый день' en='New Arrivals every day' }}
+                        </li>
+                    </ul>
+                    <button class="btn btn-secondary btn-raise btn-round"  id="bt-2daypass">
+                        {{ istring locale ru='Оплатить кредитной картой' en='Purchase with credit card' }}
+                    </button>
+                    <button class="btn btn-secondary btn-raise btn-round"  id="bt-paypal-2daypass">
+                        <i class="fa fa-circle-o-notch fa-spin fa-fw d-none mmc-spinner"></i>
+                        {{ istring locale ru='Приобрести через PayPal' en='Purchase with PayPal' }}
+                    </button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+<div id="step-payment-form" class="d-none text-center">
+    <h1>{{ istring locale ru='Информация о кредитной карте' en='Credit card information' }}</h1>
+    <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
+        <!-- subs form -->
+        <form method="post" class="text-justify" id="subscription-form" action="/profile/subscription/purchase" autocomplete="on">
+
+            <div class="form-group" id="trial-alert" style="display: none;">
+                <div class="alert alert-warning">
+                    Мы не спишем с вас деньги до окончания бесплатного периода (две недели)
+                    <br/>
+Вы можете отменить подписку в любой момент
+                    <br />
+После окончания бесплатного периода оплата составит $9.95 в месяц
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="subs-tb-cc-number">{{ istring locale ru='Номер кредитной карты' en='Credit card number' }}</label>
+                <input type="tel" class="form-control" name="cc-number" autocomplete="off" id="subs-tb-cc-number" />
+            </div>
+
+            <div class="form-group">
+                <label for="subs-select-card-type">{{ istring locale ru='Тип карты' en='Card type' }}</label>
+                <select class="form-control" data-style="btn btn-primary btn-round" name="cc-card-type" id="subs-select-card-type" autocomplete="off">
+    				<option selected="selected" data-card-type="visa" value="001">Visa</option>
+    				<option value="002" data-card-type="mastercard">MasterCard</option>
+    				<option value="003" data-card-type="amex">American Express</option>
+    				<option value="004" data-card-type="discover">Discover</option>
+    				<option value="005" data-card-type="dinersclub">Diners Club</option>
+    				<option value="007" data-card-type="jcb">JCB</option>
+    			</select>
+            </div>
+
+            <div class="form-group">
+                <label for="subs-tb-cc-expire">{{ istring locale ru='Срок действия карты' en='Expire date' }}</label>
+                <input type="text" class="form-control" name="cc-expire-date" id="subs-tb-cc-expire" placeholder="{{ istring locale ru='месяц/год' en='Month / Year' }}" autocomplete="off" />
+            </div>
+
+
+            <div class="form-group">
+                <label for="subs-tb-address">{{ istring locale ru='Адрес' en='Address' }}</label>
+                <input type="text" class="form-control" name="address" id="subs-tb-address" autocomplete="on" />
+            </div>
+
+            <div class="form-group">
+                <label for="subs-tb-city">{{ istring locale ru='Город' en='City' }}</label>
+                <input type="text" class="form-control" name="city" id="subs-tb-city" autocomplete="on" />
+            </div>
+
+            <div class="form-group">
+                <label for="subs-select-region">{{ istring locale ru='Штар / Регион' en='State / Region' }}</label>
+                <select data-style="btn btn-primary btn-round" id="subs-select-region" name="region" class="form-control">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="subs-select-country">{{ istring locale ru='Страна' en='Country' }}</label>
+                <select class="form-control" data-style="btn btn-primary btn-round" id="subs-select-country" name="country" style="text-transform: capitalize;">
+    			</select>
+            </div>
+
+            <div class="form-group">
+                <label for="subs-tb-zip-code">{{ istring locale ru='Почтовый индекс' en='Postal code' }}</label>
+                <input type="text" class="form-control" name="postal-code" id="subs-tb-address-zip-code" autocomplete="on" />
+            </div>
+
+            <div class="form-group">
+                <label>{{ istring locale ru='Имя' en='First name' }}</label>
+                <input type="text" id="subs-tb-first-name" name="first-name" class="form-control" autocomplete="on" />
+            </div>
+
+            <div class="form-group">
+                <label>{{ istring locale ru='Фамилия' en='Last name' }}</label>
+                <input type="text" id="subs-tb-first-name" name="last-name" class="form-control" autocomplete="on" />
+            </div>
+
+            <div class="form-group">
+                <label>{{ istring locale ru='Эл. почта' en='E-mail' }}</label>
+                <input type="email" id="subs-tb-first-name" name="e-mail" class="form-control"  autocomplete="on" />
+            </div>
+
+            <input type="hidden" name="payment-type" id="subs-hid-payment-type" value="gold" />
+
+            <div class="alert alert-danger d-none" id="subs-error" role="alert">
+            </div>
+
+            <div class="form-group text-center">
+                <label for="subs-cb-terms">{{ istring locale ru='Я прочитал и полностью согласен с ' en='I have read and agree with our ' }}
+                    <a href="/eula" target="_blank">{{ istring locale ru='условиями использования сервисом' en='terms of service'}}</a>
+                </label>
+            </div>
+
+            <div class="buttons text-center">
+                <a class="btn btn-secondary mmc-back-button" id="subs-payment-back">{{ istring locale ru='Назад' en='Back' }}</a>
+                <button class="btn btn-primary" id="subs-bt-submit">
+                    <i class="fa fa-circle-o-notch fa-spin fa-fw d-none" id="subs-spinner"></i>
+                    {{ istring locale ru='Подписаться' en='Subscribe' }}
+                </button>
+            </div>
+
+        </form>
+        <!-- /// subs form -->
+
+    </div>
+    </div>
+</div>{{! <div id="step-payment-form" class="d-none text-center"> }}
+
+</div>{{! <div class="card-content"> }}
+</div>{{! <div class="card"> }}
+
+{{#section "scripts"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
+<script type="text/javascript">
+// steps
+$(function () {
+    var steps = [ $('#step-payment-type') , $('#step-payment-form') ];
+    var $bt2daypass = $('#bt-2daypass');
+    var $btgold = $('#bt-gold-membership');
+    var currentStep = 0;
+    var $hidPaymentType = $('#subs-hid-payment-type');
+    $('.mmc-back-button').click(function () {
+        prevStep();
+    });
+
+    var nextStep = function() {
+        setStep(currentStep + 1);
+    };
+
+    var prevStep = function() {
+        setStep(currentStep - 1);
+    };
+
+    var setStep = function(stepIndex) {
+        if (stepIndex >= 0 && stepIndex < steps.length) {
+            currentStep = stepIndex;
+            var hiddenClass = 'd-none';
+            for (var i = 0; i < steps.length; i++) {
+                var $step = steps[i];
+                if (i == currentStep) {
+                    if ($step.hasClass(hiddenClass)) {
+                        $step.removeClass(hiddenClass);
+                    }
+                } else {
+                    if (!$step.hasClass(hiddenClass)) {
+                        $step.addClass(hiddenClass);
+                    }
+                }
+            }
+        }
+        $(document).scrollTop(0);
+    }
+
+    $bt2daypass.click(function () {
+        $hidPaymentType.val('2daypass');
+        $('#trial-alert').hide();
+        nextStep();
+    });
+
+    $btgold.click(function () {
+        $hidPaymentType.val('gold');
+        $('#trial-alert').show();
+        nextStep();
+    });
+})
+
+// payment (credit card)
+$(function () {
+
+    var $countries = $('#subs-select-country');
+    var $regions = $('#subs-select-region');
+    var $cardNumber = $('#subs-tb-cc-number');
+    var $cardExpireDate = $('#subs-tb-cc-expire');
+    var $form = $('#subscription-form');
+    var $bt = $('#subs-bt-submit');
+    var $hidPaymentType = $('#subs-hid-payment-type');
+    var $spinner = $('#subs-spinner');
+    var $error = $('#subs-error');
+
+    $cardNumber.payment('formatCardNumber');
+    $cardExpireDate.payment('formatCardExpiry');
+
+    $cardNumber.on('input', function (evt) {
+        var num = this.value;
+        var cardType = $.payment.cardType(num);
+        if (cardType !== '') {
+            var sel = 'option[data-card-type=\'' + cardType + '\']';
+            var $opt = $(sel);
+            $opt.prop('selected', true);
+        }
+    });
+
+    function loadCountries() {
+
+        var url = '/api/payments/countries';
+        $.ajax(url, {
+            method: 'GET',
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var item = response[i];
+                    var $option = $('<option />');
+                    $option.attr('value', item._id);
+                    $option.text(item.name);
+                    $countries.append($option);
+                }
+                loadRegions();
+            }
+        });
+    }
+
+    function loadRegions() {
+        var url = '/api/payments/regions/' + $countries.val();
+        $.ajax(url, {
+            method: 'GET',
+            success: function (response) {
+                $regions.html('');
+                for (var i = 0; i < response.length; i++) {
+                    var item = response[i];
+                    var $option = $('<option />');
+                    $option.attr('value', item.code);
+                    $option.text(item.name);
+                    $regions.append($option);
+                }
+                response.length > 0 ? $regions.show() : $regions.hide();
+            }
+        });
+    }
+
+    loadCountries();
+
+    $countries.change(loadRegions);
+
+    var submitRequest = null;
+
+    var validateOptions = Memocast.formValidation.defaultValidateOptions();
+    validateOptions.rules = {
+        'cc-number': {
+            'required' : true
+        },
+        'cc-expire-date': {
+            'required' : true
+        },
+        'address': {
+            'required' : true
+        },
+        'city': {
+            'required' : true
+        },
+        'postal-code': {
+            'required' : true
+        },
+        'first-name': {
+            'required' : true
+        },
+        'last-name': {
+            'required' : true
+        },
+        'e-mail': {
+            'required' : true
+        }
+    };
+    var validator = $form.validate(validateOptions);
+
+    $form.submit(function (evt) {
+        evt.preventDefault();
+        if (validator.form()) {
+            if (!submitRequest) {
+                var url = '/api/payments/404';
+                var subsType = $hidPaymentType.val();
+                switch (subsType) {
+                    case 'gold':
+                        url = '/api/payments/subscription';
+                        break;
+                    case '2daypass':
+                        url = '/api/payments/2dayspass'
+                        break;
+                }
+                var data = Memocast.formDataToJson($form);
+                $bt.prop('disabled', true);
+                $spinner.removeClass('d-none');
+                if (!$error.hasClass('d-none')) {
+                    $error.addClass('d-none');
+                }
+                submitRequest = $.ajax(url, {
+                    method: 'POST',
+                    data: data,
+                    success: function (resp) {
+                        location.assign('/profile/subscription');
+                    },
+                    error: function (err) {
+
+                        var e = err.responseJSON;
+
+                        var message = 'Unknown payment error';
+
+                        if ('error' in e) {
+                            var error = e.error;
+                            if (typeof error == 'string') {
+                                message = error;
+                            } else if ('message' in error) {
+                                message = error.message;
+                            }
+                        }
+                        if ($error.hasClass('d-none')) {
+                            $error.removeClass('d-none');
+                        }
+
+                        $error.html('<strong>' + message + '</strong>');
+                    },
+                    complete: function () {
+                        $spinner.addClass('d-none');
+                        submitRequest = null;
+                        $bt.prop('disabled', false);
+                    }
+                });
+            }
+        }
+    });
+
+});
+
+// paypal
+$(function () {
+    var $gold = $('#bt-paypal-gold-membership');
+    var $2days = $('#bt-paypal-2daypass');
+
+    var request = null;
+
+    $gold.click(function (evt) {
+        evt.preventDefault();
+        if (!request) {
+            var url = '/api/payments/paypal/subscription';
+            $gold.prop('disabled', true); $2days.prop('disabled', true);
+            $gold.find('.mmc-spinner').removeClass('d-none');
+            request = $.ajax(url, {
+                method: 'POST',
+                success: function (response) {
+                    var redir = response.url;
+                    location.assign(redir);
+                },
+                error: function (err) {
+                    $gold.find('.mmc-spinner').addClass('d-none');
+                    $gold.prop('disabled', false); $2days.prop('disabled', false);
+                },
+                complete: function () {
+                    request = null;
+                }
+            });
+        } // if (!request) ...
+    });
+
+    $2days.click(function (evt) {
+        evt.preventDefault();
+        if (!request) {
+            var url = '/api/payments/paypal/2daypass';
+            $gold.prop('disabled', true); $2days.prop('disabled', true);
+            $2days.find('.mmc-spinner').removeClass('d-none');
+            request = $.ajax(url, {
+                method: 'POST',
+                success: function (response) {
+                    var redir = response.url;
+                    location.assign(redir);
+                },
+                error: function (err) {
+                    $2days.find('.mmc-spinner').addClass('d-none');
+                    $gold.prop('disabled', false); $2days.prop('disabled', false);
+                },
+                complete: function () {
+                    request = null;
+                }
+            });
+        } // if (!request) ...
+    });
+});
+</script>
+{{/section}}

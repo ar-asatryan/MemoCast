@@ -1,0 +1,181 @@
+<h1>Video Request Detail</h1>
+<hr />
+
+<input type="hidden" name="id" id="hid-request-id" value="{{ item._id }}" />
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">User</label>
+    <div class="col-sm-10">
+        <p class="form-control-static">
+            <a href="/admin/user/{{ item.user._id }}">
+                {{ item.user.displayName }}
+            </a>
+        </p>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Request</label>
+    <div class="col-sm-10">
+        <p class="form-control-static">
+            {{ item.request }}
+        </p>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Status</label>
+    <select id="select-status" class="col-sm-4 form-control">
+        <option value="created"{{#equal item.status 'created'}} selected {{/equal}}>Created</option>
+        <option value="processing"{{#equal item.status 'processing'}} selected {{/equal}}>Processing</option>
+        <option value="rejected"{{#equal item.status 'rejected'}} selected {{/equal}}>Rejected</option>
+        <option value="complete"{{#equal item.status 'complete'}} selected {{/equal}}>Complete</option>
+    </select>
+</div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Video Title</label>
+    <select class="mmc-item-button form-control" style="width: 500px;" id="select-titles">
+        {{#each item.videoTitles}}
+        <option value="{{ _id }}">{{ title }}</option>
+        {{/each}}
+    </select>
+</div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Video Item</label>
+    <select class="mmc-item-button form-control" style="width: 500px;" id="select-items">
+        {{#each item.videoItems}}
+        <option value="{{ _id }}">{{ title }}</option>
+        {{/each}}
+    </select>
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+$(function() {
+    var $titles = $('#select-titles');
+    var $items = $('#select-items');
+    var $status = $('#select-status');
+    var $id = $('#hid-request-id');
+
+    $titles.select2({
+        ajax: {
+            url: '/api/admin/autocomplete/videos',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    search: params.term
+                };
+            },
+            delay: 250,
+            cache: true,
+            processResults: function (data, params) {
+                return {
+                    results : data.map(function (item) {
+                        let title = item.title;
+                        if (item.year && item.year != '') {
+                            title += ' (' + item.year +')';
+                        }
+                        let obj = {
+                            id : item.id,
+                            text: title,
+                            data: item
+                        };
+                        return obj;
+                    })
+                }
+            }
+        },
+        minimumInputLength: 3,
+        maximumSelectionLength: 2
+    });
+
+    $titles.change(function () {
+        let videoTitle = $titles.val();
+        let update = { videoTitles : [ videoTitle ], videoItems: [], status: 'complete' };
+        var url = '/api/admin/requests/' + $id.val();
+        var data = { update : update };
+        $.ajax(url, {
+            method: 'PUT',
+            data: data,
+            success: function (response) {
+                var url = '/admin/requests/' + $id.val() + '?rnd=' + (new Date).getTime();
+                window.location.assign(url);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+
+    $items.select2({
+        ajax: {
+            url: '/api/admin/autocomplete/video-items',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    search: params.term
+                };
+            },
+            delay: 250,
+            cache: true,
+            processResults: function (data, params) {
+                return {
+                    results : data.map(function (item) {
+                        let title = item.title;
+                        if (item.year && item.year != '') {
+                            title += ' (' + item.year +')';
+                        }
+                        let obj = {
+                            id : item.id,
+                            text: title,
+                            data: item
+                        };
+                        return obj;
+                    })
+                }
+            }
+        },
+        minimumInputLength: 3,
+        maximumSelectionLength: 2
+    });
+
+    $items.change(function () {
+        let videoItem = $items.val();
+        let update = { videoTitles : [], videoItems: [ videoItem ], status: 'complete' };
+        var url = '/api/admin/requests/' + $id.val();
+        var data = { update : update };
+        $.ajax(url, {
+            method: 'PUT',
+            data: data,
+            success: function (response) {
+                var url = '/admin/requests/' + $id.val() + '?rnd=' + (new Date).getTime();
+                window.location.assign(url);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+
+    $status.change(function () {
+        let status = $status.val();
+        let update = { status: status };
+        var url = '/api/admin/requests/' + $id.val();
+        var data = { update : update };
+        $.ajax(url, {
+            method: 'PUT',
+            data: data,
+            success: function (response) {
+                var url = '/admin/requests/' + $id.val() + '?rnd=' + (new Date).getTime();
+                window.location.assign(url);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+});
+</script>
+{{/section}}

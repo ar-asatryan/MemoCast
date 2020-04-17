@@ -1,0 +1,69 @@
+{{#section "header"}}
+
+{{#unless user }}
+<asp:PlaceHolder ID="phNotAuthenticated" runat="server">
+    <h1>3 DAY FREE Memocast access on Roku</h1>
+    <hr class="intro-divider" />
+    <div class="h3">Activate your Free Trial to access over 100 thousand Memocast movies on your ROKU device</div>
+    <hr class="intro-divider" />
+    <div class="h3">Please Login or Create new account to activate your Free Trial</div>
+    <hr class="intro-divider" />
+    <ul class="list-inline intro-social-buttons">
+        <li>
+            <a href="/login.aspx" class="btn btn-default btn-lg"><span class="network-name">Login</span></a>
+        </li>
+        <li>
+            <a href="/signup.aspx" class="btn btn-default btn-lg"><span class="network-name">Create new account</span></a>
+        </li>
+    </ul>
+{{/unless}}
+
+{{#if user}}
+
+    {{#if activeSubscription}}
+        <h1>ROKU trial subscription activation</h1>
+        <div class="h3">You already have valid subscription to watch Memocast on your Roku device</div>
+        <hr class="intro-divider" />
+        <ul class="list-inline intro-social-buttons">
+
+            <li>
+                <a href="/roku/" class="btn btn-default btn-lg"><span class="network-name">How to link my Roku to Memocast?</span></a>
+            </li>
+
+        </ul>
+    {{/if}}
+
+    {{#unless activeSubscription}}
+
+        <asp:PlaceHolder ID="phTrialWasActivatedAlready" runat="server">
+            <h1>Roku status</h1>
+            <div class="h3">Your Free Trial has been expired</div>
+            <hr class="intro-divider" />
+            <div class="h3">Please become Gold Member for full access</div>
+            <hr class="intro-divider" />
+            <ul class="list-inline intro-social-buttons">
+                <li>
+                    <a href="/profiles/subscription/" class="btn btn-default btn-lg"><span class="network-name">Become Gold Member</span></a>
+                </li>
+            </ul>
+        </asp:PlaceHolder>
+
+        <asp:PlaceHolder ID="phTrialActivation" runat="server">
+            <h1>Special Offer!</h1>
+            <hr class="intro-divider" />
+            <div class="h3">3 Day Free access on ROKU device for Memocast Members!</div>
+            <hr class="intro-divider" />
+            <ul class="list-inline intro-social-buttons">
+                <li>
+                    <form runat="server">
+                    <asp:LinkButton runat="server" CssClass="btn btn-default btn-lg" OnClick="ActivateLink_Click"><span class="network-name">Activate Trial Subscription</span></asp:LinkButton>
+                    </form>
+                </li>
+            </ul>
+        </asp:PlaceHolder>
+
+    {{/unless}}
+
+{{/if}}
+
+{{/section}}

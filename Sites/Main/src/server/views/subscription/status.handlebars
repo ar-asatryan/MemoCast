@@ -1,0 +1,89 @@
+<div class="h3 title">
+    {{ istring locale ru='Информация о текущей подписке' en='Subscription status' }}
+</div>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                {{ istring locale ru='Тип подписки' en='Subscription type' }}
+            </th>
+            <th>
+                {{ istring locale ru='Дата создания' en='Create date' }}
+            </th>
+{{#if activeSubscription.expire }}
+            <th>
+                {{ istring locale ru='Срок действия' en='Expire date' }}
+            </th>
+{{/if}}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <strong>
+                    {{#if activeSubscription.cybersource}}
+                        {{#equal activeSubscription.kind 'recurring'}}
+                        {{ istring locale ru='Ежемесячная подписка (Credit Card)' en='Recurring Credit Card subscription' }}
+                        {{else}}
+                        {{ istring locale ru='Разовая подписка (Credit Card)' en='One-time payment Credit Card subscription' }}
+                        {{/equal}}
+                    {{/if}}
+                    {{#if activeSubscription.paypal}}
+                        {{#equal activeSubscription.kind 'recurring'}}
+                        {{ istring locale ru='Ежемесячная подписка (PayPal)' en='Recurring PayPal subscription' }}
+                        {{else}}
+                        {{ istring locale ru='Разовая подписка (PayPal)' en='One-time payment PayPal subscription' }}
+                        {{/equal}}
+                    {{/if}}
+                    {{#if activeSubscription.notes}}
+                    <div>{{ activeSubscription.notes }}</div>
+                    {{/if}}
+                </strong>
+            </td>
+            <td>
+                {{#if activeSubscription.createDate }}
+                <span class="mmc-time-stamp"
+                    data-date="{{ activeSubscription.createDate }}" />
+                {{/if}}
+            </td>
+            <td>
+                {{#if activeSubscription.expire }}
+                <span class="mmc-time-stamp"
+                    data-date="{{ activeSubscription.expire }}" />
+                {{/if}}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{{#if activeSubscriptionUpdateable}}
+<div>
+    <a href="/profile/subscription/update" class="btn btn-primary">
+        {{ istring locale ru='Изменить номер карты' en='Change card number in subscription'}}
+    </a>
+</div>
+{{/if}}
+
+{{#if activeSubscriptionIsTemporary}}
+<div>
+    <a href="/profile/subscription/purchase" class="btn btn-primary">
+        {{ istring locale ru='Изменить номер карты' en='Change card number in subscription'}}
+    </a>
+</div>
+{{/if}}
+
+{{#section "sidemenu"}}
+
+{{> user-side-menu }}
+
+{{/section}}
+
+{{#section "scripts"}}
+<script type="text/javascript">
+    $(function() {
+        $('#sm-profile-subscription').addClass('active');
+    });
+</script>
+{{/section}}

@@ -1,0 +1,31 @@
+$color: #FF8F21;
+
+@mixin not-last-child($selector) {
+  & #{$selector}:not(:last-child) {
+    @content;
+  }
+}
+
+.settings {
+    .flag-item {
+        padding: 10px;
+
+        .flag-icon {
+            font-size: 46px;
+        }
+        &.active {
+            border: 1px solid lighten($color, 0%);
+            background-color: lighten($color, 33%);
+        }
+        &:hover:not(.active) {
+            border: 1px solid lighten($color, 0%);
+            background-color: lighten($color, 44%);
+        }
+    }
+    label, .title {
+        font-size: 16px;
+    }
+    @include not-last-child('.row') {
+        margin-bottom: 20px;
+    }
+}

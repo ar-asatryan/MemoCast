@@ -1,0 +1,304 @@
+{{#section "head"}}
+<meta name="robots" content="index,follow" />
+{{#if pager.pagerPrefix}}
+<link rel="canonical" content="{{ pager.pagerPrefix }}" />
+{{/if}}
+{{#if pageDescription}}
+<meta name="description" content="{{ pageDescription }}" />
+{{/if}}
+{{#if pager.prev}}
+<link rel="prev" href="?skip={{ pager.prev.skip }}{{#each @root.pager.params}}&{{ name }}={{ value }}{{/each}}" />
+{{/if}}
+{{#if pager.next}}
+<link rel="next" href="?skip={{ pager.next.skip }}{{#each @root.pager.params}}&{{ name }}={{ value }}{{/each}}" />
+{{/if}}
+<style type="text/css">
+.mmc-category-full-info > .section-title {
+    cursor: pointer;
+}
+</style>
+{{/section}}
+
+<h1 class="title">{{ video-list-title }}</h1>
+
+<div class="card">
+    <div class="card-content">
+
+        {{#if videos-list-need-filter }}
+        <form class="form row" id="form-videos-filter">
+        {{#if years}}
+        <div class="col-md-3">
+            <div class="form-group">
+                <select id="video-years" class="selectpicker" data-style="btn btn-primary btn-round" data-size="7">
+                <option value="" selected>{{ istring locale ru='Выберите год' en='Select year' }}</option>
+                {{#each years}}
+                <option value="{{ year }}"{{#if selected}} selected="selected"{{/if}}>{{ year }}</option>
+                {{/each}}
+                </select>
+            </div>
+        </div>
+        {{/if}}{{!if years}}
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <input class="form-control" name="title" placeholder="{{ istring locale ru='Фильтр фильмов' en='Filter movies' }}" id="tb-videos-filter-title" />
+            </div>
+        </div>
+
+        </form>
+        {{/if}}{{!if needVideosFilter ...}}
+
+        <div id="videos">
+            {{> videos videos }}
+        </div><!-- div#videos -->
+
+        {{#if pager.visible}}
+        <div id="pager">
+        <!-- pagination -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="pagination pagination-primary">
+                    {{#if pager.prev}}
+                	<li><a href="{{{ pager.first.link }}}">&lt;&lt;</a></li>
+                    <li><a href="{{{ pager.prev.link }}}">&lt;</a></li>
+                    {{/if}}
+                    {{#each pager.pages}}
+                    <li{{#if active}} class="active"{{/if}}>
+                        <a href="{{{ link }}}">{{ page }}</a>
+                    </li>
+                    {{/each}}
+                    {{#if pager.next}}
+                    <li><a href="{{{ pager.next.link }}}">&gt;</a></li>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
+        </div>
+        {{/if}}
+
+    </div><!-- card content -->
+</div><!-- card -->
+
+{{#if display-category-romance-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/romance}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-thriller-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/thriller}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-western-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/western}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-science-fiction-fantasy-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/science-fiction-fantasy}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-cartoons-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/cartoons}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-documentary-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/documentary}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-drama-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/drama}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-kids-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/kids}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-horror-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/horror}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-experimental-art-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/experimental-art}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-politics-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/politics}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-classics-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/classics}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-humor-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/humor}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-detective-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/detective}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-religion-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/religion}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-anime-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/anime}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-short-films-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/short-films}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-education-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/education}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-musicals-music-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/musicals-music}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-action-adventure-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/action-adventure}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-turkish-serials-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/turkish-serials}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-war-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/war}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-historical-epics-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/historical-epics}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-comedy-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/comedy}}
+    </div>
+</div>
+{{/if}}
+
+{{#if display-category-kids-family-full-info}}
+<div class="card">
+    <div class="card-content">
+        {{>category-info/kids-family}}
+    </div>
+</div>
+{{/if}}
+
+{{#section "scripts"}}
+<script type="text/javascript">
+var VideosAPIURL = '{{ api-url }}';
+var VideosPageURL = '{{ page-url }}';
+var VideosFilterParams = {
+    year: '{{ year }}'
+};
+</script>
+<script type="text/javascript" src="/js/videos.js"></script>
+
+<script type="text/javascript">
+$(function() {
+    $('.mmc-category-full-info > .content').hide();
+    $('.mmc-category-full-info > .section-title').on('click', function(event) {
+        var $el = $(this);
+        var $details = $el.next('.content');
+        $details.toggle();
+        event.stopPropagation();
+    });
+});
+</script>
+
+{{/section}}

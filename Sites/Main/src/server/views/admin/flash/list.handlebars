@@ -1,0 +1,122 @@
+<h1>Flash items</h1>
+
+<hr />
+
+<a href="/admin/flash/add" class="btn btn-primary">
+    <i class="fa fa-plus"></i> New Flash
+</a>
+
+<hr />
+
+<div id="flash-items-container">
+</div>
+
+{{#section "scripts"}}
+
+<script type="text/x-handlebars-template" id="template-flash-items">
+<!-- /.panel-heading -->
+<table id="flash-items" cellspacing="0" width="100%" class="display table table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th>Title</th>
+<th>Url</th>
+<th>Body</th>
+<th>Order</th>
+<th></th>{{! delete buttons }}
+</tr>
+</thead>
+<tbody>
+\{{#each .}}
+<tr data-flash-id="\{{ _id }}">
+<td>
+    <a href="/admin/flash/\{{ _id }}">
+
+        \{{#if isPublic }}
+        <span class="fa fa-check text-success" />
+        \{{else}}
+        <span class="fa fa-times text-danger" />
+        \{{/if}}
+
+        \{{#if title }}
+        \{{ title }}
+        \{{else}}
+        <em>(без названия)</em>
+        \{{/if}}
+        <p>
+            <img src="/images/flash/\{{ _id }}?width=240" />
+        </p>
+    </a>
+</td>
+<td>\{{ url }}</td>
+<td>\{{ body }}</td>
+<td>
+    \{{ order }}
+</td>
+<td>
+    <button data-flash-id="\{{ _id }}" class="mmd-delete-button btn btn-danger">Delete</button>
+</td>
+</tr>
+\{{/each}}
+</tbody>
+</table>
+</script>
+
+<script type="text/javascript">
+$(function () {
+
+    let $container = $('#flash-items-container');
+    let template = Handlebars.compile($("#template-flash-items").html());
+
+    let loadItems = function () {
+        let url = '/api/admin/flash';
+        $.ajax(url, {
+            method: 'GET',
+            success: function (response) {
+                $container.html(template(response));
+
+                var pageLength = getStorageValue('flash-items-page-length', 50);
+
+                let table = $('#flash-items').DataTable({
+                    order: [[0, 'desc']],
+                    search: {
+                        smart: true
+                    },
+                    pageLength: pageLength,
+                    responsive: true
+                });
+
+                table.on( 'length.dt', function ( e, settings, len ) {
+                    setStorageValue('flash-items-page-length', len);
+                });
+            },
+            error: function (err) {
+                console.log(err);
+            },
+            complete: function () {
+            }
+        })
+    };
+
+    loadItems();
+
+    // delete flash handle
+    $(document).on('click', '.mmd-delete-button', function (evt) {
+        evt.preventDefault();
+        let $bt = $(this);
+        let id = $bt.data('flash-id');
+        if (window.confirm('Are you sure?')) {
+            console.log({ 'item-to-delete' : id });
+            var url = '/api/admin/flash/' + id;
+            $.ajax(url, {
+                method: 'DELETE',
+                error: function (err) {
+                    console.log(err);
+                },
+                complete: loadItems
+            });
+        } // if (window.confirm('Are you sure?')) ...
+    }); // $(document).on('click', '.mmd-delete-button' ...
+
+});
+</script>
+{{/section}}

@@ -1,0 +1,25 @@
+{
+    "name": "Memocast Gold Membership",
+    "description": "Memocast Gold Membership Subscription - unlimited access to Memocast Movies Library.",
+    "type": "INFINITE",
+    "payment_definitions": [
+        {
+            "name": "Memocast Gold Membership Regular Payment",
+            "type": "REGULAR",
+            "frequency_interval": "1",
+            "frequency": "MONTH",
+            "cycles": "0",
+            "amount": {
+                "value": "9.95",
+                "currency": "USD"
+            }
+        }
+    ],
+    "merchant_preferences": {
+        "cancel_url": "http://localhost:7885/profile/subscription/paypal/cancel",
+        "return_url": "http://localhost:7885/profile/subscription/paypal/success",
+        "max_fail_attempts": "0",
+        "auto_bill_amount": "YES",
+        "initial_fail_amount_action": "CANCEL"
+    }
+}

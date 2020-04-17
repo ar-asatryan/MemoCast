@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card-content">
+        <h1 class="title">
+            {{ istring locale ru='Поиск' en='Search' }}
+        </h1>
+        <form autocomplete="off" method="get" action="/search" role="search">
+            <div class="form-group">
+            <input autocomplete="off" class="form-control memocast-autocomplete-videos" id="tb-videos-autocomplete"
+                name="s"
+                type="text"
+                value="{{ searchString }}"
+                placeholder="{{ string locale 'menu.top.search.placeholder' default='Search' }}" />
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-md-12">
+                {{ istring locale ru="Если вы не нашли нужный Вам фильм - " en="If you don't find desired movie - " }}
+                <a class="btn btn-round btn-secondary btn-xs" href="/profile/video-requests/new?search={{searchString}}">
+                    {{ istring locale ru='запросите его' en='request it'}}
+                </a>
+                {{ istring locale ru='и мы постараемся добавить его в нашу библиотеку как можно оперативнее.' en='and we will try to add it to our library asap.' }}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{{#if searchString }}
+{{#if videos}}
+<div class="card">
+    <div class="card-content">
+        {{> videos videos}}
+    </div>
+</div>
+{{else}}
+<div class="card">
+    <div class="card-content">
+        <div class="h2">По вашему запросу ничего не найдено</div>
+    </div>
+</div>
+{{/if}}
+
+{{/if}}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html data-cast-api-enabled="true">
+<head>
+
+    {{> head }}
+
+    {{{_sections.head}}}
+
+</head>
+<body{{#if fluid}} class="section-white"{{/if}}>
+
+    {{> nav-material }}
+
+{{#unless fluid}}
+	<div class="container" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-md-12">
+{{/unless}}
+
+{{#if welcomeBack}}
+{{> welcome/back }}
+{{/if}}
+
+{{{ body }}}
+
+{{#unless fluid}}
+            </div><!-- main col-md-12 -->
+        </div><!-- main row -->
+
+        <div class="card" id="util-loading-" style="display: none;">
+            <div class="card-content text-center">
+                <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+                {{ string locale 'utils.loading' default='Loading ...' }}
+            </div>
+        </div>
+    </div>{{! container }}
+{{/unless}}
+
+
+
+
+
+    {{> footer}}
+
+
+<!-- scripts -->
+    {{> scripts }}
+
+    {{{ _sections.scripts }}}
+
+</body>
+</html>

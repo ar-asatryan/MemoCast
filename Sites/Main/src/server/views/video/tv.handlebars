@@ -1,0 +1,220 @@
+<div class="card">
+    <div class="card-content">
+        <h1>{{ istring locale ru='Онлайн ТВ' en='Online TV' }}</h1>
+
+        <div class="d-flex justify-content-center">
+            <div id="streamHolder" class="p-2"></div>
+        </div>
+
+        <div class="d-flex justify-content-center mmc-channels">
+            <div class="p-2">
+                <a href="?id=1">
+                    <img src="http://live.russia.tv/i/small_logo/ch-logo-1.png" style="width: 80px">
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="?id=3">
+                    <img src="http://live.russia.tv/i/small_logo/ch-logo-3.png" style="width: 80px">
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="?id=7">
+                    <img src="http://live.russia.tv/i/small_logo/ch-logo-76.png" style="width: 80px">
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="?id=8">
+                    <img src="http://live.russia.tv/i/small_logo/ch-logo-199.png" style="width: 80px">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#section "scripts"}}
+<script lang="javascript" type="text/javascript">
+
+        var tvProgrammTemplate = null;
+        var tvProgrammEmptyTemplate = null;
+        var tvChannelTitle = "";
+
+        $(document).ready(function () {
+
+            var source = $("#tv-programm-template").html();
+            tvProgrammTemplate = Handlebars.compile(source);
+
+            source = $("#tv-programm-empty-template").html();
+            tvProgrammEmptyTemplate = Handlebars.compile(source);
+
+            SetChannel();
+        });
+
+
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            //var hashes = window.location.href.valueOf().split('?').slice(1)[0].split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split("=");
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        function clearTVProgramm() {
+            var context = { "title": tvChannelTitle };
+            var html = tvProgrammEmptyTemplate(context);
+            $("#tv-programm").html(html);
+        }
+
+        function loadTVProgramm(id) {
+
+            return;
+
+            var url = "/services/livetv.ashx?id=" + id;
+
+            $.ajax({
+                "type": "GET",
+                "url": url,
+                "success": function (data) {
+                    var $doc = $(data);
+                    var $items = $doc.find(".b-tv-channel-schedule__item");
+                    var itemsCount = $items.length;
+
+                    var tv = [];
+
+                    var localTime = new Date();
+                    var localOffset = localTime.getTimezoneOffset() * 60 * 1000;
+                    var moscowOffset = -3 * 60 * 60 * 1000;
+                    console.log(localOffset);
+                    console.log(moscowOffset);
+                    var moscowCurrentDate = new Date(Date.now() + localOffset - moscowOffset);
+
+                    for (var i = 0; i < itemsCount; i++) {
+                        var $item = $items.eq(i);
+                        var time = $item.find(".tv-event__time-text").text();
+                        var title = $item.find(".tv-event__title-inner").text();
+                        var tvItem = { "time": time, "title": title };
+
+                        var searchIndex = time.indexOf(":");
+
+                        if (searchIndex != -1) {
+                            var minutesString = time.slice(searchIndex + 1);
+                            var hoursString = time.substr(0, searchIndex);
+                            var minutes = parseInt(minutesString);
+                            var hours = parseInt(hoursString);
+                            var d = new Date(moscowCurrentDate.getFullYear(), moscowCurrentDate.getMonth(), moscowCurrentDate.getDate(), hours, minutes, 0);
+                            d.getTimezoneOffset
+                            tvItem["date"] = new Date(d + 14400000);
+                            tvItem["date"] = d;
+                        }
+
+                        tv.push(tvItem);
+
+                    }
+
+                    var prevItem = null;
+                    for (var i = 0; i < tv.length; i++) {
+                        var item = tv[i];
+                        var date = item["date"];
+                        if (date) {
+
+                            if (date > moscowCurrentDate) {
+                                break;
+                            }
+
+                            if (prevItem) {
+                                prevItem["current"] = null;
+                                prevItem["pre"] = true;
+                            }
+                            item["current"] = true;
+
+                        }
+
+                        prevItem = item;
+                    }
+
+                    console.log(tv);
+                    console.log(moscowCurrentDate);
+
+                    var context = { "items": tv, "title": tvChannelTitle };
+
+                    context["date"] = moscowCurrentDate.toLocaleDateString();
+                    var html = tvProgrammTemplate(context);
+                    $("#tv-programm").html(html);
+                }
+            });
+        }
+
+        function SetChannel() {
+
+            var slObjIp = document.getElementById("flashvars");
+
+            var string = "";
+
+            if (getUrlVars()["id"] == 1 || getUrlVars() != "id") {        // RU 1
+                string = "<iframe src=\"https://player.vgtrk.com/iframe/live/id/2961/showZoomBtn/false/isPlay/true/\" scrolling=\"No\" border=\"0\" frameborder=\"0\" width=\"660\" height=\"494\" mozallowfullscreen webkitallowfullscreen allowfullscreen></iframe>";
+
+                tvChannelTitle = "Россия 1";
+
+                loadTVProgramm("213/channels/711");
+            }
+
+            if (getUrlVars()["id"] == 3) {        // ROSSIA 24
+                string = "<iframe src=\"https://player.vgtrk.com/iframe/live/id/21/showZoomBtn/false/isPlay/true/\" scrolling=\"No\" border=\"0\" frameborder=\"0\" width=\"660\" height=\"494\" mozallowfullscreen webkitallowfullscreen allowfullscreen></iframe>";
+
+                tvChannelTitle = "Россия 24";
+
+                clearTVProgramm();
+            }
+
+            if (getUrlVars()["id"] == 4) {        // Россия Культура
+                string = "<iframe class=\"tv-broadcasting__player-video\" src=\"https://player.vgtrk.com/iframe/live/id/19201/start_zoom/true/showZoomBtn/true/\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\"></iframe>";
+
+                tvChannelTitle = "Россия Культура";
+
+                clearTVProgramm();
+            }
+
+            if (getUrlVars()["id"] == 7) {        // M24
+
+                string = '<iframe scrolling=\"No\" border=\"0\" frameborder=\"0\" width=\"660\" height=\"494\" mozallowfullscreen webkitallowfullscreen allowfullscreen src="http://player.rutv.ru/index/iframe/cast_id/1661/start_zoom/false/showZoomBtn/true/disableAdvert/false/isPlay/true/"></iframe>';
+
+                tvChannelTitle = "Москва 24";
+
+                loadTVProgramm("213/channels/334");
+
+            }
+
+            if (getUrlVars()["id"] == 8) {        // Vesti FM
+                string = "<iframe src=\"https://player.vgtrk.com/iframe/live/id/52035/showZoomBtn/false/isPlay/true/\" scrolling=\"No\" border=\"0\" frameborder=\"0\" width=\"660\" height=\"494\" mozallowfullscreen webkitallowfullscreen allowfullscreen></iframe>";
+
+                tvChannelTitle = "Радио Вести-FM";
+
+                clearTVProgramm();
+
+            }
+
+            document.getElementById("streamHolder").innerHTML = string;
+        }
+
+
+
+    </script>
+
+    <script id="tv-programm-template" type="text/x-handlebars-template">
+        <h1>ТВ программа канала &quot;{{title}}&quot; на {{date}}</h1>
+        <div style="margin: 15px 0px;">Время - московское</div>
+        <ul style="margin: 15px 0px;">
+            {{#each items}}
+                <li style="margin: 5px 0px;{{#if current}} font-weight: bold;{{/if}}{{#if pre}} color: lightgrey;{{/if}}">{{time}}: {{title}}</li>
+            {{/each}}
+        </ul>
+    </script>
+
+    <script id="tv-programm-empty-template" type="text/x-handlebars-template">
+        <h1>ТВ программа канала &quot;{{title}}&quot;</h1>
+        <div style="margin: 15px 0px;">Для этого канала нет программы</div>
+    </script>
+{{/section}}

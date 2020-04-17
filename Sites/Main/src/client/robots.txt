@@ -1,0 +1,7 @@
+User-agent: *
+
+Disallow: /people/
+Disallow: /profile/
+
+Host: www.memocast.com
+Sitemap: https://www.memocast.com/sitemap.xml

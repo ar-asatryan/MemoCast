@@ -1,0 +1,28 @@
+<div class="h3 title">
+    {{ istring locale ru='Ваша лента новостей' en='Your latest updates' }}
+</div>
+
+<hr />
+
+<div id="feed">
+{{> feed feed }}
+<div class="row">
+    <div class="col-md-1 hidden-xs hidden-sm">
+        <img src="/img/mc-logo-mini.png" class="img img-circle" style="width: 50px;" />
+    </div>
+    <div class="col-md-11 col-sm-12 col-xs-12">
+        <a href="/welcome" class="text-rose" target="_blank">
+            {{ istring locale ru='Добро пожаловать в обновленный Мемокаст!' en='Welcome to Memocast!' }}
+        </a>
+    </div>
+</div>
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript" src="/js/profile/feed.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#sm-profile-feed').addClass('active');
+    });
+</script>
+{{/section}}

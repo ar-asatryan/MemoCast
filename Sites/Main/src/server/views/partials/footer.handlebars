@@ -1,0 +1,78 @@
+<footer class="footer footer-black footer-big">
+	<div class="container">
+
+		<div class="content">
+			<div class="row">
+
+				<div class="col-md-4">
+                    <div class="h5">Memocast</div>
+					<p>{{
+                        istring locale
+                        ru='Самая большая библиотека русских, советских фильмов, сериалов и телепередач.'
+                        en='The biggest library of Russian and USSR movies and TV Shows'
+                    }}
+                    </p>
+					<div class="h5">
+						{{ istring locale ru='Как смотреть на ТВ'}}
+					</div>
+					<ul class="links-vertical">
+						<li><a href="/roku">ROKU</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<div class="h5">{{ istring locale en='About' ru='О нас' }}</div>
+					<ul class="links-vertical">
+						<li>
+							<a href="/about">{{ string locale 'menu.bottom.about' default='About us' }}</a>
+						</li>
+						<li>
+							<a href="/feedback">{{ string locale 'menu.bottom.feedback' default='Feedback' }}</a>
+						</li>
+						<li>
+							<a href="/contacts">{{ string locale 'menu.bottom.contacts' default='Contacts' }}</a>
+						</li>
+                        <li>
+                            <a href="/help">
+                                {{ string locale 'menu.bottom.help' default='Help' }}
+                            </a>
+                        </li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<div class="h5">{{ istring locale ru='Оплата' en='Payments' }}</div>
+					<ul class="links-vertical">
+						<li>
+                            <a href="/paymentoptions">
+                                {{ string locale 'menu.bottom.payment options' default='Payment Options' }}
+                            </a>
+						</li>
+					</ul>
+                    <div class="h5">{{ istring locale ru='Правовая информация' en='Legal' }}</div>
+					<ul class="links-vertical">
+						<li>
+                            <a href="/privacy">
+                                {{ string locale 'menu.bottom.privacy notice' default='Privacy Notice' }}
+                            </a>
+						</li>
+						<li>
+							<a href="/eula">
+                                {{ istring locale ru='Условия пользования' en='Terms & Conditions' }}
+							</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+
+		<hr />
+
+		<div class="copyright pull-center">
+            {{ istring locale
+                ru='Все права защищены'
+                en='Copyright'
+            }}
+			{{{ copyright }}}
+		</div>
+	</div>
+</footer>

@@ -1,0 +1,39 @@
+{{#section "head"}}
+<meta name="robots" content="noindex, nofollow" />
+<meta name="yandexbot" content="noindex, nofollow" />
+<meta name="googlebot" content="noindex, nofollow" />
+{{/section}}
+
+<div class="col-md-4 mmc-video-item" style="height: 100%;" data-mmc-link="{{ url }}" data-video-title-id="{{ id }}">
+	<div class="card card-plain card-blog">
+
+		<div>
+		<a href="{{ url }}">
+			<img class="img mmc-video-popover"  data-video-title-id="{{ id }}" src="/images/video-title/{{ id }}?width=480&height=270" />
+		</a>
+		{{#if stats}}
+		<span class="stats">
+			{{#if stats.likes }}
+			<span><i class="fa fa-heart" aria-hidden="true"></i> {{ stats.likes }}</span>
+			{{/if}}
+			&nbsp;
+			{{#if stats.comments }}
+			<i class="fa fa-comment ml-2" aria-hidden="true"></i> {{ stats.comments }}
+			{{/if}}
+		</span>
+		{{/if}}
+		</div>
+
+		<div class="card-content">
+			<h4 class="card-title">
+				<a href="{{ url }}">{{ title }}{{#if yearAndCountries}} <small>({{#each yearAndCountries}}{{ . }}{{#unless @last}}, {{/unless}}{{/each}})</small>{{/if}}</a>
+			</h4>
+			{{#if categories}}
+			<div class="category text-info">
+				{{#each categories}}{{#if title}}{{ category title }}{{#unless @last}}, {{/unless}}{{/if}}{{/each}}
+			</div>
+			{{/if}}
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,51 @@
+<div class="h3 title">
+    {{ istring locale ru='Запросить новое видео' en='Add video request' }}
+</div>
+<hr />
+
+<form id="new-video-request">
+    <input type="hidden" name="searchString" value="{{ searchString }}" />
+
+    <div class="form-group">
+    <label for="tb-video-request">
+        {{ istring locale ru='Название' en='Title' }}
+    </label>
+    <input type="text" id="tb-video-request" class="form-control" placeholder="{{ istring locale ru='Введите название запрашиваемого фильма/передачи' en='Video title / name' }}" name="request" value="{{ searchString }}" />
+    </div>
+
+    <button id="bt-video-request" class="btn btn-primary">
+        {{ istring locale ru='Отправить' en='Send' }}
+    </button>
+
+    <a href="/profile/video-requests" class="btn btn-secondary">
+        {{ istring locale ru='Список моих видео запросов' en='My video requests' }}
+    </a>
+</form>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+$(function () {
+
+    $('#sm-profile-video-requests').addClass('active');
+
+    let apiURL = '/api/video-request';
+
+    $('#tb-video-request').focus();
+
+    $('#new-video-request').submit(function (evt) {
+        evt.preventDefault();
+        let $form = $(this);
+        let data = Memocast.formDataToJson($form);
+        if (data.request && data.request != '') {
+            $.ajax(apiURL, {
+                method: 'POST',
+                data: data,
+                success: function (response) {
+                    window.location.assign('/profile/video-requests');
+                }
+            });
+        }
+    });
+});
+</script>
+{{/section}}

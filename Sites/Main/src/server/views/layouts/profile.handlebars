@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html data-cast-api-enabled="true">
+<head>
+
+    {{> head }}
+
+    {{{_sections.head}}}
+
+</head>
+<body>
+
+    {{> nav-material }}
+
+    <div class="container">
+
+        {{#if welcomeBack}}
+        {{> welcome/back }}
+        {{/if}}
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-content text-center">
+                        <a href="/profile/edit-avatar">
+                        <img class="img-rounded img mmc-my-avatar" src="{{ user.photo }}" data-placement="right" data-toggle="tooltip" title="{{ istring locale en='Edit' ru='Изменить' }}" style="width: 120px;" />
+                        </a>
+
+                        <a href="/profile/edit" data-placement="right" data-toggle="tooltip" title="{{ istring locale en='Edit' ru='Изменить' }}">
+                        <div class="card-title h5">
+                            {{ user.displayName }}
+                            {{#equal user.sex "male"}}
+                            <i class="fa fa-mars" aria-hidden="true"></i>
+                            {{/equal}}
+                            {{#equal user.sex "female"}}
+                            <i class="fa fa-venus" aria-hidden="true"></i>
+                            {{/equal}}
+                        </div>
+                        </a>
+                    </div>
+                    <div class="card-content" style="margin-top: 0px; padding-top: 0px;">
+                    <ul class="nav nav-pills nav-pills-rose nav-stacked">
+                        {{> user-side-menu }}
+                    </ul>
+                </div></div>
+            </div>
+            <div class="col-md-9">
+                <div class="card"><div class="card-content">
+                {{{body}}}
+                </div></div>
+            </div>
+        </div>
+
+        <div class="card" id="util-loading" style="display: none;">
+            <div class="card-content text-center">
+                <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+                {{ string locale 'utils.loading' default='Loading ...' }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {{> footer}}
+            </div>
+        </div>
+
+
+        </div>
+    </div>
+
+<!-- scripts -->
+    {{> scripts }}
+
+    {{{ _sections.scripts }}}
+
+</body>
+</html>

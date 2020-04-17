@@ -1,0 +1,12 @@
+<div class="card">
+    <div class="card-content">
+        {{#each categories}}
+        <h1>{{ category @root.locale title }}</h1>
+        <ul>
+        {{#each childs}}
+        <li><a href="/videos/{{ permalink }}">{{ category @root.locale title }}</a></li>
+        {{/each}}
+        </ul>
+        {{/each}}
+    </div>
+</div>

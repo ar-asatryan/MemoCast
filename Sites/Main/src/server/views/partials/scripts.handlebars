@@ -1,0 +1,77 @@
+<a href="#0" class="cd-top">Top</a>
+
+<!--   Core JS Files   -->
+<script src="/material/js/jquery.min.js" type="text/javascript"></script>
+<script src="/material/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/material/js/material.min.js"></script>
+
+<!--    Plugin for Date Time Picker and Full Calendar Plugin   -->
+<!-- <script src="/material/js/moment.min.js"></script> -->
+<script src="/bower/moment/min/moment-with-locales.min.js"></script>
+
+<!--	Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/   -->
+<script src="/material/js/nouislider.min.js" type="text/javascript"></script>
+
+<!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker   -->
+<script src="/material/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+
+<!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select   -->
+<script src="/material/js/bootstrap-selectpicker.js" type="text/javascript"></script>
+
+<!--	Plugin for Tags, full documentation here: http://xoxco.com/projects/code/tagsinput/   -->
+<script src="/material/js/bootstrap-tagsinput.js"></script>
+
+<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput   -->
+<script src="/material/js/jasny-bootstrap.min.js"></script>
+
+<!--    Plugin for 3D images animation effect, full documentation here: https://github.com/drewwilson/atvImg    -->
+<script src="/material/js/atv-img-animation.js" type="text/javascript"></script>
+
+<!--    Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc    -->
+<script src="/material/js/material-kit.js?v=1.1.0" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/5.20.2/video.min.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" type="text/javascript"></script>
+<script src="/dist/js/lib.min.js" type="text/javascript"></script>
+<script src="/dist/js/bundle.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+Memocast.locale = '{{ locale }}';
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+Memocast.LegacyPlayback = {{#if legacyPlayback}}true{{else}}false{{/if}};
+</script>
+{{#if user }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+<script type="text/javascript">
+Memocast.CurrentUserID = '{{ user.id }}';
+Memocast.CurrentUserIsAdmin = {{#if userIsAdmin}}true{{/if}}{{#unless userIsAdmin}}false{{/unless}};
+var SocketIOAddress = '{{ socketio }}';
+var videoTitleID = '';
+var SocketEstablishedHandler = null;
+</script>
+{{/if}}
+
+{{! Google Analytics }}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-4244655-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<span id="util-signup-message" class="d-none">
+    {{ istring locale
+    ru='Пожалуйста авторизуйтесь или зарегистрируйтесь'
+    en='Please login or signup'
+    }}
+</span>

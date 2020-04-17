@@ -1,0 +1,13 @@
+{ id: '10153961914866359',
+  username: undefined,
+  displayName: 'Konstantin Bahinsky',
+  name: 
+   { familyName: undefined,
+     givenName: undefined,
+     middleName: undefined },
+  gender: undefined,
+  profileUrl: undefined,
+  provider: 'facebook',
+  _raw: '{"name":"Konstantin Bahinsky","id":"10153961914866359"}',
+  _json: { name: 'Konstantin Bahinsky', id: '10153961914866359' } 
+}

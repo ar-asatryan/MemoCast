@@ -1,0 +1,19 @@
+<div class="h3 title">
+    {{ istring locale ru='Мои комментарии к фильмам' en='My video comments' }}
+</div>
+
+<hr />
+
+<div id="div-comments">
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript" src="/js/profile/comments.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $('#sm-profile-comments').addClass('active');
+    });
+</script>
+
+{{/section}}

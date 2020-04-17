@@ -1,0 +1,42 @@
+{
+    "id": "P-6MA44415XP7258131MJUNRSA",
+    "state": "CREATED",
+    "name": "Memocast Gold Membership",
+    "description": "Memocast Gold Membership Subscription - unlimited access to Memocast Movies Library.",
+    "type": "INFINITE",
+    "payment_definitions": [
+        {
+            "id": "PD-78J92908NW9220517MJUNRSA",
+            "name": "Memocast Gold Membership Regular Payment",
+            "type": "REGULAR",
+            "frequency": "Month",
+            "amount": {
+                "currency": "USD",
+                "value": "9.95"
+            },
+            "cycles": "0",
+            "charge_models": [],
+            "frequency_interval": "1"
+        }
+    ],
+    "merchant_preferences": {
+        "setup_fee": {
+            "currency": "USD",
+            "value": "0"
+        },
+        "max_fail_attempts": "0",
+        "return_url": "http://localhost:7885/profile/subscription/paypal/success",
+        "cancel_url": "http://localhost:7885/profile/subscription/paypal/cancel",
+        "auto_bill_amount": "YES",
+        "initial_fail_amount_action": "CANCEL"
+    },
+    "create_time": "2017-04-12T13:44:50.120Z",
+    "update_time": "2017-04-12T13:44:50.120Z",
+    "links": [
+        {
+            "href": "https://api.sandbox.paypal.com/v1/payments/billing-plans/P-6MA44415XP7258131MJUNRSA",
+            "rel": "self",
+            "method": "GET"
+        }
+    ]
+}

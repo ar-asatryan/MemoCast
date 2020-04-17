@@ -1,0 +1,455 @@
+{{#section "head"}}
+<meta name="robots" content="noindex, nofollow" />
+<meta name="yandexbot" content="noindex, nofollow" />
+<meta name="googlebot" content="noindex, nofollow" />
+{{/section}}
+
+<div itemscope itemtype="http://schema.org/Movie">
+    <meta itemprop="image" content="https://www.memocast.com/images/video-title/{{ videoTitleID }}?width=480&height=270" />
+
+    <h1 class="title mmc-video-title-title" style="margin: 0px 0px 15px 0px; padding: 0px;">
+        <small style="margin: 0px; padding: 0px;">
+        {{#if userIsAdmin}}
+        <a href="/admin/videos/titles/{{ videoTitleID }}/{{ videoItemID }}" target="_blank" title="Click to edit">{{title}}</a>
+        {{else}}
+        <span itemprop="name">{{title}}</span>
+        {{/if}}
+        {{#if subTitle}}
+        <br /><span class="mmc-video-item-title">{{subTitle}}</span>
+        {{/if}}
+        </small>
+
+        {{#if originalTitle}}
+        <span itemprop="alternateName" style="font-size: 22px; font-weight: normal; display: block;">{{ originalTitle }}</span>
+        {{/if}}
+       
+
+    </h1>
+
+    {{#if too-many-sessions }}
+    <div class="card card-background" style="background: #2142b5; color: white;">
+      <div class="card-content">
+        <h6 class="category text-info">
+          {{ istring locale ru='Уважаемый пользователь' en='Dear Member' }}
+        </h6>
+        <p class="card-description">
+          {{ 
+            istring
+            locale 
+            ru='Ваш аккаунт был использован более чем с двух разных компьютеров одновременно, что превышает наш лимит.'
+            en='Your account being used from more than two computers which exceeds our legal limit.'
+            default='Your account being used from more than two computers which exceeds our legal limit.'
+          }}
+          <br /><br />
+          {{ 
+            istring
+            locale 
+            ru='Пожалуйста сделайте RELOGIN (Выход/Вход) в Ваш аккаунт, а если Вы не уверены кто ещё пользуется -  то смените пароль.'
+            en='Please RELOGIN or change password if you are not sure who is using your account.'
+            default='Please RELOGIN or change password if you are not sure who is using your account.'
+          }}
+        </p>
+        <a href="/logout" class="btn btn-white btn-simple">
+          {{ istring locale ru='Повторный вход' en='Relogin' default='Relogin' }}
+        </a>
+        <a href="/profile/change-password" class="btn btn-white btn-simple">
+          {{ istring locale ru='Сменить пароль' en='Change password' default='Change password' }}
+        </a>
+      </div>
+    </div>
+    {{else}}
+    <div id="div-video-player" class="embed-responsive embed-responsive-16by9" class_x="video-container text-center align-middle">
+        <p style="margin: 20px 0px;">
+            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fixed"></i>
+            {{ istring locale ru='Загрузка видео ...' en='Loading video ...'}}
+        </p>
+        {{#if legacyPlayback}}
+        <p style="margin: 20px 0px;">
+            <div class="h3">
+            {{ istring locale ru='Если не удается воспроизвести фильм в режиме старого плеера, то вернитесь к новому плееру или установите Adobe Flash Player' en='To enable playback on this video install Adobe Flash Player or use New Player option' }}
+            </div>
+            <a href="https://get.adobe.com/flashplayer/" class="btn btn-primary btn-round" target="_blank">Get Adobe Flash Player</a>
+
+            <a class="btn btn-warning btn-round" href="/link/legacyplayback/false" data-toggle="tooltip" title="{{ istring locale en='Back to the new player' ru='Вернуться к новому плееру' }}">
+                {{ istring locale ru='Использовать новый плеер' en='Use new player' }}
+            </a>
+        </p>
+        {{/if}}
+    </div>
+    {{/if}}
+    
+
+    <div class="card"><div class="card-content">
+
+        <div class="row">
+            <div class="col-md-12">
+
+            <a id="div-video-prev" class="btn btn-primary btn-round" data-toggle="tooltip" style="display: none;">
+                {{ istring locale ru='Предыдущая серия / эпизод' en='Prev episode' }}
+            </a>
+
+            <a id="div-video-next" class="btn btn-primary  btn-round" data-toggle="tooltip" style="display: none;">
+                {{ istring locale ru='Следующая серия / эпизод' en='Next episode' }}
+            </a>
+
+            <button class="btn btn-secondary btn-round d-none" data-toggle="tooltip" title="{{ istring locale en='Like this video' ru='Добавить в понравившиеся' }}">
+                <i class="fa fa-heart-o" style="color: red;" aria-hidden="true"></i>
+            </button>
+
+            <button class="btn btn-rose btn-round d-none" id="bt-video-unsub" data-toggle="tooltip" title="{{ istring locale en='Cancel video updates subscription' ru='Прекратить сообщать о новых эпизодах' }}">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                {{ istring locale en='Unsubscribe' ru='Отписаться' }}
+            </button>
+
+            <button class="btn btn-primary btn-round d-none" id="bt-video-sub" data-toggle="tooltip" title="{{ istring locale en='Inform me about new episodes' ru='Сообщать о новых эпизодах' }}">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                <span class="hidden-md-down">
+                {{ istring locale en='Subscribe' ru='Подписаться' }}
+                </span>
+            </button>
+
+            <button class="btn btn-primary btn-fab btn-fab-mini btn-round" id="bt-toggle-like">
+                <i class="material-icons">favorite</i>
+            </button>
+
+
+            &nbsp;&nbsp;&nbsp;
+
+                {{ istring locale ru='Поделиться' en='Share' }}
+                &nbsp;&nbsp;
+
+                <button class="btn btn-fab btn-fab-mini btn-facebook" onclick="javascript:window.open('https://www.facebook.com/sharer/sharer.php?u={{ share-url }}&picture={{ share-image-url }}', '_blank')">
+                    <i class="fa fa-facebook"></i>
+                </button>
+
+                <button onclick="javascript:window.open('https://twitter.com/home?status={{ share-url }}','_blank')" class="btn btn-fab btn-fab-mini btn-twitter">
+                    <i class="fa fa-twitter"></i>
+                </button>
+
+                <button onclick="javascript:window.open('https://plus.google.com/share?url={{ share-url }}', '_blank')" class="btn btn-fab btn-fab-mini btn-google">
+                    <i class="fa fa-google"></i>
+                </Button>
+
+                <button onclick="window.open('http://vk.com/share.php?url={{ share-url }}&image={{ share-image-url }}','_blank')" class="btn btn-facebook btn-fab btn-fab-mini">
+                    <i class="fa fa-vk"></i>
+                </button>
+
+                {{#unless legacyPlayback}}
+                <a class="pull-right btn btn-secondary btn-round" href="/link/legacyplayback/true" data-toggle="tooltip" title="{{ istring locale en='Use this option if you have troubles with current player and your browser supports Adobe Flash' ru='Воспользуйтесь этой опцией если вы испытываете проблемы с воспроизведением и ваш браузер поддерживает технологию Adobe Flash' }}">
+                    {{ istring locale ru='Использовать старый плеер' en='Use legacy player' }}
+                </a>
+                {{/unless}}
+                {{#if legacyPlayback}}
+                <a class="pull-right btn btn-secondary btn-round" href="/link/legacyplayback/false" data-toggle="tooltip" title="{{ istring locale en='Back to the new player' ru='Вернуться к новому плееру' }}">
+                    {{ istring locale ru='Использовать новый плеер' en='Use new player' }}
+                </a>
+                {{/if}}
+
+            </div>
+        </div>{{! icons: next / prev / like / subs / social buttons }}
+
+    </div></div>{{! div.card video's title }}
+
+    <div class="card card-nav-tabs">
+        <div class="header header-primary">
+            <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="active">
+                            <a href="#video-info-tab" data-toggle="tab">
+                                {{ istring locale ru='О фильме' en='Info' }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#comments-tab">
+                                {{ istring locale ru='Комментарии' en='Comments' }}
+                            </a>
+                        </li>
+                        {{#if episodesAvailable}}
+                            {{#unless seealso-dropdown}}
+                            <li>
+                                <a href="#episodes-tab">{{ istring locale ru='Эпизоды' en='Episodes' }}</a>
+                            </li>
+                            {{/unless}}
+                            {{#if seealso-dropdown}}
+                            <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{ istring locale ru='Сезоны' en='Seasons' }} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{#each seealso}}
+                                <li>
+                                <a class="dropdown-item" href="#video-season-{{ seasonIndex }}">
+                                    {{#if seasonTitle}}
+                                    {{ seasonTitle }}
+                                    {{/if}}
+                                    {{#unless seasonTitle}}
+                                    {{ seasonIndex }}
+                                    {{/unless}}
+                                </a>
+                                </li>
+                                {{/each}}
+                            </ul>
+                            </li>
+                            {{/if}}
+                        {{/if}}
+                        <li id="video-nav-likes" style="display: none;" data-toggle="tooltip" title="{{ istring locale ru='Кому понравился этот фильм / видео' en='People who likes this video' }}">
+                            <a href="#video-likes">
+                                <i class="fa fa-heart"></i> 1
+                            </a>
+                        </li>
+                        <li id="video-nav-viewers" style="display: none;"  data-toggle="tooltip" title="{{ istring locale ru='Это видео сейчас смотрят' en='People watching this movie right now' }}">
+                            <a class="nav-link" href="#video-viewers">
+                                <i class="fa fa-eye" aria-hidden="true"></i> 1
+                            </a>
+                        </li>
+                        {{#if recomendations}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#recomendations">
+                                    {{ istring locale ru='Рекомендации' en='Recomended' }}
+                                </a>
+                            </li>
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="tab-content">
+                <div class="tab-pane active" id="video-info-tab">
+
+                    <div class="h3 title d-none">{{ istring locale ru='О фильме' en='Video details' }}</div>
+                    {{#if countries}}
+                    <div itemprop="countryOfOrigin">
+                        <span style="font-weight: bold;">{{ istring locale ru='Страна' en='Country' }} -</span>
+                        {{#each countries}}{{#if @index}}, {{/if}}{{ . }}{{/each}}
+                    </div>
+                    {{/if}}
+
+                    {{#if year}}
+                    <div >
+                        <span style="font-weight: bold;">{{ istring locale ru='Год' en='Year' }} -</span>
+                        <span itemprop="datePublished">{{ year }}</span>
+                    </div>
+                    {{/if}}
+
+                    {{#if director}}
+                    <div>
+                        <span style="font-weight: bold;">{{ istring locale ru='Режиссер' en='Director' }} -</span>
+                        <span itemprop="director">{{ director }}</
+                    </div>
+                    {{/if}}
+
+                    {{#if musicby}}
+                    <div>
+                        <span style="font-weight: bold;">{{ istring locale ru='Композитор' en='Music by' }} -</span>
+                        <span itemprop="musicBy">{{ musicby }}</span>
+                    </div>
+                    {{/if}}
+
+                    {{#if produced}}
+                    <div>
+                        <span style="font-weight: bold;">{{ istring locale ru='Студия' en='Produced' }} -</span>
+                        <span itemprop="productionCompany">{{ produced }}</span>
+                    </div>
+                    {{/if}}
+
+                    {{#if writer}}
+                    <div>
+                        <span style="font-weight: bold;">{{ istring locale ru='Сценарий' en='Writer' }} -</span>
+                        <span>{{ writer }}</span>
+                    </div>
+                    {{/if}}
+
+                    {{#if awards}}
+                    <div>
+                        <span style="font-weight: bold;">{{ istring locale ru='Награды' en='Awards' }} -</span>
+                        <span itemprop="award">{{ awards }}</span>
+                    </div>
+                    {{/if}}
+
+                    {{#if duration}}
+                    <div>
+                        <span style="font-weight: bold;">{{ istring locale ru='Продолжительность' en='Duration' }} ≈</span>
+                        {{ duration }} {{ istring locale ru='мин' en='min' }}
+                    </div>
+                    {{/if}}
+
+                    {{#if categories}}
+                    <div style="margin: 5px 0px;">
+                    <span style="font-weight: bold; display: none;">{{ istring locale ru='Категории' en='Categories' }}</span>
+                    {{#each categories}}
+                    <a class="label label-info" href="/videos/{{ permalink }}">{{ category @root.locale title }}</a>
+                    {{/each}}
+                    </div>
+                    {{/if}}
+
+                    {{#if sinopsis}}
+                    <div style="margin: 15px 0px;">
+                        <span style="font-weight: bold;">{{ istring locale ru='О фильме' en='Sinopsis' }}</span>
+                        <br/>
+                        <div itemprop="description">{{sinopsis}}</div>
+                    </div>
+                    {{/if}}
+
+                    {{#if cast}}
+                    <div style="margin: 15px 0px;">
+                        <span style="font-weight: bold;">{{ istring locale ru='В ролях' en='Cast' }}</span>
+                        <br/>
+                        <span itemprop="actor">
+                            {{cast}}
+                        </span>
+                    </div>
+                    {{/if}}
+
+                    {{#if tags}}
+                    <div style="margin: 5px 0px;">
+                        {{#each tags}}
+                            <a class="label label-rose" href="/videos/tag/{{ . }}">#{{ . }}</a>{{#unless @last}}, {{/unless}}
+                        {{/each}}
+                        {{ writer }}
+                    </div>
+                    {{/if}}
+
+                </div>{{! video info tab }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="comments-tab" class="card">
+<div class="card-content">
+
+<div class="row">
+<div class="col-md-12">
+
+<div class="h3 title">{{ istring locale ru='Комментарии' en='Comments'}}</div>
+
+{{! new comment form }}
+{{#if user}}
+<div class="media media-post">
+  <a class="pull-left author" href="#pablo">
+      <div class="avatar">
+            <img class="media-object" src="{{ user.photo }}" />
+      </div>
+  </a>
+  <div class="media-body">
+    <form method="post" action="#" id="form-new-comment" class="memocast-comment-form">
+        <input type="hidden" name="video-item-id" value="{{ videoItemID }}" />
+        <div class="form-group is-empty">
+        <textarea name="body" id="new-comment-body" class="form-control" placeholder="{{ istring locale ru='Новый комментарий' en='New comment' }}" rows="6"></textarea>
+        </div>
+        <div class="media-footer">
+        <button type="submit" class="btn btn-primary btn-wd pull-right">
+            {{ istring locale ru='Отправить' en='Post Comment' }}
+        </button>
+        </div>
+    </form>
+  </div>
+</div>
+{{/if}}
+
+{{! comments container }}
+<div class="media-area">
+    <div id="div-comments" class="memocast-comments" memocast-video-title-id="{{ videoTitleID }}" memocast-video-item-id="{{ videoItemID }}">
+    </div>
+</div>
+
+</div></div>{{! row }}
+</div></div><!-- #comments-tab.card -->
+
+{{#if episodesAvailable}}
+<div id="episodes-tab" class="card">
+    <div class="card-content">
+<div class="h3 title">{{ istring locale ru='Эпизоды' en='Episodes' }}</div>
+<table class="table table-striped">
+{{#each seealso}}
+<tr id="video-season-{{ seasonIndex }}">
+    <td></td>
+    <td>
+        <div class="h4 title">
+        {{#if seasonTitle}}
+        {{ seasonTitle }}
+        {{/if}}
+        {{#unless seasonTitle}}
+        {{ seasonIndex }}
+        {{/unless}}
+        </div>
+    </td>
+</tr>
+    {{#each items}}
+        <tr{{#equal item.id @root.videoItemID }} class="success"{{/equal}}>
+            <td>{{#equal item.id @root.videoItemID }}<i class="material-icons pull-right">play_arrow</i>{{/equal}}</td>
+            <td><a href="{{ link }}">{{ item.title }}</a></td>
+        </tr>
+    {{/each}}
+{{/each}}
+</table>
+</div></div>{{! <div id="episodes-tab" class="card"> }}
+{{/if}}
+
+<div class="card" id="video-likes">
+    <div class="card-content">
+        <div class="h3 title">{{ istring locale ru='Фильм понравился этим пользователям' en='People liked this video' }}</div>
+        <div id="div-likes-users-list">
+        </div>
+    </div>
+</div>
+
+<div class="card" id="video-viewers">
+    <div class="card-content">
+        <div class="h3 title">{{ istring locale ru='Фильм сейчас смотрят' en='Current viewers' }}</div>
+        <div id="div-viewers-users-list">
+        </div>
+    </div>
+</div>
+
+{{#if recomendations}}
+<div id="recomendations" class="card">
+    <div class="card-content">
+    <div class="h3 title">{{ istring locale ru='Рекомендации' en='Recomended' }}</div>
+    {{> videos recomendations }}
+    </div>
+</div>
+{{/if}}
+
+</div>
+
+{{#section "scripts"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.3.3/videojs-contrib-hls.min.js"></script>
+<script src="//cdn.sc.gl/videojs-hotkeys/latest/videojs.hotkeys.min.js"></script>
+<script type="text/javascript">
+
+    var currentUserID = '{{ user.id }}';
+    var videoItemID = '{{ videoItemID }}';
+    var nextVideoItemID = '';
+    var nextVideoItemTitle = '';
+    var videoTitleID = '{{ videoTitleID }}';
+    var videoTitleTitle = '{{ title }}';
+    var videoTitleDescription = '{{ subTitle }}';
+    var player = null;
+
+    {{#if too-many-sessions}}
+    Memocast.tooManySessions = true;
+    {{/if}}
+
+    Memocast.playbackAvailable = {{#if playbackAvailable}}true{{else}}false{{/if}};
+
+</script>
+
+{{! jwPlayer }}
+<script src="/jwplayer/swfobject.js" type="text/javascript"></script>
+<script src="/jwplayer/jwplayer.5.10.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="/js/video.js"></script>
+{{/section}}
+
+
+{{#section "head"}}
+<meta name="description" content="Смотреть {{ title }}{{#if subTitle}} {{ subTitle}}{{/if}}{{#if year}} {{ year }}{{/if}} онлайн в хорошем качестве на Memocast" />
+<meta property="og:url"           content="https://www.memocast.com{{ original-url }}" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Memocast - {{ title }}" />
+<meta property="og:description"   content="{{ description }}" />
+<meta property="og:image"         content="https://www.memocast.com/images/video-title/{{ videoTitleID }}?height=320" />
+{{/section}}

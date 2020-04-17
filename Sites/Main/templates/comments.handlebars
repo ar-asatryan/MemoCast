@@ -1,0 +1,46 @@
+
+{{#each .}}
+
+<div class="media mmc-video-comment mmc-time-stamp-container" data-comment-id="{{ id }}" data-user-id="{{ user.id }}">
+<div class="pull-left">
+<div class="avatar">
+<img class="media-object" src="{{ user.photo }}" />
+</div>
+</div>
+
+
+
+<div class="media-body" style="position: relative;">
+<h4 class="media-heading"><a href="{{ user.url }}">{{ user.displayName }}</a> <small>· <span class="mmc-time-stamp" data-date="{{ date }}"></span></small>
+
+{{#if videoTitle.title }}
+<h5>
+    <a href="{{ videoTitle.url }}">{{ videoTitle.title }} <span class="text-muted">({{ videoTitle.year }})</span></a>
+</h5>
+{{/if}}
+
+</h4>
+
+
+{{#if videoItem.title }}
+<h6 style="text-transform: none;" class="text-muted">
+    <a class="text-muted" href="/video/{{videoItem.videoTitle}}/{{ videoItem._id }}">
+        {{ videoItem.title }}
+    </a>
+</h6>
+{{/if}}
+
+<p>
+    {{render-text body}}
+</p>
+
+<button class="pull-right mmc-remove-container d-none btn btn-danger btn-sm btn-round mmc-remove-button" style="position: absolute; top: 0; right: 0;" href="#">
+    <i class="fa fa-trash"></i>
+    &nbsp;
+    <span class="remove-label">Remove comment</span>
+</button>
+
+</div>
+</div>
+
+{{/each}}

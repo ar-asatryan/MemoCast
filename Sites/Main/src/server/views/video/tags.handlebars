@@ -1,0 +1,15 @@
+<h1 class="title">
+    {{ istring locale ru='Популярные тэги' en='Popular tags' }}
+</h1>
+
+<div class="card">
+    <div class="card-content">
+
+        <div class="row">
+        {{#each tags}}
+        {{> tag-card . }}
+        {{/each}}
+        </div>
+
+    </div><!-- card content -->
+</div><!-- card -->

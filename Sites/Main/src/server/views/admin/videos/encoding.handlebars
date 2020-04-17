@@ -1,0 +1,89 @@
+<div id="encoding-requests-container">
+</div>
+
+{{#section "scripts"}}
+
+<script type="text/x-handlebars-template" id="template-encoding-queue">
+<!-- /.panel-heading -->
+<table id="encoding-items" cellspacing="0" width="100%" class="display table table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th></th>
+<th>Item</th>
+<th>Status</th>
+<th>User</th>
+<th>Preset</th>
+</tr>
+</thead>
+<tbody>
+\{{#each .}}
+<tr data-request-id="\{{ _id }}">
+<td>\{{ createDate }}</td>
+<td>
+    \{{#if file.videoItem.videoTitle}}
+    <a href="/admin/videos/titles/\{{ file.videoItem.videoTitle }}/\{{ file.videoItem._id }}">
+        \{{#if file.videoItem.title }}
+        \{{ file.videoItem.title }}
+        \{{else}}
+        \{{_id}}
+        \{{/if}}
+    </a>
+    \{{else}}
+
+        \{{#if file.videoItem.title }}
+        \{{ file.videoItem.title }}
+        \{{else}}
+        \{{_id}}
+        \{{/if}}
+
+    \{{/if}}
+</td>
+<td>\{{ status }}</td>
+<td><a href="/admin/user/\{{ user._id }}">\{{ user.displayName }}</a></td>
+<td>\{{ encodingPreset }}</td>
+</tr>
+\{{/each}}
+</tbody>
+</table>
+</script>
+
+<script type="text/javascript">
+$(function () {
+
+    let $container = $('#encoding-requests-container');
+    let template = Handlebars.compile($("#template-encoding-queue").html());
+
+    let loadItems = function () {
+        let url = '/api/admin/encoding-requests';
+        $.ajax(url, {
+            method: 'GET',
+            success: function (response) {
+                $container.html(template(response));
+
+                var pageLength = getStorageValue('encoding-page-length', 50);
+
+                let table = $('#encoding-items').DataTable({
+                    order: [[0, 'desc']],
+                    search: {
+                        smart: true
+                    },
+                    pageLength: pageLength,
+                    responsive: true
+                });
+
+                table.on( 'length.dt', function ( e, settings, len ) {
+                    setStorageValue('encoding-page-length', len);
+                });
+            },
+            error: function (err) {
+                console.log(err);
+            },
+            complete: function () {
+            }
+        })
+    };
+
+    loadItems();
+});
+</script>
+{{/section}}

@@ -1,0 +1,20 @@
+<div class="h3 title">
+    {{ istring locale ru='Любимые фильмы' en='Favorite movies' }}
+</div>
+<hr />
+
+{{#if likes }}
+{{> videos likes }}
+{{else}}
+<p>
+    {{ istring locale ru="У вам пока нет любимых фильмов на сайте" en="You don't have favorite movies yet"}}
+</p>
+{{/if}}
+
+{{#section "scripts"}}
+<script type="text/javascript">
+    $(function() {
+        $('#sm-profile-likes').addClass('active');
+    });
+</script>
+{{/section}}

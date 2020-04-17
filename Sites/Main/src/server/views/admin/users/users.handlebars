@@ -1,0 +1,77 @@
+<div id="users-container">
+</div>
+
+{{#section "scripts"}}
+
+<script type="text/x-handlebars-template" id="template-users">
+<!-- /.panel-heading -->
+<table id="users-items" cellspacing="0" width="100%" class="display table table-striped table-bordered table-hover">
+<thead>
+<tr>
+<th>Date</th>
+<th>User</th>
+<th>E-mail</th>
+</tr>
+</thead>
+<tbody>
+\{{#each .}}
+<tr data-user-id="\{{ _id }}">
+<td>\{{ createDate }}</td>
+<td><a href="/admin/user/\{{ _id }}">
+    \{{#if displayName}}\{{ displayName }}\{{/if}}
+    \{{#unless displayName}}
+    \{{#if facebook-credentials.displayName }}
+    FB: \{{ facebook-credentials.displayName }}
+    \{{/if}}
+    \{{#if vkontakte-credentials.displayName }}
+    VK: \{{ vkontakte-credentials.displayName }}
+    \{{/if}}
+    \{{/unless}}
+</a></td>
+<td>\{{ email }}</td>
+</tr>
+\{{/each}}
+</tbody>
+</table>
+</script>
+
+<script type="text/javascript">
+$(function () {
+
+    let initialSearch = '{{ search.search }}';
+
+    let $container = $('#users-container');
+    let template = Handlebars.compile($("#template-users").html());
+
+    let loadItems = function () {
+        let url = '/api/admin/users';
+        let data = {
+            search : initialSearch
+        };
+        $.ajax(url, {
+            method: 'GET',
+            data: data,
+            success: function (response) {
+                console.log(response);
+                $container.html(template(response));
+
+                let table = $('#users-items').DataTable({
+                    order: [[0, 'desc']],
+                    search: {
+                        smart: true
+                    },
+                    responsive: true
+                });
+            },
+            error: function (err) {
+                console.log(err);
+            },
+            complete: function () {
+            }
+        })
+    };
+
+    loadItems();
+});
+</script>
+{{/section}}

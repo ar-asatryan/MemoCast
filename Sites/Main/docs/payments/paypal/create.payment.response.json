@@ -1,0 +1,37 @@
+{
+  "id": "PAY-8YL701757Y062180SLDXFQ2I",
+  "intent": "sale",
+  "state": "created",
+  "payer": {
+    "payment_method": "paypal"
+  },
+  "transactions": [
+    {
+      "amount": {
+        "total": "2.99",
+        "currency": "USD"
+      },
+      "description": "Memocast 2-days pass ticket",
+      "related_resources": []
+    }
+  ],
+  "create_time": "2017-04-12T16:40:09Z",
+  "links": [
+    {
+      "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAY-8YL701757Y062180SLDXFQ2I",
+      "rel": "self",
+      "method": "GET"
+    },
+    {
+      "href": "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-0C45263256511274F",
+      "rel": "approval_url",
+      "method": "REDIRECT"
+    },
+    {
+      "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAY-8YL701757Y062180SLDXFQ2I/execute",
+      "rel": "execute",
+      "method": "POST"
+    }
+  ],
+  "httpStatusCode": 201
+}

@@ -1,0 +1,26 @@
+@import "../bower_components/bootstrap/scss/variables";
+
+footer { padding-top: 60px; }
+.mmc-block {
+    margin: 15px 0px;
+}
+
+@mixin mmc-video-stats {
+    position: absolute;
+    top: $spacer;
+    color: lighten(lightgray, 20%);
+}
+
+body {
+    // padding-top: 70px;
+}
+
+.mmc-video-item {
+
+    .stats {
+        @include mmc-video-stats;
+        right: $spacer;
+    }
+
+    cursor: pointer;
+}

@@ -1,0 +1,43 @@
+<div class="row">
+{{#if user}}
+
+<div class="d-xs-none col-md-1">
+{{#if user.photo }}
+<a href="{{ user.url }}">
+<img class="rounded-circle" style="width: 50px; height: 50px;" src="{{ user.photo }}">
+</a>
+{{/if}}
+</div>
+
+
+<div class="col-xs-12 col-md-11">
+<div class="h6">
+    {{ istring locale ru='' en='by'}}
+    <a href="{{ user.url }}">{{ user.displayName }}</a></strong> <span class="text-muted">{{ date }}</div>
+{{#if videoTitle.title }}
+<div class="h6">on <a href="{{ videoTitle.url }}">{{ videoTitle.title }} <span class="text-muted">({{ videoTitle.year }})</span></a></div>
+{{/if}}
+<p>
+{{render-text body}}
+</p>
+</div>
+
+{{else}}
+
+<div class="col-md-12">
+<div class="h6 text-muted">{{ date }}</div>
+{{#if videoTitle.title }}
+<div class="h6">on <a href="{{ videoTitle.url }}">{{ videoTitle.title }} <span class="text-muted">({{ videoTitle.year }})</span></a></div>
+{{/if}}
+<p>
+{{ body }}
+</p>
+</div>
+
+{{/if}}
+
+<div class="col-md-12 col-md-12">
+<hr />
+</div>
+
+</div><!-- /row -->

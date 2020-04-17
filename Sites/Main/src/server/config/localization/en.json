@@ -1,0 +1,72 @@
+{
+    "pages": {
+        "login": {
+            "title": "Login or <a href='/signup'>Sign up</a>",
+            "submit-button": "Login",
+            "forgot-password": "Forgot password?",
+            "or": "or"
+        },
+        "signup": {
+            "title": "Sign up",
+            "or": "or"
+        },
+        "home": {
+
+        },
+        "video": {
+
+        }
+    },
+    "menu": {
+        "top": {
+            "movies": {
+                "title": "Movies",
+                "all": "All movies",
+                "categories": "Categories",
+                "online": "Watching now",
+                "weektop": "Top by week",
+                "comments": "Comments",
+                "requests": "Requests"
+            },
+            "people": {
+                "title": "People",
+                "commentators": "Commentators",
+                "top": "Top",
+                "online": "Online"
+            },
+            "profile": {
+                "my": "My Profile",
+                "edit": "Edit",
+                "history": "History",
+                "likes": "Likes",
+                "messages": "Messages",
+                "logout": "Logout",
+                "login": "Login",
+                "signup": "Signup"
+            },
+            "search": {
+                "placeholder": "Search ..."
+            },
+            "settings": {
+                "title": "Settings",
+                "incognito": {
+                    "label": "Incognito mode",
+                    "note": "In incognito mode other users can't see you."
+                }
+            }
+        },
+        "bottom": {
+            "about": "About us",
+            "feedback": "Feedback",
+            "contacts": "Contacts",
+            "user agreement": "User Agreement",
+            "payment options": "Payment Options",
+            "privacy notice": "Privacy Notice",
+            "help": "Help"
+        }
+    },
+
+    "utils": {
+        "loading": "Loading ..."
+    }
+}

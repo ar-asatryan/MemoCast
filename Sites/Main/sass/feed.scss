@@ -1,0 +1,15 @@
+// @import "../material/sass/material-kit/_variables"
+
+$brand-warning: #ff7c00 !default;
+
+#mmc-feed-popup {
+    z-index: 1000;
+    min-width: 320px;
+    max-width: 450px;
+}
+
+.mmc-has-updates {
+    i {
+        color: $brand-warning !important;
+    }
+}

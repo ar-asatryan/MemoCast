@@ -1,0 +1,79 @@
+<div id="form-settings-placeholder">
+</div>
+
+{{#section "scripts"}}
+
+<script type="text/javascript">
+    
+    var formTemplate = null;
+    var changesTracker = null;
+    
+    var loadSettings = function() {
+        var url = '/api/settings';
+        $.ajax(url, {
+            method: 'GET',
+            headers: {
+                'memocast-api-key': 'fFzTwySabqlT0PsHI4yZA2Qn'
+            },
+            success: function(response) {
+                var formHtml = formTemplate(response);
+                $('#form-settings-placeholder').html(formTemplate(response));
+                changesTracker = { };
+            }
+        });
+    };
+    
+    var initFormTemplate = function() {
+        formTemplate = Handlebars.compile($("#template-settings").html());  
+    };
+    
+    $(function() {
+        initFormTemplate();
+        
+        loadSettings();
+        
+        $(document).on('submit', '#form-settings', function(evt) {
+            var url = '/api/settings';
+            
+            var arr = new Array();
+            for (var key in changesTracker) {
+                var item = { key: key, value: changesTracker[key] };
+                arr.push(item);
+            }
+            
+            $.ajax(url, {
+                method: 'PUT',
+                data: { updates: arr },
+                headers: {
+                    'memocast-api-key': 'fFzTwySabqlT0PsHI4yZA2Qn'
+                },
+                success: function(response) {
+                }
+            });
+            
+            evt.preventDefault();
+        });
+        
+        $(document).on('change', '#form-settings input', function(evt) {
+            var $el = $(this);
+            var val = $el.val();
+            var key = $el.attr('name');
+            changesTracker[key] = val;
+        });
+    });
+</script>
+
+<script type="text/x-handlebars-template" id="template-settings">
+<form id="form-settings" action="#" method="post">
+<table callpadding="2" cellspacing="2">
+\{{#each .}}
+<tr><td style="text-align: right;"><label for="\{{ key }}">\{{ key }}</label></td><td><input type="text" name="\{{ key }}" value="\{{ value }}" /></td></tr>
+\{{/each}}
+<tr>
+<td colspan="2"><button type="submit">Сохранить</button></td>
+</tr>
+</table>
+</form>
+</script>
+
+{{/section}}

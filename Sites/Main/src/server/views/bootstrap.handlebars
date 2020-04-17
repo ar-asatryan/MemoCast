@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Bootstrap Tests</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css" />
+    </head>
+    <body>
+
+        <div class="container">
+<button type="button" class="btn btn-success btn-lg">Success
+     Button</button>
+     <br><br>
+       <button type="button" class="btn btn-info btn-sm">Info
+       Button</button>
+     <br><br>
+       <button type="button" class="btn btn-warning btn-xs">Warning
+       Button</button>
+     <br><br>
+       <button type="button" class="btn btn-danger">Danger
+       Button</button>
+     <br><br>
+       <button type="button" class="btn btn-link">Link
+       Button</button>
+        </div>
+
+        <script src="/bower/jquery/dist/jquery.min.js"></script>
+        <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"></script>-->
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+        {{#if debug }}
+        <!-- Reload -->
+        <script src="/reload/reload.js" type="text/javascript"></script>
+        {{/if }}
+
+    </body>
+</html>

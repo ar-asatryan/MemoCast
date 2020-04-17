@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1 class="title" style="font-size: 24px; padding: 0px; margin: 15px 0px 25px 0px;" >
+            
+            
+
+            {{ istring locale ru='Memocast - лучшая коллекция русских фильмов и сериалов' 
+                              en='Memocast - The best collection of Russian movies and serials' }}
+            </h1>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {{> flash flash }}
+    </div>
+</div>
+
+{{#unless user}}
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-4">
+            <div class="h3">
+                {{ istring locale ru='Лучшая библиотека фильмов на русском' en='Biggest movie library in Russian' }}
+            </div>
+            <p>
+                {{ istring locale ru='Более 200 тысяч фильмов и сериалов' en='Over 200 thousand Movies' }}
+            </p>
+            <p>
+                {{ istring locale ru='Новые поступления каждый день' en='New Arrivals every day' }}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <div class="h3">
+                {{ istring locale ru='Первые две недели просмотра - бесплатно' en='Enjoy 2 weeks Free' }}
+            </div>
+            <div>
+                {{ istring locale ru='Всего $9.95 в месяц после пробного периода' en='Flat monthly rate $9.95/month for Unlimited Access' }}
+            </div>
+            <div>
+                <a href="/signup" class="btn btn-rose">
+                    {{ istring locale ru='Попробовать бесплатно сейчас' en='Start Your Free Trial Now' }}
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <a href="/welcome#tv">
+            <div class="h3">
+                {{ istring locale ru='Смотрите на ТВ' en='Watch on TV' }}
+            </div>
+            <p>
+                {{ istring locale ru='Доступно на Roku, ChromeCast и Apple TV' en='Available now on ROKU, Chromecast and AppleTV' }}
+            </p>
+            </a>
+        </div>
+    </div>
+{{/unless}}
+
+{{#if feed}}
+<div class="card">
+    <div class="card-content">
+        <a href="/profile/feed" title="{{ istring locale ru='Показать все обновления' en='Show all updates'}}">
+        <div class="h3 title">
+            {{ istring locale ru='Ваша лента новостей' en='Your latest updates' }}
+        </div>
+        </a>
+    </div>
+    <div class="card-content">
+        {{> feed feed }}
+    </div>
+</div>
+{{/if}}
+
+{{#if history }}
+<div class="card card-contact">
+<div class="card-content">
+<a href="/profile/history">
+<div class="h3 title">{{ istring locale ru='История просмотров' en='Watch history' }}</div>
+</a>
+{{> videos history }}
+</div></div>
+{{/if}}
+
+{{#if tags}}
+<div class="card"><div class="card-content">
+    <div class="h3 title">
+        <a href="/videos/tags" style="color: black;">
+            {{ istring locale ru='Популярные тэги' en='Popular tags' }}
+        </a>
+    </div>
+
+<div class="row">
+{{#each tags}}
+{{> tag-card . }}
+{{/each}}
+</div>
+
+</div></div>
+{{/if}}
+
+{{#if new-videos }}
+<div class="card"><div class="card-content">
+<div class="h3 title">
+    <a href="/videos/new" style="color: black;">
+        {{ istring locale ru='Новинки' en='New arrivals' }}
+    </a>
+</div>
+{{> videos new-videos }}
+</div></div>
+{{/if}}
+
+{{#if online }}
+<div class="card"><div class="card-content">
+<div class="h3 title">
+    <a href="/videos/online" style="color: black;">
+        {{ istring locale ru='Что смотрят в данный момент' en='Watching right now' }}
+    </a>
+</div>
+{{> videos online }}
+</div></div>
+{{/if}}
+
+{{#if kids }}
+<div class="card"><div class="card-content">
+<div class="h3 title">
+    <a href="/videos/kids" style="color: black;">
+        {{ istring locale ru='Для детей' en='For kids' }}
+    </a>
+</div>
+{{> videos kids }}
+</div></div>
+{{/if}}
+
+{{#each categories}}
+<div class="card"><div class="card-content">
+<div class="h3 title">
+    <a href="/videos/{{ id }}" style="color: black;">
+        {{ title }}
+    </a>
+</div>
+{{> videos videos }}
+</div></div>
+{{/each}}
+
+{{#section "scripts"}}
+
+<!-- loading flash adverts from api -->
+{{!-- <script src="/js/home-flash.js" type="text/javascript"></script> --}}
+
+{{/section}}
+
+{{#section "head"}}
+<meta name="description" content="Смотреть новые русские сериалы и фильмы онлайн в хорошем качестве, лучшие российские сериалы Russian TV 2017 года." />
+{{/section}}

@@ -1,0 +1,39 @@
+<div class="h3 title">
+    {{ istring locale ru='Мои видео запросы' en='My video requests' }}
+</div>
+<hr />
+
+<a href="/profile/video-requests/new" class="btn btn-primary">
+    {{ istring locale ru='Отправить новый видео запрос' en='Send new video request' }}
+</a>
+
+<hr />
+
+<div id="video-requests" style="display: none;">
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+    $(function() {
+
+        $('#sm-profile-video-requests').addClass('active');
+
+        let $requests = $('#video-requests');
+        let apiURL = '/api/video-request';
+        $.ajax(apiURL, {
+            method: 'GET',
+            success: function (response) {
+                let html = '';
+                Memocast.loadTemplateByName('video-request-item', function (err, temp) {
+                    response.forEach(function (item) {
+                        html += temp(item);
+                        html += '<hr/>';
+                    });
+                    $requests.html(html);
+                    $requests.show();
+                });
+            }
+        });
+    });
+</script>
+{{/section}}

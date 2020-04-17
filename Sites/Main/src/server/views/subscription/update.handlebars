@@ -1,0 +1,253 @@
+<div class="card">
+    <div class="card-content">
+
+        <h1>
+            {{ istring locale ru='Изменить номер карты для подписки' en='Change card number in subscription' }}
+        </h1>
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+
+    <!-- subs form -->
+    <form method="post" class="text-justify" id="subscription-form" action="/profile/subscription/update" autocomplete="on">
+
+        <div class="form-group">
+            <label for="subs-tb-cc-number">{{ istring locale ru='Номер кредитной карты' en='Credit card number' }}</label>
+            <input type="tel" class="form-control" name="cc-number" autocomplete="off" id="subs-tb-cc-number" />
+        </div>
+
+        <div class="form-group">
+            <label for="subs-select-card-type">{{ istring locale ru='Тип карты' en='Card type' }}</label>
+            <select class="form-control" name="cc-card-type" id="subs-select-card-type" autocomplete="off">
+				<option selected="selected" data-card-type="visa" value="001">Visa</option>
+				<option value="002" data-card-type="mastercard">MasterCard</option>
+				<option value="003" data-card-type="amex">American Express</option>
+				<option value="004" data-card-type="discover">Discover</option>
+				<option value="005" data-card-type="dinersclub">Diners Club</option>
+				<option value="007" data-card-type="jcb">JCB</option>
+			</select>
+        </div>
+
+        <div class="form-group">
+            <label for="subs-tb-cc-expire">{{ istring locale ru='Срок действия карты' en='Expire date' }}</label>
+            <input type="text" class="form-control" name="cc-expire-date" id="subs-tb-cc-expire" placeholder="{{ istring locale ru='месяц/год' en='Month / Year' }}" autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+            <label for="subs-tb-address">{{ istring locale ru='Адрес' en='Address' }}</label>
+            <input type="text" class="form-control" name="address" id="subs-tb-address" autocomplete="on" />
+        </div>
+
+        <div class="form-group">
+            <label for="subs-tb-city">{{ istring locale ru='Город' en='City' }}</label>
+            <input type="text" class="form-control" name="city" id="subs-tb-city" autocomplete="on" />
+        </div>
+
+        <div class="form-group">
+            <label for="subs-select-region">{{ istring locale ru='Штар / Регион' en='State / Region' }}</label>
+            <select id="subs-select-region" name="region" class="form-control">
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="subs-select-country">{{ istring locale ru='Страна' en='Country' }}</label>
+            <select id="subs-select-country" name="country" style="text-transform: capitalize;" class="form-control">
+			</select>
+        </div>
+
+        <div class="form-group">
+            <label for="subs-tb-zip-code">{{ istring locale ru='Почтовый индекс' en='Postal code' }}</label>
+            <input type="text" class="form-control" name="postal-code" id="subs-tb-address-zip-code" autocomplete="on" />
+        </div>
+
+        <div class="form-group">
+            <label>{{ istring locale ru='Имя' en='First name' }}</label>
+            <input type="text" id="subs-tb-first-name" name="first-name" class="form-control" autocomplete="on" />
+        </div>
+
+        <div class="form-group">
+            <label>{{ istring locale ru='Фамилия' en='Last name' }}</label>
+            <input type="text" id="subs-tb-first-name" name="last-name" class="form-control" autocomplete="on" />
+        </div>
+
+        <div class="form-group">
+            <label>{{ istring locale ru='Эл. почта' en='E-mail' }}</label>
+            <input type="email" id="subs-tb-first-name" name="e-mail" class="form-control"  autocomplete="on" />
+        </div>
+
+        <input type="hidden" name="subscription-id" id="subs-hid-subscription-id" value="{{ activeSubscription.cybersource.subscription-id }}" />
+
+        <div class="alert alert-danger d-none" id="subs-error" role="alert">
+        </div>
+
+        <div class="alert alert-success d-none" id="subs-success" role="alert">
+            {{ istring locale ru='Подписка успешно обновлена' en='Subscription updated successfully' }}
+        </div>
+
+        <div class="buttons text-center">
+            <button class="btn btn-primary" id="subs-bt-submit">
+                <i class="fa fa-circle-o-notch fa-spin fa-fw d-none" id="subs-spinner"></i>
+                {{ istring locale ru='Обновить' en='Update' }}
+            </button>
+        </div>
+
+    </form>
+    <!-- /// subs form -->
+
+</div></div>{{! .row }}
+
+</div></div>{{! .card & .card-content }}
+
+{{#section "scripts"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
+<script type="text/javascript">
+// payment (credit card)
+$(function () {
+
+    var $countries = $('#subs-select-country');
+    var $regions = $('#subs-select-region');
+    var $cardNumber = $('#subs-tb-cc-number');
+    var $cardExpireDate = $('#subs-tb-cc-expire');
+    var $form = $('#subscription-form');
+    var $bt = $('#subs-bt-submit');
+    var $spinner = $('#subs-spinner');
+    var $error = $('#subs-error');
+    var $success = $('#subs-success');
+
+    $cardNumber.payment('formatCardNumber');
+    $cardExpireDate.payment('formatCardExpiry');
+
+    $cardNumber.on('input', function (evt) {
+        var num = this.value;
+        var cardType = $.payment.cardType(num);
+        if (cardType !== '') {
+            var sel = 'option[data-card-type=\'' + cardType + '\']';
+            var $opt = $(sel);
+            $opt.prop('selected', true);
+        }
+    });
+
+    function loadCountries() {
+
+        var url = '/api/payments/countries';
+        $.ajax(url, {
+            method: 'GET',
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var item = response[i];
+                    var $option = $('<option />');
+                    $option.attr('value', item._id);
+                    $option.text(item.name);
+                    $countries.append($option);
+                }
+                loadRegions();
+            }
+        });
+    }
+
+    function loadRegions() {
+        var url = '/api/payments/regions/' + $countries.val();
+        $.ajax(url, {
+            method: 'GET',
+            success: function (response) {
+                $regions.html('');
+                for (var i = 0; i < response.length; i++) {
+                    var item = response[i];
+                    var $option = $('<option />');
+                    $option.attr('value', item.code);
+                    $option.text(item.name);
+                    $regions.append($option);
+                }
+                response.length > 0 ? $regions.show() : $regions.hide();
+            }
+        });
+    }
+
+    loadCountries();
+
+    $countries.change(loadRegions);
+
+    var submitRequest = null;
+
+    var validateOptions = Memocast.formValidation.defaultValidateOptions();
+    validateOptions.rules = {
+        'cc-number': {
+            'required' : true
+        },
+        'cc-expire-date': {
+            'required' : true
+        },
+        'address': {
+            'required' : true
+        },
+        'city': {
+            'required' : true
+        },
+        'postal-code': {
+            'required' : true
+        },
+        'first-name': {
+            'required' : true
+        },
+        'last-name': {
+            'required' : true
+        },
+        'e-mail': {
+            'required' : true
+        }
+    };
+    var validator = $form.validate(validateOptions);
+
+    $form.submit(function (evt) {
+        evt.preventDefault();
+        if (validator.form()) {
+            if (!submitRequest) {
+                var url = '/api/payments/subscription';
+                var data = Memocast.formDataToJson($form);
+                $bt.prop('disabled', true);
+                $spinner.removeClass('d-none');
+                if (!$error.hasClass('d-none')) {
+                    $error.addClass('d-none');
+                }
+                if (!$success.hasClass('d-none')) {
+                    $success.addClass('d-none');
+                }
+                submitRequest = $.ajax(url, {
+                    method: 'PATCH',
+                    data: data,
+                    success: function (resp) {
+                        $success.removeClass('d-none')
+                    },
+                    error: function (err) {
+
+                        var e = err.responseJSON;
+
+                        var message = 'Unknown payment error';
+
+                        if ('error' in e) {
+                            var error = e.error;
+                            if (typeof error == 'string') {
+                                message = error;
+                            } else if ('message' in error) {
+                                message = error.message;
+                            }
+                        }
+                        if ($error.hasClass('d-none')) {
+                            $error.removeClass('d-none');
+                        }
+
+                        $error.html('<strong>' + message + '</strong>');
+                    },
+                    complete: function () {
+                        $spinner.addClass('d-none');
+                        submitRequest = null;
+                        $bt.prop('disabled', false);
+                    }
+                });
+            }
+        }
+    });
+
+});
+</script>
+{{/section}}

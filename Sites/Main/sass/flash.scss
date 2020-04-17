@@ -1,0 +1,28 @@
+.flash-adverts-carousel {
+    width: 100%;
+    height: auto;
+}
+
+.flash-item img {
+    width: 100%;
+    height: 100%;
+}
+.flash-item {
+    width: 100%;
+    height: auto;
+    cursor: hand;
+    cursor: pointer;
+}
+.flash-item .title {
+    color: white;
+}
+.flash-item .body {
+    color: white;
+}
+.flash-item .info {
+    padding: 10px;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0.25);
+    position: absolute;
+    bottom: 10px;
+}

@@ -1,0 +1,48 @@
+<div class="row mmc-feed-item">
+{{#if author }}
+<div class="col-md-1" style="position: relative;">
+    <img class="rounded-circle" src="{{ author.photo }}" style="width: 50px; height: 50px; position: relative;" />
+{{#equal objType "follower"}}
+    <div style="background-color: transparent; color: black; padding: 2px; position: absolute; top: 0px; left: 0px;">
+    <i class="fa fa-user-plus"></i>
+    </div>
+{{/equal}}
+{{#equal objType "like"}}
+    <div style="background-color: transparent; color: black; padding: 2px; position: absolute; top: 0px; left: 0px;">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+    </div>
+{{/equal}}
+{{#equal objType "comment"}}
+    <div style="background-color: transparent; color: black; padding: 2px; position: absolute; top: 0px; left: 0px;">
+    <i class="fa fa-comment" aria-hidden="true"></i>
+    </div>
+{{/equal}}
+</div>
+{{/if}}
+
+{{#equal objType "newvideoitem"}}
+<div class="col-md-1" style="position: relative;">
+    <img class="rounded-circle" src="/images/video-title/{{ videoTitle.id }}?width=50&height=50" style="width: 50px; height: 50px; position: relative;" />
+    <div style="background-color: transparent; color: black; padding: 2px; position: absolute; top: 0px; left: 0px;">
+    <i class="fa fa-user-plus"></i>
+    </div>
+</div>
+{{/equal}}
+
+<div class="col-md-11">
+{{#equal objType "newvideoitem"}}
+    <a href="{{ author.url }}">{{ author.displayName }}</a> LALALA
+{{/equal}}
+{{#equal objType "follower"}}
+    <a href="{{ author.url }}">{{ author.displayName }}</a> подписался(ась) на ваши обновления
+{{/equal}}
+{{#equal objType "like"}}
+Пользователю <a href="{{ author.url }}">{{ author.displayName }}</a> нравится <a href="{{ videoTitle.url }}">{{ videoTitle.title }}</a>
+{{/equal}}
+{{#equal objType "comment"}}
+Пользователь <a href="{{ author.url }}">{{ author.displayName }}</a> прокомментировал(а) <a href="{{ videoTitle.url }}">{{ videoTitle.title }}</a>
+<p>{{ comment.body }}</p>
+{{/equal}}
+</div>
+
+</div>

@@ -1,0 +1,264 @@
+<nav class="navbar navbar-primary{{#if fluid}}  navbar-fixed-top  navbar-transparent navbar-color-on-scroll{{/if}}" color-on-scroll="200" role="navigation" style="z-index: 1000;">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="/">
+    <img src="/img/logo-sv1.png" width="168" alt="Memocast" />
+</a>
+</div>
+
+<div class="collapse navbar-collapse">
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="/">{{ istring locale en='Home' ru='Начало' }}</a>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ string locale 'menu.top.movies.title' default='Movies' }} <b class="caret"></b></a>
+<ul class="dropdown-menu">
+{{#if user}}
+<li>
+<a href="/profile/history">
+{{ istring locale en='Watch history' ru='История просмотров' }}
+</a>
+</li>
+<li class="divider"></li>
+{{/if}}
+<li>
+    <a href="/videos/all">
+        {{ string locale 'menu.top.movies.all' default='All movies' }}
+    </a>
+</li>
+<li>
+    <a href="/videos/new">
+        {{ istring locale ru='Новинки' en='New videos' }}
+    </a>
+</li>
+<li>
+    <a href="/videos/kids">
+        {{ istring locale ru='Для детей' en='For kids' }}
+    </a>
+</li>
+<li>
+    <a href="/category/all">
+    {{ string locale 'menu.top.movies.categories' default='By category' }}
+    </a>
+</li>
+<li class="divider"></li>
+<li>
+    <a href="/videos/online">
+        {{ string locale 'menu.top.movies.online' default='Watching now' }}
+    </a>
+</li>
+<li>
+    <a href="/videos/tags">
+        {{ istring locale ru='Популярные тэги' en='Popular tags' }}
+    </a>
+</li>
+<li>
+    <a href="/videos/liked">
+        {{ istring locale ru='Популярное за неделю' en='Top of the week' }}
+    </a>
+</li>
+<li class="divider"></li>
+<li>
+    <a href="/comments/">
+        {{ string locale 'menu.top.movies.comments' default='Comments' }}
+    </a>
+</li>
+
+{{! video requests / hidden for now }}
+<li class="divider"></li>
+<li>
+    <a href="/videos/requests">
+        {{ istring locale ru='Видео-запросы' en='Video requests'}}
+    </a>
+</li>
+
+</ul>
+</li>
+
+{{! people menu }}
+
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        {{ string locale 'menu.top.people.title' default='People' }}
+        <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+    <li>
+        <a href="/people/commentators">
+            {{ string locale 'menu.top.people.commentators' default='Commentators' }}
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a href="/people/leaders">
+            {{ string locale 'menu.top.people.top' default='Top' }}
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a class="dropdown-item" href="/people/online">
+            {{ string locale 'menu.top.people.online' default='Online' }}
+        </a>
+    </li>
+    </ul>
+</li>
+
+{{#if user}}
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        {{#if user.displayName }}
+        {{ user.displayName }}
+        {{else}}
+        {{ istring locale ru='Профиль' en='Profile' }}
+        {{/if}}
+        <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+        {{#unless activeSubscription}}
+            <li>
+                <a href="/profile/subscription/purchase">
+                    {{ istring locale
+                        ru='Приобрести подписку'
+                        en='Become Gold Member' }}
+                </a>
+            </li>
+        {{/unless}}
+        {{#if activeSubscriptionIsTemporary}}
+            <li>
+                <a href="/profile/subscription/purchase">
+                    {{ istring locale
+                        ru='Приобрести подписку'
+                        en='Become Gold Member' }}
+                </a>
+            </li>
+        {{/if}}
+        <li>
+            <a href="/profile/">
+                {{ string locale 'menu.top.profile.my' default='My Profile' }}
+            </a>
+        </li>
+        <li>
+            <a href="/profile/edit">
+                {{ string locale 'menu.top.profile.edit' default='Edit' }}
+            </a>
+        </li>
+        {{#if activeSubscriptionCanUpgradeCreditCard}}
+        <li>
+            <a href="/profile/subscription/update">
+                {{ istring locale ru='Изменить номер карты' en='Change card number in subscription'}}
+            </a>
+        </li>
+        {{/if}}
+        <li>
+            <a href="/profile/history">
+                {{ string locale 'menu.top.profile.history' default='History' }}
+            </a>
+        </li>
+        <li>
+            <a href="/profile/likes">
+                {{ string locale 'menu.top.profile.likes' default='Likes' }}
+            </a>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <a class="dropdown-item" href="/logout">
+                {{ string locale 'menu.top.profile.logout' default='Logout' }}
+            </a>
+        </li>
+        {{#if userIsAdmin}}
+        <li class="divider"></li>
+        <li>
+            <a href="/admin">
+                {{ istring locale ru='Админка' en='Admin' }}
+            </a>
+        </li>
+        {{/if}}
+    </ul>
+</li>
+<li>
+    <a href="#" class="mmc-popover-triggerer" id="bt-feed-popup">
+        <i class="fa fa-bell" aria-hidden="true"></i>
+    </a>
+</li>
+{{/if}}
+{{#unless user}}
+<li>
+    <a href="/login">
+        {{ string locale 'menu.top.profile.login' default='Login' }}
+    </a>
+</li>
+{{/unless}}
+
+<li>
+    <a href="#" id="settings-button" class="mmc-popover-triggerer" title="{{ string locale 'menu.top.settings.title' }}">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+    </a>
+</li>
+
+<li class="visible-xs-inline">
+    <a href="/search">{{ istring locale ru='Поиск' en='Search' }}</a>
+</li>
+
+</ul>
+{{#unless hide-nav-search}}
+<form autocomplete="off" class="navbar-form navbar-right" method="get" action="/search" role="search">
+    <div class="form-group form-white">
+    <input autocomplete="off" class="form-control memocast-autocomplete-videos" id="tb-videos-autocomplete"
+        name="s"
+        type="text"
+        placeholder="{{ string locale 'menu.top.search.placeholder' default='Search' }}" />
+    </div>
+</form>
+{{/unless}}
+
+</div>
+</div>
+</nav>
+
+<div id="mmc-autocomplete" class="mmc-popover-content mmc-autocomplete card card-raised" style="display: none;">
+</div>
+
+<div id="mmc-feed-popup" class="mmc-popover-content mmc-feed-popup card card-raised" style="display: none;">
+</div>
+
+<div id="mmc-video-title-popover" class="card card-raised" style="display: none; z-index: 1000; max-width: 500px;">
+</div>
+
+<div id="settings-popover" class="mmc-popover-content card card-raised" style="width: 300px; z-index: 1000; display: none;">
+    <div class="card-content settings">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="title">Выберите язык / Select language</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 text-center">
+                <div class="flag-item rounded{{#equal locale 'ru' }} active{{/equal}}">
+                    <a href="/link/locale/ru"><span class="flag-icon flag-icon-ru"></span></a>
+                </div>
+            </div>
+            <div class="col-xs-6 text-center">
+                <div class="flag-item rounded{{#equal locale 'en' }} active{{/equal}}">
+                    <a href="/link/locale/en"><span class="flag-icon flag-icon-us"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <div class="checkbox">
+                	<label>
+                		<input type="checkbox" id="cb-legacy-playback"{{#if legacyPlayback}} checked{{/if}}>
+                        {{ istring locale ru='Использовать старый плеер' en='Use legacy player' }}
+                	</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

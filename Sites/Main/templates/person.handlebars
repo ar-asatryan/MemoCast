@@ -1,0 +1,26 @@
+<div class="col-md-3">
+	<div class="card card-profile card-plain">
+		<div class="card-avatar">
+			<a href="{{ url }}">
+				<img class="img" src="{{ photo }}" />
+			</a>
+		</div>
+
+		<div class="card-content">
+			<a href="{{ url }}">
+				<h4 class="card-title">
+					{{ displayName }}
+					{{#equal sex "male"}}
+					<i class="fa fa-mars" aria-hidden="true"></i>
+					{{/equal}}
+					{{#equal sex "female"}}
+					<i class="fa fa-venus" aria-hidden="true"></i>
+					{{/equal}}
+				</h4>
+			</a>
+			<h6 class="category text-muted">
+				{{ shortInfo }}
+			</h6>
+		</div>
+	</div>
+</div>

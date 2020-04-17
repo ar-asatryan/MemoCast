@@ -1,0 +1,85 @@
+{
+  "id": "I-5G42WT6FSUK1",
+  "state": "Active",
+  "description": "Memocast Gold Membership Subscription - unlimited access to Memocast Movies Library.",
+  "payer": {
+    "payment_method": "paypal",
+    "status": "verified",
+    "payer_info": {
+      "email": "bahinsky@gmail.com",
+      "first_name": "Konstantin",
+      "last_name": "Bahinsky",
+      "payer_id": "5T2HSULD7CRSQ",
+      "shipping_address": {
+        "recipient_name": "Konstantin Bahinsky",
+        "line1": "1 Main St",
+        "city": "San Jose",
+        "state": "CA",
+        "postal_code": "95131",
+        "country_code": "US"
+      }
+    }
+  },
+  "plan": {
+    "payment_definitions": [
+      {
+        "type": "REGULAR",
+        "frequency": "Month",
+        "amount": {
+          "value": "9.95"
+        },
+        "cycles": "0",
+        "charge_models": [
+          {
+            "type": "TAX",
+            "amount": {
+              "value": "0.00"
+            }
+          },
+          {
+            "type": "SHIPPING",
+            "amount": {
+              "value": "0.00"
+            }
+          }
+        ],
+        "frequency_interval": "1"
+      }
+    ],
+    "merchant_preferences": {
+      "setup_fee": {
+        "value": "0.00"
+      },
+      "max_fail_attempts": "0",
+      "auto_bill_amount": "YES"
+    },
+    "links": [],
+    "currency_code": "USD"
+  },
+  "links": [
+    {
+      "href": "https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-5G42WT6FSUK1",
+      "rel": "self",
+      "method": "GET"
+    }
+  ],
+  "start_date": "2017-04-13T07:00:00Z",
+  "shipping_address": {
+    "recipient_name": "Konstantin Bahinsky",
+    "line1": "1 Main St",
+    "city": "San Jose",
+    "state": "CA",
+    "postal_code": "95131",
+    "country_code": "US"
+  },
+  "agreement_details": {
+    "outstanding_balance": {
+      "value": "0.00"
+    },
+    "cycles_remaining": "0",
+    "cycles_completed": "0",
+    "next_billing_date": "2017-04-13T10:00:00Z",
+    "final_payment_date": "1970-01-01T00:00:00Z",
+    "failed_payment_count": "0"
+  }
+}

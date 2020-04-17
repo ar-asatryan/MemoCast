@@ -1,0 +1,100 @@
+{{#section "head"}}
+<meta name="robots" content="index,follow" />
+{{#if pager.pagerPrefix}}
+<link rel="canonical" content="{{ pager.pagerPrefix }}" />
+{{/if}}
+{{#if pageDescription}}
+<meta name="description" content="{{ pageDescription }}" />
+{{/if}}
+{{#if pager.prev}}
+<link rel="prev" href="?skip={{ pager.prev.skip }}{{#each @root.pager.params}}&{{ name }}={{ value }}{{/each}}" />
+{{/if}}
+{{#if pager.next}}
+<link rel="next" href="?skip={{ pager.next.skip }}{{#each @root.pager.params}}&{{ name }}={{ value }}{{/each}}" />
+{{/if}}
+{{/section}}
+
+<h1 class="title">
+    {{ istring locale ru='Свежие комментарии к фильмам' en='Recent movies comments'}}
+</h1>
+
+<div class="card">
+    <div class="card-content">
+        <hr />
+        <div id="div-comments">
+
+            {{#each comments }}
+
+            <div class="media mmc-video-comment mmc-time-stamp-container" data-comment-id="{{ id }}" data-user-id="{{ user.id }}">
+            <div class="pull-left">
+            <div class="avatar">
+            <img class="media-object" src="{{ user.photo }}" />
+            </div>
+            </div>
+
+
+
+            <div class="media-body" style="position: relative;">
+            <div class="media-heading h4"><a href="{{ user.url }}">{{ user.displayName }}</a> <small>· <span class="mmc-time-stamp" data-date="{{ date }}"></span></small>
+
+            {{#if videoTitle.title }}
+            <div class="h5">
+                <a href="{{ videoTitle.url }}">{{ videoTitle.title }} <span class="text-muted">({{ videoTitle.year }})</span></a>
+            </div>
+            {{/if}}
+
+            </div>
+
+
+            {{#if videoItem.title }}
+            <div style="text-transform: none;" class="h6 text-muted">
+                <a class="text-muted" href="/video/{{ videoItem.permalink }}">
+                    {{ videoItem.title }}
+                </a>
+            </div>
+            {{/if}}
+
+            <p>
+            {{ render-text body }}
+            </p>
+
+            <button class="pull-right mmc-remove-container d-none btn btn-danger btn-sm btn-round mmc-remove-button" style="position: absolute; top: 0; right: 0;" href="#">
+                <i class="fa fa-trash"></i>
+                &nbsp;
+                <span class="remove-label">Remove comment</span>
+            </button>
+
+            </div>
+            </div>
+
+            {{/each}}
+
+        </div>
+
+        {{#if pager}}
+        <!-- pagination -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="pagination pagination-primary">
+                    {{#if pager.prev}}
+                	<li><a href="?skip=0">&lt;&lt;</a></li>
+                    <li><a href="?skip={{ pager.prev.skip }}">&lt;</a></li>
+                    {{/if}}
+                    {{#each pager.pages}}
+                    <li{{#if active}} class="active"{{/if}}>
+                        <a href="?skip={{ skip }}">{{ page }}</a>
+                    </li>
+                    {{/each}}
+                    {{#if pager.next}}
+                    <li><a href="?skip={{ pager.next.skip }}">&gt;</a></li>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+
+{{#section "scripts"}}
+<!-- script type="text/javascript" src="/js/comments.js"></script -->
+{{/section}}

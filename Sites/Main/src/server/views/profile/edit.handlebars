@@ -1,0 +1,251 @@
+<div class="h3 title">
+    {{ istring locale ru='Редактировать профиль' en='Edit profile' }}
+</div>
+{{#if canChangePassword }}
+<p>
+	<a href="/profile/change-password">{{ istring locale ru='Сменить пароль' en='Change password' }}</a>
+</p>
+{{/if}}
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+
+<div class="row d-none">
+    <div class="col-md-12">
+
+    </div>
+</div>
+
+<form id="profile-info-form">
+    <div class="alert alert-success d-none" id="profile-form-success">
+        <div class="container-fluid">
+          <div class="alert-icon">
+        	<i class="material-icons">check</i>
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        	<span aria-hidden="true"><i class="material-icons">clear</i></span>
+          </button>
+          {{ istring locale ru='Профиль успешно обновлен' en='Done' }}
+        </div>
+    </div>
+    <div class="alert alert-danger d-none" id="profile-form-error">
+        <div class="container-fluid">
+          <div class="alert-icon">
+            <i class="material-icons">check</i>
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">clear</i></span>
+          </button>
+          {{ istring locale ru='При сохранении профиля произошла ошибка' en='Error occured while updating profile' }}
+        </div>
+    </div>
+    <div class="form-group row d-none" id="fg-user-id">
+        <label for="tb-user-id">
+            {{ istring locale ru='Ваш ID' en='Your ID' }}
+        </label>
+        <div class="input-group">
+          <span class="input-group-addon">https://memocast.com/profile/</span>
+          <input type="text" id="tb-user-id" name="userID" value="{{ profile.userID }}" class="form-control" placeholder="{{ istring locale ru='ID пользователя' en='User ID' }}" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="tb-profile-display-name">
+            {{ istring locale ru='Имя' en='Name' }}
+        </label>
+        <input type="text" id="tb-profile-display-name" value="{{ profile.displayName }}" class="form-control" name="displayName" placeholder="{{ istring locale ru='Имя' en='Display name' }}" />
+    </div>
+    <div class="form-group row">
+        <label>
+            {{ istring locale ru='Ваш пол' en='Gender' }}
+        </label>
+    </div>
+    <div class="radio">
+    	<label>
+            <input type="radio" name="sex" value="male"{{#equal profile.sex 'male'}} checked="checked"{{/equal}} />
+            {{ istring locale ru='Мужчина' en='Male' }}
+    	</label>
+    </div>
+    <div class="radio">
+    	<label>
+            <input type="radio" name="sex" value="female"{{#equal profile.sex 'female'}} checked="checked"{{/equal}} />
+            {{ istring locale ru='Женщина' en='Female' }}
+    	</label>
+    </div>
+    <div class="form-group row">
+        <label for="tb-profile-birth-date">
+            {{ istring locale ru='Дата рождения' en='Birth date' }}
+        </label>
+        <input type="text" id="tb-profile-birth-date" name="birth-date" data-date="{{ profile.birthDate }}" value="" class="form-control datetimepicker"  />
+    </div>
+    <div class="form-group row">
+        <label for="tb-profile-city">
+            {{ istring locale ru='Город' en='City' }}
+        </label>
+        <input type="text" id="tb-profile-city" value="{{ profile.city }}" class="form-control" name="city" placeholder="{{ istring locale ru='Город' en='City' }}" />
+    </div>
+    <div class="form-group row">
+        <label for="tb-profile-email">
+            {{ istring locale ru='Эл. почта' en='E-mail' }}
+        </label>
+        <input type="email" id="tb-profile-email" name="email" value="{{ profile.email }}" class="form-control" placeholder="{{ istring locale ru='Эл. почта' en='E-mail' }}" />
+    </div>
+    <button id="bt-profile-info" class="btn btn-primary">
+        {{ istring locale ru='Сохранить' en='Update' }}
+    </button>
+</form>
+
+
+</div>
+</div>
+
+
+
+{{#section "scripts"}}
+<script type="text/javascript">
+
+function getFormData($form){
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}
+
+$(function() {
+
+    var $bd = $('#tb-profile-birth-date');
+    var d = new Date($bd.data('date'));
+    var m = moment(d).format('YYYY/MM/DD');
+    $bd.val(m);
+
+    $('.datetimepicker').datetimepicker({
+        format: 'YYYY/MM/DD',
+        locale: Memocast.locale,
+	    icons: {
+	        time: "fa fa-clock-o",
+	        date: "fa fa-calendar",
+	        up: "fa fa-chevron-up",
+	        down: "fa fa-chevron-down",
+	        previous: 'fa fa-chevron-left',
+	        next: 'fa fa-chevron-right',
+	        today: 'fa fa-screenshot',
+	        clear: 'fa fa-trash',
+	        close: 'fa fa-remove'
+	    }
+	});
+
+    $('#sm-profile-edit').addClass('active');
+
+    var currentCheckRequest = null;
+
+    $('#tb-user-id').on('change', function(evt) {
+
+        if (currentCheckRequest) {
+            currentCheckRequest.abort();
+            currentCheckRequest = null;
+        }
+
+        var $tb = $(this);
+        var $fg = $('#fg-user-id');
+        var id = $tb.val();
+        if (id == '') {
+            $fg.removeClass('has-success');
+            $fg.removeClass('has-error');
+            $fg.addClass('has-warning');
+        } else {
+            var url = '/api/user/userid-check/';
+            var data = { userID : id };
+            currentCheckRequest = $.ajax(url, {
+                method: 'POST',
+                data: data,
+                success: function(response) {
+
+                    if (!response.available) {
+                        $fg.removeClass('has-success');
+                        $fg.addClass('has-error');
+                        $fg.removeClass('has-warning');
+                    } else {
+                        $fg.addClass('has-success');
+                        $fg.removeClass('has-error');
+                        $fg.removeClass('has-warning');
+                    }
+
+                },
+                complete: function() {
+                    currentCheckRequest = null;
+                }
+            });
+        }
+    });
+
+    var files = [];
+    $('#avatar-form input[type=file]').on('change', function(evt) {
+        files = [];
+        $.each(evt.target.files, function(key, f) {
+            if (f.type === 'image/jpeg' || f.type === 'image/png') {
+                files.push(f);
+            }
+        });
+        $('#bt-avatar-submit').prop('disabled', files.length == 0);
+    });
+
+    $('#avatar-form').on('submit', function(evt) {
+        evt.preventDefault();
+
+        var url = '/api/user-image';
+        var data = new FormData();
+        data.append('image', files[0]);
+        $.ajax(url, {
+            method: 'POST',
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log(response);
+                var d = new Date();
+                let url = '/images/my?width=120&height=120&rnd=' + d.getTime();
+                console.log(url);
+                $('#img-avatar').attr('src', url);
+            },
+            error: function(err) {
+                console.log(err);
+            },
+            complete: function() {
+            }
+        });
+    });
+
+    $('#profile-info-form').on('submit', function(evt) {
+        evt.preventDefault();
+        var data = getFormData($(this));
+        if (data.userID == '') {
+            delete data['userID'];
+        }
+
+        var url = '/api/user/profile';
+        $.ajax(url, {
+            method: 'POST',
+            data: data,
+            success: function(response) {
+
+                $('#profile-form-success').removeClass('d-none');
+                $('#profile-form-error').addClass('d-none');
+
+            },
+            error: function(err) {
+
+                $('#profile-form-success').addClass('d-none');
+                $('#profile-form-error').removeClass('d-none');
+
+            }
+        });
+
+    });
+});
+</script>
+{{/section}}

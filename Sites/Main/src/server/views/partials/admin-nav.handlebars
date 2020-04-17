@@ -1,0 +1,60 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/admin/">
+      <img src="/img/mc-logo-mini.png" height="30" class="d-inline-block align-top" title="Memocast" />
+      &nbsp;Admin
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <!-- users menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarUsersLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Users
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarUsersLink">
+            <a class="dropdown-item" href="/admin/users/">Users</a>
+            <a class="dropdown-item" href="/admin/subscriptions/">Subscriptions</a>
+          </div>
+        </li>
+        <!-- videos menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarVideosLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Videos
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarVideosLink">
+              <a class="dropdown-item" href="/admin/videos/items">Items</a>
+              <a class="dropdown-item" href="/admin/encoding">Encoding</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarFlashLink" data-toggle="dropdown">
+                Flash
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarFlashLink">
+                <a class="dropdown-item" href="/admin/flash/list">
+                    All flash items
+                </a>
+                <a class="dropdown-item" href="/admin/flash/add">
+                    Add new flash item
+                </a>
+            </div>
+        </li>
+        <!-- video title menu -->
+        {{{_sections.leftmenu}}}
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/requests">Requests</a>
+        </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" id="search-form">
+      <input class="form-control mr-sm-2" id="tb-search-form-search" name="search" type="text" placeholder="Search" value="{{ search.search }}">
+      <select id="search-type" class="form-control mr-sm-2" name="type">
+          <option value="users">Users</option>
+          <option value="videos">Videos</option>
+      </select>
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>

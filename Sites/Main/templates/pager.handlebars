@@ -1,0 +1,21 @@
+{{#if pager}}
+<!-- pagination -->
+<div class="row">
+    <div class="col-md-12 text-center">
+        <ul class="pagination pagination-primary">
+            {{#if pager.prev}}
+            <li><a href="?skip=0">&lt;&lt;</a></li>
+            <li><a href="?skip={{ pager.prev.skip }}">&lt;</a></li>
+            {{/if}}
+            {{#each pager.pages}}
+            <li{{#if active}} class="active"{{/if}}>
+                <a href="?skip={{ skip }}{{#each @root.pager.params}}&{{ name }}={{ value }}{{/each}}">{{ page }}</a>
+            </li>
+            {{/each}}
+            {{#if pager.next}}
+            <li><a href="?skip={{ pager.next.skip }}">&gt;</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</div>
+{{/if}}

@@ -1,0 +1,213 @@
+<div class="container d-none">
+
+    <div class="row">
+        <div class="col-md-12">
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="margin-bottom: 15px;">
+
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<a class="navbar-brand" href="/">
+    <img src="/img/mc-logo-mini.png" height="30" class="hidden-md-up d-inline-block align-top" title="Memocast" />
+    <img src="/img/mc-logo.png" height="30" class="hidden-sm-down d-inline-block align-top" title="Memocast" />
+</a>
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ string locale 'menu.top.movies.title' default='Movies' }}
+      </a>
+      <div class="dropdown-menu">
+{{#if user}}
+<a class="dropdown-item" href="/profile/history">
+    {{ istring locale en='Watch history' ru='История просмотров' }}
+</a>
+<div class="dropdown-divider"></div>
+{{/if}}
+        <a class="dropdown-item" href="/videos/all">
+            {{ string locale 'menu.top.movies.all' default='All movies' }}
+        </a>
+        <a class="dropdown-item" href="/videos/new">
+            {{ istring locale ru='Новинки' en='New vidoes' }}
+        </a>
+        <a class="dropdown-item" href="/videos/kids">
+            {{ istring locale ru='Для детей' en='For kids' }}
+        </a>
+        <a class="dropdown-item" href="/category/all">
+            {{ string locale 'menu.top.movies.categories' default='By category' }}
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/videos/online">
+            {{ string locale 'menu.top.movies.online' default='Watching now' }}
+        </a>
+        <a class="dropdown-item" href="/videos/liked">
+            {{ istring locale ru='Популярное за неделю' en='Top of the week' }}
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/comments/">
+            {{ string locale 'menu.top.movies.comments' default='Comments' }}
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item d-none" href="/videos/requests">
+            {{ string locale 'menu.top.movies.requests' default='Requests' }}
+        </a>
+      </div>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ string locale 'menu.top.people.title' default='People' }}
+      </a>
+      <div class="dropdown-menu">
+          <a class="dropdown-item" href="/people/commentators">
+              {{ string locale 'menu.top.people.commentators' default='Commentators' }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/people/leaders">
+              {{ string locale 'menu.top.people.top' default='Top' }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/people/online">
+              {{ string locale 'menu.top.people.online' default='Online' }}
+          </a>
+      </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/roku">
+            {{ istring locale ru='Roku' en='Roku' }}
+        </a>
+    </li>
+    {{#if userIsAdmin}}
+    <li class="nav-item">
+        <a class="nav-link" href="/admin">
+            {{ istring locale ru='Админка' en='Admin' }}
+        </a>
+    </li>
+    {{/if}}
+  </ul>
+
+<ul class="navbar-nav justify-content-end">
+  {{#if user}}
+  <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="/profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ user.photo }}" class="rounded-circle d-none" style="width: 20px; height: 20px;" /> {{ user.displayName }}</a>
+      <div class="dropdown-menu">
+{{#unless activeSubscription}}
+          <a class="dropdown-item" style="color: red;" href="/profile/subscription/purchase">
+              {{ istring locale ru='Приобрести подписку' en='Become Gold Member' }}
+          </a>
+{{/unless}}
+{{#if activeSubscriptionIsTemporary}}
+          <a class="dropdown-item" style="color: red;" href="/profile/subscription/purchase">
+              {{ istring locale ru='Приобрести подписку' en='Become Gold Member' }}
+          </a>
+{{/if}}
+          <a class="dropdown-item" href="/profile/">
+              {{ string locale 'menu.top.profile.my' default='My Profile' }}
+          </a>
+          <a class="dropdown-item" href="/profile/edit">
+              {{ string locale 'menu.top.profile.edit' default='Edit' }}
+          </a>
+          <a class="dropdown-item" href="/profile/history">
+              {{ string locale 'menu.top.profile.history' default='History' }}
+          </a>
+          <a class="dropdown-item" href="/profile/likes">
+              {{ string locale 'menu.top.profile.likes' default='Likes' }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/profile/im">
+              {{ string locale 'menu.top.profile.messages' default='Messages' }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout">
+              {{ string locale 'menu.top.profile.logout' default='Logout' }}
+          </a>
+      </div>
+  </li>
+  {{else}}
+  <li class="nav-item">
+      <a class="btn btn-secondary" href="/login">
+
+      </a>
+  </li>
+  <li class="nav-item">
+      <a class="btn btn-primary ml-2 mr-2" href="/signup">
+
+      </a>
+  </li>
+  {{/if}}
+  <li class="nav-item">
+      <a class="nav-link" href="#" id="settings-button" data-toggle="popover">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+      </a>
+  </li>
+</ul>
+
+  <!-- search form -->
+  <form method="get" action="/search">
+    <div class="input-group">
+        <input class="form-control memocast-autocomplete-videos"
+            name="s"
+            type="text"
+            placeholder="{{ string locale 'menu.top.search.placeholder' default='Search' }}" />
+        <span class="input-group-btn">
+            <button class="btn btn-secondary" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+  </form>
+  <!-- /// search form -->
+
+</div>
+
+</nav>
+
+</div><!-- col -->
+</div><!-- row -->
+</div><!-- container -->
+
+<div class="d-none">
+
+    <div id="settings-popover" style="width: 640px;" class="popover">
+        <div class="popover-title settings">
+            <span class="title">{{ string locale 'menu.top.settings.title' }}</span>
+        </div>
+        <div class="popover-content settings">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span class="title">Выберите язык / Select language</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 text-center">
+                    <div class="flag-item rounded{{#equal locale 'ru' }} active{{/equal}}">
+                        <a href="/link/locale/ru"><span class="flag-icon flag-icon-ru"></span></a>
+                    </div>
+                </div>
+                <div class="col-6 text-center">
+                    <div class="flag-item rounded{{#equal locale 'en' }} active{{/equal}}">
+                        <a href="/link/locale/en"><span class="flag-icon flag-icon-us"></span></a>
+                    </div>
+                </div>
+            </div>
+{{#if user}}
+            <hr/>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <label for="cb-settings-incognito">{{ string locale 'menu.top.settings.incognito.label' }}</label>
+                    &nbsp;&nbsp;
+                    <input type="checkbox" id="cb-settings-incognito" class="js-switch" {{#if user.incognito }} checked="checked" {{/if}} />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{ string locale 'menu.top.settings.incognito.note' }}
+                </div>
+            </div>
+{{/if}}
+        </div>
+    </div>
+
+</div>

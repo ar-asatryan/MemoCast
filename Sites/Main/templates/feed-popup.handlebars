@@ -1,0 +1,76 @@
+<div class="card-content">
+
+    <h4 class="card-title text-center">
+        {{ istring ru='Ваша лента новостей' en='Your latest updates' }}
+    </h4>
+
+    {{#each .}}
+    <div class="row mmc-feed-item">
+    {{#if author }}
+    <div class="col-md-2 hidden-xs hidden-sm">
+        <img class="img img-circle" src="{{ author.photo }}" style="min-width: 50px; max-width: 75px;" />
+    </div>
+    {{/if}}
+
+    {{#equal objType "newvideoitem"}}
+    <div class="col-md-2">
+        <img class="img img-circle" src="/images/video-title/{{ videoTitle.id }}?width=50&height=50" style="width: 50px; height: 50px;" />
+    </div>
+    {{/equal}}
+
+    <div class="col-md-10 col-sm-12 col-xs-12">
+
+        {{#equal objType "newvideoitem"}}
+
+        <i class="fa fa-plus text-rose"></i>
+
+        Добавлен новый эпизод
+        <a href="{{ videoTitle.url }}/{{ videoItem._id }}">
+            {{videoTitle.title }} / {{ videoItem.title }}
+        </a>
+
+        {{/equal}}
+
+        {{#equal objType "follower"}}
+            <i class="fa fa-user-plus text-info"></i>
+        {{/equal}}
+        {{#equal objType "like"}}
+            <i class="fa fa-heart text-rose" aria-hidden="true"></i>
+        {{/equal}}
+        {{#equal objType "comment"}}
+            <i class="fa fa-comment text-warning" aria-hidden="true"></i>
+        {{/equal}}
+    {{#equal objType "follower"}}
+        <a href="{{ author.url }}">{{ author.displayName }}</a> подписался(ась) на ваши обновления
+    {{/equal}}
+    {{#equal objType "like"}}
+    Пользователю <a href="{{ author.url }}">{{ author.displayName }}</a> нравится <a href="{{ videoTitle.url }}">{{ videoTitle.title }}</a>
+    {{/equal}}
+    {{#equal objType "comment"}}
+    Пользователь <a href="{{ author.url }}">{{ author.displayName }}</a> прокомментировал(а) <a href="{{ videoTitle.url }}">{{ videoTitle.title }}</a>
+    <blockquote style="margin: 5px 0px;">
+    <p>{{ comment.body }}</p>
+    </blockquote>
+    {{/equal}}
+    </div>
+
+    </div>
+
+    <hr style="margin: 5px 0px; padding: 0px;" />
+
+    {{/each}}
+
+    <div class="row">
+        <div class="col-md-2 hidden-xs hidden-sm">
+            <img src="/img/mc-logo-mini.png" class="img img-circle" style="min-width: 50px; max-width: 75px;" />
+        </div>
+        <div class="col-md-10 col-sm-12 col-xs-12">
+            <a href="/welcome" class="text-rose" target="_blank">
+                {{ istring ru='Добро пожаловать в обновленный Мемокаст!' en='Welcome to Memocast!' }}
+            </a>
+        </div>
+    </div>
+</div>
+<div class="card-footer">
+    <a href="/profile/feed" class="pull-right text-rose">{{ istring ru='Все события' en='All events' }}</a>
+</div>

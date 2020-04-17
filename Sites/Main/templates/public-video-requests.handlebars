@@ -1,0 +1,24 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{ istring ru='Запрос' en='Request'}}</th>
+            <th>{{ istring ru='Видео' en='Video' }}</th>
+            <th>{{ istring ru='Дата' en='Date' }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each . }}
+        <tr>
+            <td>&quot;{{ request }}&quot;</td>
+            <td>
+                {{#if videoTitles }}
+                {{#each videoTitles }}
+                <a href="{{ url }}">{{ title }}</a>
+                {{/each}}
+                {{/if}}
+            </td>
+            <td class="mmc-time-stamp" data-date="{{ createDate }}"></td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-md-12">
+
+		<!-- Carousel Card -->
+		<div class="card card-raised card-carousel">
+			<div id="flash-adverts-carousel" class="carousel slide" data-ride="carousel">
+				<div class="carousel slide" data-ride="carousel">
+
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+                        {{#each .}}
+                            <li data-target="#flash-adverts-carousel" data-slide-to="{{@index}}"></li>
+                        {{/each}}
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+                        {{#each .}}
+						<a href="{{ url }}">
+                        <div class="flash-item item{{#if @first }} active{{/if}}" id="flash-item-{{ @index }}" data-link="{{ url }}" style="cursor: pointer;">
+                            <img src="/images/flash/{{ _id }}" title="{{ title }}">
+                            <div class="carousel-caption">
+                                <h2 class="title">{{ title }}</h2>
+                                <p>{{ body }}</p>
+                            </div>
+                        </div>
+						</a>
+                        {{/each}}
+					</div>
+
+					<!-- Controls -->
+					<a class="left carousel-control" href="#flash-adverts-carousel" data-slide="prev">
+						<i class="material-icons">keyboard_arrow_left</i>
+					</a>
+					<a class="right carousel-control" href="#flash-adverts-carousel" data-slide="next">
+						<i class="material-icons">keyboard_arrow_right</i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- End Carousel Card -->
+
+	</div>
+</div>

@@ -1,0 +1,30 @@
+{  
+   id:239580789,
+   username:'kbahinsky',
+   displayName:'Константин Бахинский',
+   name:{  
+      familyName:'Бахинский',
+      givenName:'Константин'
+   },
+   gender:'male',
+   profileUrl:'http://vk.com/kbahinsky',
+   photos:[  
+      {  
+         value:'https://pp.vk.me/c627618/v627618789/45270/QeW7QwnRNSU.jpg',
+         type:'photo'
+      }
+   ],
+   birthday:'1978-11-11',
+   provider:'vkontakte',
+   _raw:'{"response":[{"id":239580789,"first_name":"Константин","last_name":"Бахинский","sex":2,"screen_name":"kbahinsky","bdate":"11.11.1978","city":73,"photo":"https:\\/\\/pp.vk.me\\/c627618\\/v627618789\\/45270\\/QeW7QwnRNSU.jpg"}]}',
+   _json:{  
+      id:239580789,
+      first_name:'Константин',
+      last_name:'Бахинский',
+      sex:2,
+      screen_name:'kbahinsky',
+      bdate:'11.11.1978',
+      city:73,
+      photo:'https://pp.vk.me/c627618/v627618789/45270/QeW7QwnRNSU.jpg'
+   }
+}

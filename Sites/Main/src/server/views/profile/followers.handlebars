@@ -1,0 +1,16 @@
+<div class="h3 title">
+    {{ istring locale ru='Followers' en='Followers' }}
+</div>
+<hr />
+
+{{#each followers}}
+{{> user-info .}}
+{{else}}
+<p>No fallowers yet.</p>
+{{/each}}
+
+{{#section "scripts"}}
+<script type="text/javascript">
+$('#sm-profile-followers').addClass('active');
+</script>
+{{/section}}

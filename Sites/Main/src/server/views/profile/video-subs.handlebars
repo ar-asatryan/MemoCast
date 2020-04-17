@@ -1,0 +1,46 @@
+<div class="h3 title">
+    {{ istring locale en='Video subscriptions' ru='Подписки на видео' }}
+</div>
+<hr />
+
+<div id="video-subs" class="row">
+</div>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+$(function() {
+    $('#sm-profile-video-subs').addClass('active');
+});
+$(function () {
+    var $videos = $('#video-subs');
+    var $loading = $('#util-loading');
+
+    let fetchVideos = function() {
+
+        $loading.show();
+
+        let apiURL = '/api/video/subs/my';
+
+        $.ajax(apiURL, {
+            method: 'GET',
+            success: function(response) {
+                var html = '';
+                let videos = response.map(function (item) {
+                    return item.video;
+                });
+                Memocast.loadTemplateByName('video-title', function (err, temp) {
+                    videos.forEach(function (item) {
+                        html += temp(item);
+                    });
+                    $videos.html(html);
+                    $loading.hide();
+                });
+            }
+        });
+    }; // loadVideos
+
+    fetchVideos();
+});
+
+</script>
+{{/section}}

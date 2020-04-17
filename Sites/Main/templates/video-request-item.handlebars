@@ -1,0 +1,32 @@
+<div class="row mmc-video-request-item">
+    <div class="col-12">
+        {{ istring ru='Запрос' en='Request' }}:
+        &quot;{{ request }}&quot;
+    </div>
+    <div class="col-12">
+        {{ istring ru='Дата' en='Date' }}:
+        {{ createDate }}
+    </div>
+
+    <div class="col-12">
+        {{ istring ru='Статус' en='Status' }}:
+        {{#equal status 'created'}}{{ istring ru='Ожидает обработки' en='Pending' }}{{/equal}}
+    {{#equal status 'processing'}}{{ istring ru='Обрабатывается' en='Processing' }}{{/equal}}
+    {{#equal status 'rejected'}}{{ istring ru='Отклонен' en='Rejected' }}{{/equal}}
+    {{#equal status 'complete'}}{{ istring ru='Исполнен' en='Complete'}}{{/equal}}
+    </div>
+
+    {{#if videoTitles }}
+    <ul class="col-12">
+    {{#each videoTitles }}
+    <li><a href="{{ url }}">{{ title }}</a></li>
+    {{/each}}
+    </ul>
+    {{/if}}
+
+    {{#if response}}
+    <div class="col-12">
+    {{ istring ru='Примечание' en='Notes'}}: {{ response }}
+    </div>
+    {{/if}}
+</div>

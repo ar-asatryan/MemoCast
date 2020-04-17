@@ -1,0 +1,80 @@
+<div class="card"><div class="card-content">
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="h2">
+                    {{{ string locale 'pages.login.title' default='Login or <a href="/signup">Sign up</a>' }}}
+                </div>
+            </div>
+        </div>
+
+        <!-- login form -->
+        <form method="post" class="form" id="login-form" action="/login" autocomplete="on">
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" class="form-control" name="username" id="login" placeholder="{{ istring locale ru='Имя пользователя' en='User name' }}" value="" />
+            </div>
+
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                <input type="password" class="form-control" autocomplete="on" name="password" id="password" placeholder="password" value="" />
+            </div>
+
+            {{#if message}}
+            <span class="help-block"></span>
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+            {{/if}}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{{ string locale 'pages.login.submit-button' default='Login'}}</button>
+
+        </form>
+        <!-- /// login form -->
+
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-md-12 text-center">
+                <a href="/passwordrecovery">
+                    {{ string locale 'pages.login.forgot-password' default='Forgot password?' }}
+                </a>
+            </div>
+        </div>
+
+        <!-- social buttons -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <hr />
+                <div class="h5">
+                    {{ istring locale ru='Или воспользуйтесь социальной сетью для создания аккаунта и входа на сайт' en='Or use social network for create account and enter site' }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row social-buttons">
+            <div class="col-md-6 text-left">
+                <a href="/auth/facebook" class="btn btn-lg btn-block btn-facebook">
+                    <i class="fa fa-facebook visible-xs"></i>
+                    <span class="hidden-xs">Facebook</span>
+                </a>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/auth/vk" class="btn btn-lg btn-block btn-vkontakte">
+                    <i class="fa fa-vk visible-xs"></i>
+                    <span class="hidden-xs">VKontakte</span>
+                </a>
+            </div>
+        </div>
+        <!-- /// social buttons -->
+
+    </div>
+</div>
+</div></div>
+
+{{#section "scripts"}}
+<script type="text/javascript">
+$(function() {
+    $('#login').focus();
+});
+</script>
+{{/section}}

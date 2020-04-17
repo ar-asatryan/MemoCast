@@ -1,0 +1,17 @@
+{
+  "name": "Memocast Gold Membership",
+  "description": "Memocast Gold Membership Subscription - unlimited access to Memocast Movies Library.",
+  "start_date": "2017-04-13T09:13:49Z",
+  "plan":
+  {
+    "id": "{{billing-plan}}"
+  },
+  "payer":
+  {
+    "payment_method": "paypal"
+  },
+  "override_merchant_preferences": {
+	"return_url": "https://beta.memocast.com/profile/subscription/paypal/success",
+	"cancel_url": "https://beta.memocast.com/profile/subscription/paypal/cancel"
+  }
+}
