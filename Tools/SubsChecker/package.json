@@ -1,0 +1,19 @@
+{
+  "name": "subschecker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "kostya": "NODE_ENV=kostya-cent-os node index.js",
+    "production": "NODE_ENV=san-jose-dev node index.js"
+  },
+  "author": "Konstantin Bahinsky",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.9.6",
+    "nodemailer": "^4.4.1",
+    "nodemailer-express-handlebars": "^2.0.0",
+    "validator": "^9.2.0",
+    "xml2js": "^0.4.19"
+  }
+}
