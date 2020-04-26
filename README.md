@@ -1,4 +1,4 @@
-# mmc-node
+# MemoCast
 
 
 Memocast - Node.js application
