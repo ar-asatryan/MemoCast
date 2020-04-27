@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport(
         secure: true, // use SSL
         auth: {
             user: 'info@memocast.com',
-            pass: '4z7zn5r2pR3Y946'
+            pass: 'YouReallyExpectToSeePasswordHere?'
         },
         defaults: {
             "from":"info@memocast.com",
