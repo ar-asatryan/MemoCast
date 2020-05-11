@@ -84,6 +84,10 @@ module.exports = function () {
                 }
             ], (err, result) => {
                 if (err) {
+                    // let nameMatch = /(?:\"email\"\ \: \")(.+)(\"\,)$/g;
+                    // if(models.User.email != nameMatch) {
+                    //     res.send({ message : 'This E-Mail has not been found' });
+                    // }
                     return res.status(500).send(err);
                 }
                 res.send({ message : 'An email with instructions on how to reset your password has been sent to your e-mail. Check your spam or junk folder if you don\’t see the email in your inbox.' });
