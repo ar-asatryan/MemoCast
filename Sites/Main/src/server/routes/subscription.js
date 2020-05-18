@@ -34,6 +34,15 @@ module.exports = function() {
             }
         });
 
+    router.route('/purchase-promo')
+        .get(function(req, res) {
+            if (!req.activeSubscription || req.activeSubscriptionIsTemporary) {
+                res.render('subscription/purchase-promo', { layout: 'main' });
+            } else {
+                res.redirect('/profile/subscription');
+            }
+        });
+
     router.route('/update')
         .get(function (req, res) {
             if (req.activeSubscriptionUpdateable) {
