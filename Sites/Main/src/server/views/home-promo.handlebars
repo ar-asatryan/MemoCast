@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1 class="title" style="font-size: 24px; padding: 0px; margin: 15px 0px 25px 0px;" >
+
+            {{ istring locale ru='Memocast - лучшая коллекция русских фильмов и сериалов' 
+                              en='Memocast - лучшая коллекция русских фильмов и сериалов' }}
+            </h1>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {{> flash-promo flash }}
+    </div>
+</div>
+
+
+    <div class="row" style="margin-bottom: 15px;margin-top: 20px;">
+        <div class="col-md-4">
+            <div class="h3">
+                {{ istring locale ru='Лучшая библиотека фильмов на русском' en='Biggest movie library in Russian' }}
+            </div>
+            <p>
+                {{ istring locale ru='Более 200 тысяч фильмов и сериалов' en='Over 300 thousand Movies' }}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <div class="h3">
+                {{ istring locale ru='Первые две недели просмотра - бесплатно' en='Enjoy 2 weeks Free' }}
+            </div>
+            <div>
+                {{ istring locale ru='Всего $5.99 в месяц после пробного периода' en='Flat monthly rate $5.99/month for Unlimited Access' }}
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <a href="/welcome#tv">
+            <div class="h3">
+                {{ istring locale ru='Смотрите на ТВ' en='Watch on TV' }}
+            </div>
+            <p>
+                {{ istring locale ru='Доступно на Roku, ChromeCast и Apple TV' en='Available now on ROKU, Chromecast and AppleTV' }}
+            </p>
+            </a>
+        </div>
+
+    </div>
+              <div style="display: flex; justify-content: center;">
+                   <a href="/signup" class="btn btn-rose  btn-promo" style="margin: 60px auto; padding: 20px 60px; font-size: 17px;">
+                                {{ istring locale ru='Подписаться сейчас' en='Подписаться сейчас' }}
+                    </a>
+                        </div>
+
+
+
+{{#section "scripts"}}
+
+<!-- loading flash adverts from api -->
+{{!-- <script src="/js/home-flash.js" type="text/javascript"></script> --}}
+
+{{/section}}
+
+{{#section "head"}}
+<meta name="description" content="Смотреть новые русские сериалы и фильмы онлайн в хорошем качестве, лучшие российские сериалы Russian TV 2017 года." />
+{{/section}}
