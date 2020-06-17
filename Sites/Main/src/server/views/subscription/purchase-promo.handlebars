@@ -31,7 +31,7 @@
                         </li>
                         <li>
                             <i class="material-icons text-success">check</i>
-                            {{ istring locale ru='Более 200 тысяч фильмов и сериалов' en='Over 200 thousand Movies' }}
+                            {{ istring locale ru='Более 200 тысяч фильмов и сериалов' en='Over 300 thousand Movies' }}
                         </li>
                         <li>
                             <i class="material-icons text-success">check</i>
@@ -42,10 +42,10 @@
                             {{ istring locale ru='Новые поступления каждый день' en='New Arrivals every day' }}
                         </li>
                     </ul>
-                    <button class="btn btn-secondary btn-raise btn-round"  id="bt-2daypass">
+                    <button class="btn btn-secondary btn-raise btn-round"  id="bt-promo">
                         {{ istring locale ru='Оплатить кредитной картой' en='Purchase with credit card' }}
                     </button>
-                    <button class="btn btn-secondary btn-raise btn-round"  id="bt-paypal-2daypass">
+                    <button class="btn btn-secondary btn-raise btn-round"  id="bt-paypal-promo">
                         <i class="fa fa-circle-o-notch fa-spin fa-fw d-none mmc-spinner"></i>
                         {{ istring locale ru='Приобрести через PayPal' en='Purchase with PayPal' }}
                     </button>
@@ -174,7 +174,7 @@
 // steps
 $(function () {
     var steps = [ $('#step-payment-type') , $('#step-payment-form') ];
-    var $bt2daypass = $('#bt-2daypass');
+    var $bt2daypromo = $('#bt-promo');
     var $btgold = $('#bt-gold-membership');
     var currentStep = 0;
     var $hidPaymentType = $('#subs-hid-payment-type');
@@ -210,8 +210,8 @@ $(function () {
         $(document).scrollTop(0);
     }
 
-    $bt2daypass.click(function () {
-        $hidPaymentType.val('2daypass');
+    $bt2daypromo.click(function () {
+        $hidPaymentType.val('gold');
         $('#trial-alert').hide();
         nextStep();
     });
@@ -321,17 +321,16 @@ $(function () {
     var validator = $form.validate(validateOptions);
 
     $form.submit(function (evt) {
+        debugger;
         evt.preventDefault();
-        if (validator.form()) {
+        if (true) {
+        //if (validator.form()) {
             if (!submitRequest) {
                 var url = '/api/payments/404';
                 var subsType = $hidPaymentType.val();
                 switch (subsType) {
                     case 'gold':
-                        url = '/api/payments/subscription';
-                        break;
-                    case '2daypass':
-                        url = '/api/payments/2dayspass'
+                        url = '/api/payments/subscription-promo';
                         break;
                 }
                 var data = Memocast.formDataToJson($form);
@@ -381,7 +380,7 @@ $(function () {
 // paypal
 $(function () {
     var $gold = $('#bt-paypal-gold-membership');
-    var $2days = $('#bt-paypal-2daypass');
+    var $2days = $('#bt-paypal-promo');
 
     var request = null;
 
