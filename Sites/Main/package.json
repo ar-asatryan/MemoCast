@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./src/server/index.js --watch ./src/server",
     "dev": "NODE_ENV=name-dev-local nodemon ./src/server/index.js --watch ./src/server",
+    "stage": "pm2 start ecosystem.config.js --env stage",
     "production": "pm2 start ecosystem.config.js --env production"
   },
   "author": "Konstantin Bahinsky & Ararat Asatryan",
@@ -33,7 +34,7 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
-    "passport-vkontakte": "^0.3.2",
+    "passport-vkontakte": "^0.3.3",
     "paypal-rest-sdk": "^1.7.1",
     "rabbit.js": "^0.4.4",
     "redis": "^2.6.5",
