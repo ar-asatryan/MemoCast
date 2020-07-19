@@ -24,9 +24,10 @@ module.exports = function() {
             } else {
                 if (req.activeSubscription) {
                     res.redirect('/');
-                } else {
-                    res.redirect('/profile/subscription/purchase')
                 }
+               // else {
+                //    res.redirect('/profile/subscription/purchase-promo')
+               // }
             }
 
         });

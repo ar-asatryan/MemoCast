@@ -73,9 +73,14 @@ $(function () {
 
     var fetchVideos = function() {
 
+        //console.log('log action 1:', 'inside fetchVideos()-start')
+
+
         if (apiURL == '') {
             return;
         }
+
+        console.log('log action 2:', 'inside fetchVideos() after apiURL');
 
         $loading.show();
         var itemsCount = $videos.find('.mmc-video-item').length;
@@ -89,10 +94,13 @@ $(function () {
         params.skip = 0;
         params.limit = 20;
 
+        //console.log('log action 3:', 'before AJAX request being started')
+
         request = $.ajax(apiURL, {
             method: 'GET',
             data: params,
             success: function(response) {
+                console.log('log action 4:', 'inside AJAX request');
                 var videos = response.videos;
                 $videos.html('');
                 var $row = $videos.children('.row:last');
@@ -100,9 +108,15 @@ $(function () {
                     $row = $('<div class="row"></div>');
                     $videos.append($row);
                 }
+
+                //this function is for loading movies data>>
                 Memocast.loadTemplateByName('video-title', function (err, temp) {
                     videos.forEach(function (item) {
+                        //TODO: logging results for a movies list by filter
+                        //console.log('item-->>', temp)
                         var childs = $row.children('.mmc-video-item').length;
+                        //console.log('temp(item)-->>', temp(item))
+
                         if (childs == 3) {
                             $row = $('<div class="row"></div>');
                             $videos.append($row);
@@ -111,7 +125,7 @@ $(function () {
                     });
                     Memocast.loadTemplateByName('pager', function (err, temp) {
                         $('#pager').html(temp(response));
-                    })
+                    });
                     // $videosContent.append(html);
                     $loading.hide();
                 });

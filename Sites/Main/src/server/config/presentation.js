@@ -188,7 +188,7 @@ let File = function(file) {
         .replace('\\\\memocast.com\\stream\\', '/legacystream/')
         .replace(/\\/g, '/');
 
-    let rokuPath = 'http://38.126.119.150' + file.path
+    let rokuPath = 'http://38.111.148.167' + file.path
       .replace('\\\\memocast.com\\stream\\', '/legacystream/')
       .replace(/\\/g, '/');
 
