@@ -431,9 +431,10 @@ module.exports = function () {
                     result['video-list-title'] = header;
                 }
             }
-            
+            //console.log('Show permalink>>>>>', result.category.permalink)
+            //changed from "id" to "permalink" for categories filter.
             result['videos-list-need-filter'] = true;
-            result['api-url'] = '/api/videos/' + result.category.id;
+            result['api-url'] = '/api/videos/' + result.category.permalink;
             result['page-url'] = '/videos/' + req.params['id'];
 
             let isFirstPage = true;
