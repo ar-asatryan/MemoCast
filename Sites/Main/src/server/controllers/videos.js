@@ -243,7 +243,9 @@ controller.processVideosByCategoryRequest = function (options, resultCallback) {
             // query for category
             SubCategory.findOne(query, function (err, item) {
                 if (err || !item) { return callback({ error: 'Category not found'}); }
-                console.log({id: item._id });
+                //console.log({"data ----->": data});
+                //console.log({"item of id": item});
+                //console.log({id: item._id });
                 if (!!item && item.permalink !== data.CategoryID) {
                     let link = `/videos/${item.permalink}`;
                     let original = options.req.originalUrl;
@@ -344,7 +346,7 @@ controller.processVideosByCategoryRequest = function (options, resultCallback) {
             data.pager = pager;
             callback(null, data);
         },
-        // load years (for filter)
+        // ToDo: function which load years for filtering movies>
         function (data, callback) {
             yearsController.getVideoTitleYears( { category: data.category.id }, function (err, years) {
                 if (years) {

@@ -12,6 +12,7 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
+//ToDo: Get ready for filter movies by year
 controller.getVideoTitleYears = function (params, resultCallback) {
 
     let VideoTitle = models.VideoTitle;
