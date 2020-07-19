@@ -23,9 +23,9 @@ module.exports = function() {
         });
 
         if (!!cacheValue) { return cacheValue };
-
+        // video loading and opening section >>
         const query = mongoose.Types.ObjectId.isValid(title) ? 
-            { isPublic: true, $or: [ { _id: mongoose.Types.ObjectId(title) }, { titleID: title } ] } : 
+            { isPublic: true, $or: [ { _id: mongoose.Types.ObjectId(title) }, { titleID: title } ] } :
             { isPublic: true, titleID: title } ;
         
         const videoTitle = await models.VideoTitle.findOne(query)
