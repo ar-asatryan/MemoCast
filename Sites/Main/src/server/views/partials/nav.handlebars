@@ -94,12 +94,12 @@
       <a class="nav-link dropdown-toggle" href="/profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ user.photo }}" class="rounded-circle d-none" style="width: 20px; height: 20px;" /> {{ user.displayName }}</a>
       <div class="dropdown-menu">
 {{#unless activeSubscription}}
-          <a class="dropdown-item" style="color: red;" href="/profile/subscription/purchase-promo">
+          <a class="dropdown-item" style="color: red;" href="/profile/subscription/purchase">
               {{ istring locale ru='Приобрести подписку' en='Become Gold Member' }}
           </a>
 {{/unless}}
 {{#if activeSubscriptionIsTemporary}}
-          <a class="dropdown-item" style="color: red;" href="/profile/subscription/purchase-promo">
+          <a class="dropdown-item" style="color: red;" href="/profile/subscription/purchase">
               {{ istring locale ru='Приобрести подписку' en='Become Gold Member' }}
           </a>
 {{/if}}
