@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const async = require('async');
 const models = require('../../config/models');
+var passport = require('passport');
 
 const jssha = require('jssha');
 
@@ -15,7 +16,7 @@ module.exports = function() {
         })
         .post(function (req, res) {
 
-            let email = req.body['email']; email = email ? email : '';
+            let email = req.body['username']; email = email ? email : '';
             email = email.toLowerCase();
 
             let displayName = req.body['displayName'];
@@ -65,6 +66,7 @@ module.exports = function() {
                         }
                     });
 
+
                 }
             ], function (err, result) {
                 if (err) {
@@ -75,20 +77,25 @@ module.exports = function() {
                         confirmPassword : confirm,
                         error: err
                     });
+
+
                 } else {
-                    req.logIn(result, function (err) {
-                        if (err) {
-                            res.render('auth/signup', {
-                                email: email,
-                                password: password,
-                                displayName: displayName,
-                                confirmPassword : confirm,
-                                error: { message : 'При создании пользователя произошла ошибка' }
-                            });
-                        } else {
-                            res.redirect('/profile/subscription/purchase');
-                        }
+                    passport.authenticate('local')(req, res, function () {
+                        res.redirect('/profile/subscription/purchase-promo');
                     });
+                    // req.logIn(result, function (err) {
+                    //     if (err) {
+                    //         res.render('auth/signup', {
+                    //             email: email,
+                    //             password: password,
+                    //             displayName: displayName,
+                    //             confirmPassword : confirm,
+                    //             error: { message : 'При создании пользователя произошла ошибка' }
+                    //         });
+                    //     } else {
+                    //         res.redirect('/profile/subscription/purchase-promo');
+                    //     }
+                    // });
                 }
             });
 

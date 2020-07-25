@@ -25,7 +25,7 @@ module.exports = function() {
     router.get('/', function(req, res) {
 
 //        console.dir(req.session);
-
+// TODO on first run returns error
         if (req.user) {
 
             var sess = req.session;
@@ -38,13 +38,13 @@ module.exports = function() {
             }
 
         } else {
-            var flash = req.flash('error');
+            // var flash = req.flash('error');
             var ctx = { message: null };
-            if (flash) {
-                if (flash[0]) {
-                    ctx.message = flash[0];
-                }
-            }
+            // if (flash) {
+            //     if (flash[0]) {
+            //         ctx.message = flash[0];
+            //     }
+            // }
             res.render('auth/login', ctx);
         }
     });
