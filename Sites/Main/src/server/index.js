@@ -111,7 +111,7 @@ let ensureAuthenticated = function(req, res, next) {
 app.use((req, res, next) => {
   req.realIp = req.query['mmc-ip'] || req.headers['x-forwarded-for'] || req.ip;
   next();
-})
+});
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -392,6 +392,7 @@ app.use(function(req, res, next) {
 
 // home page
 app.get('/', require('./routes/home'));
+app.get('/promo', require('./routes/home-promo'));
 
 // helper pages (help, about, feedback, contacts)
 require('./routes/helpers/helpers')(app);
