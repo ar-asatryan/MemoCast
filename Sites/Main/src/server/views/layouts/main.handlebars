@@ -9,7 +9,11 @@
 </head>
 <body{{#if fluid}} class="section-white"{{/if}}>
 
+{{#if is_promo}}
+    {{> nav-material-promo }}
+{{else}}
     {{> nav-material }}
+{{/if}}
 
 {{#unless fluid}}
 	<div class="container" style="padding-top: 15px;">
@@ -38,9 +42,13 @@
 
 
 
-
-
+{{#if is_promo}}
+    {{> footer-promo}}
+{{else}}
     {{> footer}}
+{{/if}}
+
+
 
 
 <!-- scripts -->
