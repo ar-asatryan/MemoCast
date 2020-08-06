@@ -299,10 +299,67 @@ module.exports = function () {
         });
     });
 
+    router.route('/subscription-promo')
+        .post(function (req, res) {
+
+            let price = 5.99;
+
+            // TODO update to set true to boolean in database
+
+            paymentProcessor(req, res, price, '/services/payments/cb.asmx/CreateSubscriptionPromo', function (reply, callback) {
+                let requestID = reply.requestID;
+                let sub = {
+                    active: true,
+                    kind: 'recurring',
+                    cybersource: {
+                        'subscription-id': requestID
+                    }
+                };
+                let update = { $push : { subs: sub } };
+                models.User.findByIdAndUpdate(req.user['_id'], update, { new : true }, callback);
+            });
+        })
+        .patch(function (req, res) {
+            async.waterfall([
+                // checking if active subscription equals with subscription-id
+                function (callback) {
+                    let SubscriptionID = req.body['subscription-id'];
+                    let subscription = req.activeSubscription;
+                    if (subscription) {
+                        let cybersource = subscription.cybersource;
+                        if (cybersource) {
+                            if (SubscriptionID && cybersource['subscription-id'] === SubscriptionID) {
+                                return callback(null, SubscriptionID);
+                            }
+                        }
+                    }
+                    return callback({ message : 'Can\'t update empty subscription'});
+                }
+            ], function (err, result) {
+
+                if (err) {
+                    res.status(500).send({ error : err, ok: false });
+                } else {
+                    paymentProcessor(req, res, 9.95, '/services/payments/cb.asmx/UpdateSubscription', function (reply, callback) {
+                        callback(null, { ok : true });
+                    });
+                }
+
+                // res.send({ err: err, result : req.activeSubscription });
+            });
+        });
+
     router.route('/subscription')
         .post(function (req, res) {
 
-            paymentProcessor(req, res, 9.95, '/services/payments/cb.asmx/CreateSubscription', function (reply, callback) {
+            let price = 9.95;
+
+            let promoSubscribed = models.User.findById(req.user['_id'], function(err, item) {
+
+                console.log(item);
+            });
+            return;
+            paymentProcessor(req, res, price, '/services/payments/cb.asmx/CreateSubscription', function (reply, callback) {
                 let requestID = reply.requestID;
                 let sub = {
                     active: true,
