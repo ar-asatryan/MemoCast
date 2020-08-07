@@ -14,6 +14,7 @@
 <th></th>
 <th>Expire</th>
 <th>Notes</th>
+<th>Promo</th>
 </tr>
 </thead>
 <tbody>
@@ -33,6 +34,8 @@
 <td>\{{#if sub.paypal }}\{{ sub.paypal.id }}\{{/if}}\{{#if sub.cybersource }}\{{ sub.cybersource.subscription-id }}\{{/if}}</td>
 <td>\{{ sub.expire }}</td>
 <td>\{{ sub.notes }}</td>
+
+<td>\{{ sub.promoSubscribed }}</td>
 </tr>
 \{{/each}}
 </tbody>
