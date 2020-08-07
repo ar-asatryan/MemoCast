@@ -315,7 +315,7 @@ module.exports = function () {
                         'subscription-id': requestID
                     }
                 };
-                let update = { $push : { subs: sub } };
+                let update = { $push : { subs: sub, promoSubscribed: true } };
                 models.User.findByIdAndUpdate(req.user['_id'], update, { new : true }, callback);
             });
         })
@@ -358,7 +358,7 @@ module.exports = function () {
 
                 console.log(item);
             });
-            return;
+
             paymentProcessor(req, res, price, '/services/payments/cb.asmx/CreateSubscription', function (reply, callback) {
                 let requestID = reply.requestID;
                 let sub = {
