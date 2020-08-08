@@ -16,6 +16,10 @@ module.exports = {
             PORT: 7885,
             NODE_ENV: "dima-dev-local"
         },
+        env_stage: {
+            PORT: 7885,
+            NODE_ENV: "aro-dev"
+         },
         env_production: {
             PORT: 7885,
             NODE_ENV: "san-jose-dev"
