@@ -1,0 +1,19 @@
+{
+  "name": "encoder",
+  "version": "1.0.0",
+  "description": "memocast encoder",
+  "main": "encoder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "kostya": "NODE_ENV=kostya-cent-os node worker.js"
+  },
+  "author": "Konstantin & Dmitry Bahinsky",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.4.0",
+    "fs-extra": "^3.0.0",
+    "mathjs": "^3.12.2",
+    "mongoose": "^4.9.6",
+    "rabbit.js": "^0.4.4"
+  }
+}
