@@ -20,7 +20,7 @@ Memocast streaming application consists of the following components:
 
 ## Deployment
 
-# Memocast Software Development Workflow
+# Memocast Updates Workflow
 
 1. Create a ticket which describes what exactly you are going to do
 
