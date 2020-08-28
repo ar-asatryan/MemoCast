@@ -7,13 +7,6 @@ Memocast - Node.js application
  - Main components details
  - Configuration details
 
-## Components
-
-Memocast streaming application consists of the following components:
-
-- 
-- 
-
 ## Settings
 
 
