@@ -7,12 +7,6 @@ Memocast - Node.js application
  - Main components details
  - Configuration details
 
-## Settings
-
-
-
-## Deployment
-
 # Memocast Updates Workflow
 
 1. Create a ticket which describes what exactly you are going to do
