@@ -6,6 +6,7 @@ Memocast - Node.js application
  - Hi level overview
  - Main components details
  - Configuration details
+ - Special Promo Service for Pandemic
 
 # Memocast Updates Workflow
 
