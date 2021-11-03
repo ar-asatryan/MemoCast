@@ -13,7 +13,7 @@
     "mongoose": "^5.9.6",
     "nodemailer": "^4.4.1",
     "nodemailer-express-handlebars": "^2.0.0",
-    "validator": "^9.2.0",
+    "validator": "^13.7.0",
     "xml2js": "^0.4.19"
   }
 }
